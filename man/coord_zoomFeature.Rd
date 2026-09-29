@@ -4,15 +4,38 @@
 \alias{coord_zoomFeature}
 \title{Zoom into given feature}
 \usage{
-coord_zoomFeature(data, id, r = 2000, ...)
+coord_zoomFeature(data, r = 2000, ...)
 }
 \arguments{
 \item{data}{data to zoom on.}
-
-\item{id}{id of the data to zoom on}
 
 \item{r}{radius of the zoom.}
 }
 \description{
 Zoom into given feature
+}
+\examples{
+\dontrun{
+# You need to use this with a plot so the basics
+library(tidyverse)
+library(tidyterra)
+library(postcodElapse)
+
+data <- pollutionFromBag("9726AC", "bag-light.gpkg")
+
+elapse <- loadElapse()
+
+# We are zooming in on the 3rd building.
+ggplot() +
+   geom_spatraster(data = elapse$NO2FULL) +
+   geom_sf(data = data, aes(geometry = geom), colour = "red") +
+   coord_zoomFeature(data[3])
+
+# On the 5th trough 10th buildings
+ggplot() +
+   geom_spatraster(data = elapse$NO2FULL) +
+   geom_sf(data = data, aes(geometry = geom), colour = "red") +
+   coord_zoomFeature(data[5:10])
+}
+
 }
