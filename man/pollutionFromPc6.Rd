@@ -36,7 +36,7 @@ library(tidyverse)
 library(tidyterra)
 library(postcodElapse)
 
-data <- pollutionFromPc6("9726AC", "../data/cbs_pc6_2024.gpkg")
+data <- pollutionFromPc6("9726AC", "cbs_pc6_2024.gpkg")
 
 elapse <- loadElapse()
  ggplot() +
