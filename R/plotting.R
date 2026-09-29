@@ -1,10 +1,35 @@
 #' Zoom into given feature
+#'
 #' @param data data to zoom on.
-#' @param id id of the data to zoom on
 #' @param r radius of the zoom.
+#'
+#' @examples
+#' \dontrun{
+#' # You need to use this with a plot so the basics
+#' library(tidyverse)
+#' library(tidyterra)
+#' library(postcodElapse)
+#'
+#' data <- pollutionFromBag("9726AC", "bag-light.gpkg")
+#'
+#' elapse <- loadElapse()
+#'
+#' # We are zooming in on the 3rd building.
+#' ggplot() +
+#'    geom_spatraster(data = elapse$NO2FULL) +
+#'    geom_sf(data = data, aes(geometry = geom), colour = "red") +
+#'    coord_zoomFeature(data[3])
+#'
+#' # On the 5th trough 10th buildings
+#' ggplot() +
+#'    geom_spatraster(data = elapse$NO2FULL) +
+#'    geom_sf(data = data, aes(geometry = geom), colour = "red") +
+#'    coord_zoomFeature(data[5:10])
+#' }
+#'
 #' @export
-coord_zoomFeature <- function(data, id, r = 2000, ...) {
-  data <- data$geom[[id]] # I just want the geometery
+coord_zoomFeature <- function(data, r = 2000, ...) {
+  data <- data$geom # I just want the geometery
 
   # If the geoms are MULTIPOLYGONS first find the center then calculate the bbox
   geom_multipolygon <- FALSE
@@ -33,6 +58,31 @@ coord_zoomFeature <- function(data, id, r = 2000, ...) {
 #' @param data data to zoom on.
 #' @param id id of the data to zoom on
 #' @param size size of the rectangle.
+#'
+#' @examples
+#' \dontrun{
+#' # Some plotting basics
+#' library(tidyverse)
+#' library(tidyterra)
+#' library(postcodElapse)
+#'
+#' data <- pollutionFromBag("9726AC", "bag-light.gpkg")
+#'
+#' elapse <- loadElapse()
+#'
+#' # We are drawing a box around 3rd building.
+#' ggplot() +
+#'    geom_spatraster(data = elapse$NO2FULL) +
+#'    geom_sf(data = data, aes(geometry = geom), colour = "red") +
+#'    geom_reactFeature(data[3])
+#'
+#' # On the 5th trough 10th buildings
+#' ggplot() +
+#'    geom_spatraster(data = elapse$NO2FULL) +
+#'    geom_sf(data = data, aes(geometry = geom), colour = "red") +
+#'    geom_rectFeature(data[5:10])
+#' }
+#'
 #' @export
 geom_rectFeature <- function(data, id, size = 2000, colour = "red", fill = NA, ...) {
   bbox <- sf::st_bbox(data$geom[[id]])
