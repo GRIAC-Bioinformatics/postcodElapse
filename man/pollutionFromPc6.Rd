@@ -2,7 +2,7 @@
 % Please edit documentation in R/extraction.R
 \name{pollutionFromPc6}
 \alias{pollutionFromPc6}
-\title{Get air pollution data for a postcode with Postcode6 database.}
+\title{Estimate air pollution concentrations in a postcode with PC6 database.}
 \usage{
 pollutionFromPc6(postcodes, pc6_path, elapse_path, ...)
 }
@@ -14,8 +14,34 @@ pollutionFromPc6(postcodes, pc6_path, elapse_path, ...)
 \item{elapse_path}{\emph{optional} string Path to the ELAPSE database.}
 }
 \value{
-data.frame containing avrage, minimum & maximum air pollutant concentrations and areas per postcode.
+simple feature collection. for every postcode the average, minimum &
+maximum air pollutant concentration. In addition the geographic area of that
+postcode.
 }
 \description{
-Get air pollution data for a postcode with Postcode6 database.
+\href{https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml}{Postcode6(PC6)}
+by the CBS, contains the geographic region of every postcode in the Netherlands.
+\code{pollutionFromPc6()} query's the geographic region of all given postcodes.
+Subsequently it uses ELAPSE to calculate the average, minimum & maximum
+concentration of every air pollutant in that region. In addition it collects
+the amount of buildings in that region.
+}
+\examples{
+\dontrun{
+# basic use
+pollutionFromPc6("9726AC", "cbs_pc6_2024.gpkg")
+
+# Plotting the area's, I recommend you use tidyverse & tidyterra
+library(tidyverse)
+library(tidyterra)
+library(postcodElapse)
+
+data <- pollutionFromPc6("9726AC", "../data/cbs_pc6_2024.gpkg")
+
+elapse <- loadElapse()
+ ggplot() +
+ geom_spatraster(data = elapse$NO2FULL) +
+ geom_sf(data = data, aes(geometry = geom), colour = "red")
+}
+
 }

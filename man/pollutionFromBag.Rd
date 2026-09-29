@@ -2,33 +2,47 @@
 % Please edit documentation in R/extraction.R
 \name{pollutionFromBag}
 \alias{pollutionFromBag}
-\title{Get air pollution data for a postcode with BAG database.}
+\title{Estimate air pollution concentrations in a postcode with BAG database.}
 \usage{
-pollutionFromBag(postcodes, bag_path, elapse_path, ...)
+pollutionFromBag(postcodes, bag, elapse, ...)
 }
 \arguments{
-\item{postcodes}{string or vector of strings Containing PC6 postcodes.}
+\item{postcodes}{string or vector of strings Containing Duch postcodes.}
 
-\item{bag_path}{string Path to the BAG database.}
+\item{bag}{string Path to BAG database.}
 
-\item{elapse_path}{\emph{optional} string Path to the ELAPSE database.}
+\item{elapse}{\emph{optional} Path to ELAPSE. (When empty will load internal ELAPSE)}
+}
+\value{
+data.frame containing air pollution estimates and geo-location for all
+buildings in the given postcodes
 }
 \description{
-\code{pollution_from_bag()} extracts the geolocation of all building assigned the
-given postcodes form BAG. With the geolocation the air pollution data can be
-extracted from ELAPSE.
+Kadaster's \href{https://www.pdok.nl/introductie/-/article/basisregistratie-adressen-en-gebouwen-ba-1}{Basisregistratie Adressen en Gebouwen}
+database contains for all buildings in the Netherlands their location and postcode.
+\code{pollutionFromBag()} finds the geo-location of all buildings part of the given
+postcodes. Then extracts the air pollutant concentrations at those geo-locations
+from ELAPSE. Returned are all pollution estimates for every building in the
+wanted postcodes, including the geo-location.
 }
-\section{BAG}{
+\examples{
+\dontrun{
+# Basic usage
+pollutionFromBag("9726AC", "bag-light.gpkg")
 
-Basisregistratie Adressen en Gebouwen or BAG contains the geolocation of all
-buildings in the Netherlands with an address. You can download it from
-\href{https://www.pdok.nl/introductie/-/article/basisregistratie-adressen-en-gebouwen-ba-1}{pdok}.
-At the time of writing the file is 8gig.
+# Plotting the location of all buildings,
+# I recommend you use tidyverse & tidyterra
+library(tidyverse)
+library(tidyterra)
+library(postcodElapse)
+
+data <- pollutionFromBag("9726AC", "bag-light.gpkg")
+
+elapse <- loadElapse()
+
+ggplot() +
+   geom_spatraster(data = elapse$NO2FULL) +
+   geom_sf(data = data, aes(geometry = geom), colour = "red")
 }
 
-\section{ELAPSE}{
-
-This function automaticly loads the ELAPSE dataset included in the addrElapsR
-package. When given elapse_path this func loads that ELAPSE dataset.
 }
-
