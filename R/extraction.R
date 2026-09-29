@@ -104,8 +104,24 @@ postcodElapse <- function(postcodes, database, type = "GUESS", elapse_path) {
 #' buildings in the given postcodes
 #' @examples
 #' \dontrun{
+#' # Basic usage
 #' pollutionFromBag("9726AC", "bag-light.gpkg")
+#'
+#' # Plotting the location of all buildings,
+#' # I recommend you use tidyverse & tidyterra
+#' library(tidyverse)
+#' library(tidyterra)
+#' library(postcodElapse)
+#'
+#' data <- pollutionFromBag("9726AC", "bag-light.gpkg")
+#'
+#' elapse <- loadElapse()
+#'
+#' ggplot() +
+#'    geom_spatraster(data = elapse$NO2FULL) +
+#'    geom_sf(data = data, aes(geometry = geom), colour = "red")
 #' }
+#'
 #' @export
 pollutionFromBag <- function(postcodes, bag, elapse, ...) {
   pass_db_check <- list(...)$pass_db_check # grab optional parameter
@@ -162,12 +178,36 @@ pollutionFromBag <- function(postcodes, bag, elapse, ...) {
 #' @description
 #' [Postcode6(PC6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
 #' by the CBS, contains the geographic region of every postcode in the Netherlands.
-#' `pollutionFromPc6()`
+#' `pollutionFromPc6()` query's the geographic region of all given postcodes.
+#' Subsequently it uses ELAPSE to calculate the average, minimum & maximum
+#' concentration of every air pollutant in that region. In addition it collects
+#' the amount of buildings in that region.
 #'
 #' @param postcodes string or vector of strings Containing PC6 postcodes.
 #' @param pc6_path string Path to the Postcode6 database.
 #' @param elapse_path *optional* string Path to the ELAPSE database.
-#' @returns data.frame containing avrage, minimum & maximum air pollutant concentrations and areas per postcode.
+
+#' @returns simple feature collection. for every postcode the average, minimum &
+#' maximum air pollutant concentration. In addition the geographic area of that
+#' postcode.
+#'
+#' @examples
+#' \dontrun{
+#' # basic use
+#' pollutionFromPc6("9726AC", "cbs_pc6_2024.gpkg")
+#'
+#' # Plotting the area's, I recommend you use tidyverse & tidyterra
+#' library(tidyverse)
+#' library(tidyterra)
+#' library(postcodElapse)
+#'
+#' data <- pollutionFromPc6("9726AC", "cbs_pc6_2024.gpkg")
+#'
+#' elapse <- loadElapse()
+#'  ggplot() +
+#'  geom_spatraster(data = elapse$NO2FULL) +
+#'  geom_sf(data = data, aes(geometry = geom), colour = "red")
+#' }
 #'
 #' @export
 pollutionFromPc6 <- function(postcodes, pc6_path, elapse_path, ...) {
