@@ -7,55 +7,43 @@
 
 <!-- badges: end -->
 
-postcodElapse provides air pollution estimates for the Netherlands from Duch postal
-codes. It does this by querying a given postcodes geolocation from public databases.
-Subsequently this postition imformation is used to extract air pollution estimates 
-from the Effects of Low-Level Air Pollution: A Study in Europe (ELAPSE) model.
+Estimate PM~2.5~, BC, NO~2~ and O~3~ concentrations for Dutch postal codes. Trough
+the [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model in addition with
+a postcode database containing the geographic location of every postcode in the 
+Netherlands. My thanks go to [Kees de Hoogh](https://orcid.org/0000-0001-5974-2007)
+for developing & allowing the use of [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036)
+in this package.
 
-<!-- [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) was published by 
-[Kees de Hoogh](https://orcid.org/0000-0001-5974-2007) 
-who has my gratitude for agreeing with it's use in postcodElapse. -->
+## Quick start
 
-## Installation
+### R-spatial
+Ensure you have the [terra](https://rspatial.github.io/terra/index.html) R-package
+correctly installed for you OS. See [their guide](https://rspatial.github.io/terra/index.html#installation)
 
-### Setup
+### Postcode database
 
-#### R-spatial
-postcodElapse requires [terra](https://rspatial.github.io/terra/index.html) witch
-you might have to install beforehand, for Windows and Mac run the command below.
-``` r
-install.packages('terra', repos='https://rspatial.r-universe.dev')
-```
-When R prompts: "Do you want to install from sources..." awnser **no** then it 
-should install the package. If in doubt check the [installation guide](https://rspatial.github.io/terra/index.html#installation)
-of terra.
+postcodElapse **requires** an extra database containing the location of Dutch postcodes.
+Two are supported, download at-least one:
 
-### Databases
-
-One of the extra databases below is **required**, chose one or both.
-
-- [Basisregistratie Adressen en Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml)(BAG), 
+- [Basisregistratie Adressen en Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml)(BAG) 
   Note 8Gigabyte in size.
 - [Postcode6](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)(PC6)
   Only 0.5Gigabyte.
 
-The ELAPSE model is optional it is included in postcodElapse, if you wish use your 
-own that is possible. It is expected as an single tiff image containing multiple
-layers representing air pollution concentration.
-
 ### Install
-To install download the postcodElapse source package onto your device. Run the
-command below, ensure you are pointing at the file!
+Download the latest release of postcodElapse, run the command below pointing at 
+the package install file.
 
 ``` r
 install.packages("postcodElapse_0.0.0.9610.tar.gz")
 ```
 
-You can also use the Rstudio packages tab, navigate there press the "Install" button.
-Change "Install from:" to "Package Archive ...", open the file picker. Navigate 
-to and open the postcodElapse package download. Press "Install", and youre done.
+If you are using Rstudio you can use the packages tab, nativate there press the
+"Install" button. Change "Install from:" to "Package Archive ...", open the file
+picker. Navigate to and open the downloaded postcodElapse release. Press "Install",
+and youre done.
 
-## Example
+## Examples
 
 The example below shows how to get air pollution estimates using the `postcodElapse()`
 function, using the BAG database. The same command works for PC6 just change the path.
@@ -63,7 +51,8 @@ function, using the BAG database. The same command works for PC6 just change the
 ``` r
 library(postcodelapse)
 
-postcodElapse(c("8917DD", "9712CP"), "./bag-light.gpkg")
+postcodElapse(c("8917DD", "9712CP"), "bag-light.gpkg")
+#> Guessed db type to be: BAG
 #>   postcode n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg
 #> 1   8917DD 5   1.637956    28.14168    60.92046    46.11469    76.49764
 #> 2   9712CP 8   1.735555    30.59054    62.10056    45.57095    78.96525
@@ -77,12 +66,27 @@ postcodElapse(c("8917DD", "9712CP"), "./bag-light.gpkg")
 #> 1      15.64734
 #> 2      15.03059
 
-# Both postcodes are public locations!
+Both postcodes are public locations!
 ```
 
-The "n" column contains the amount of buildings in the given postcodes. The rest
-of the variables are the mean, maximum & minimum air pollutant concentration for 
-all layers in ELAPSE.
+Postcodes must be four numbers two letters, extra spaces are removed and all
+letters are capitalized. Keep this in mind when joining with other data.
+``` r
+postcodElapse(c("9 7 2 6 A c", "8934 cj"), "cbs_pc6_2024.gpkg")
+#> Guessed db type to be: PC6
+#>   postcode  n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg PM25FULLt_avg BCFULL_min
+#> 1   8934CJ NA   1.758855    30.12195    59.48217    44.89864    75.59747      15.12021   1.655208
+#> 2   9726AC NA   1.842203    34.03876    60.01628    44.65147    77.06836      15.67927   1.816390
+#>   NO2FULL_min O3FULLa_min O3FULLc_min O3FULLw_min PM25FULLt_min BCFULL_max NO2FULL_max
+#> 1    27.70151    58.78391    44.50707    74.77161      14.65690   1.773019    31.05828
+#> 2    33.83566    59.20438    44.58334    76.94397      15.64022   1.887790    35.16822
+#>   O3FULLa_max O3FULLc_max O3FULLw_max PM25FULLt_max
+#> 1    60.92498    45.37432    76.52650      15.20761
+#> 2    60.04224    44.71480    77.29417      15.89977
+
+Both postcodes are public locations!
+```
+
 
 # FAQ
 ## I am getting null-pointer errors!
