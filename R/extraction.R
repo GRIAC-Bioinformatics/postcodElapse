@@ -86,47 +86,46 @@ postcodElapse <- function(postcodes, database, type = "GUESS", elapse_path) {
   return(postcode_pollution_stats)
 }
 
-#' Get air pollution data for a postcode with BAG database.
+#' Estimate air pollution concentrations in a postcode with BAG database.
 #'
 #' @description
-#' `pollution_from_bag()` extracts the geolocation of all building assigned the
-#' given postcodes form BAG. With the geolocation the air pollution data can be
-#' extracted from ELAPSE.
+#' Kadaster's [Basisregistratie Adressen en Gebouwen](https://www.pdok.nl/introductie/-/article/basisregistratie-adressen-en-gebouwen-ba-1)
+#' database contains for all buildings in the Netherlands their location and postcode.
+#' `pollutionFromBag()` finds the geo-location of all buildings part of the given
+#' postcodes. Then extracts the air pollutant concentrations at those geo-locations
+#' from ELAPSE. Returned are all pollution estimates for every building in the
+#' wanted postcodes, including the geo-location.
 #'
-#' @section BAG:
-#' Basisregistratie Adressen en Gebouwen or BAG contains the geolocation of all
-#' buildings in the Netherlands with an address. You can download it from
-#' [pdok](https://www.pdok.nl/introductie/-/article/basisregistratie-adressen-en-gebouwen-ba-1).
-#' At the time of writing the file is 8gig.
+#' @param postcodes string or vector of strings Containing Duch postcodes.
+#' @param bag string Path to BAG database.
+#' @param elapse *optional* Path to ELAPSE. (When empty will load internal ELAPSE)
 #'
-#' @param postcodes string or vector of strings Containing PC6 postcodes.
-#' @param bag_path string Path to the BAG database.
-#' @param elapse_path *optional* string Path to the ELAPSE database.
-#'
-#' @section ELAPSE:
-#' This function automaticly loads the ELAPSE dataset included in the addrElapsR
-#' package. When given elapse_path this func loads that ELAPSE dataset.
-#'
+#' @return data.frame containing air pollution estimates and geo-location for all
+#' buildings in the given postcodes
+#' @examples
+#' \dontrun{
+#' pollutionFromBag("9726AC", "bag-light.gpkg")
+#' }
 #' @export
-pollutionFromBag <- function(postcodes, bag_path, elapse_path, ...) {
+pollutionFromBag <- function(postcodes, bag, elapse, ...) {
   pass_db_check <- list(...)$pass_db_check # grab optional parameter
 
   # if pass_db_check set assume that the parent did it's homework and checked the
   # database, otherwise we have to check ourselves. This is so we don't check the
   # db type twice, which is time consuming, each check takes 3100ms.
   if(is.null(pass_db_check)) {
-    if(checkDb(bag_path) != "BAG") {
-      stop(bag_path, " Does not seem to be an BAG database.")
+    if(checkDb(bag) != "BAG") {
+      stop(bag, " Does not seem to be an BAG database.")
     }
   }
 
   # Try to use ELAPSE from the parent-env, doesn't exist then.
-  if(missing(elapse_path) && !exists("elapse")) {
+  if(missing(elapse) && !exists("elapse")) {
     elapse <- loadElapse()
   }
   # when given a path for ELAPSE always use it.
-  if(!missing(elapse_path)) {
-    elapse <- loadElapse(elapse_path)
+  if(!missing(elapse)) {
+    elapse <- loadElapse(elapse)
   }
 
   postcodes <- formatPc6(postcodes)
@@ -139,7 +138,7 @@ pollutionFromBag <- function(postcodes, bag_path, elapse_path, ...) {
   # location and postcode. The R statements below builds the query.
   postcodes_query <- paste0("('", paste(postcodes, collapse = "','"), "')")
 
-  postcode_geo <- sf::st_read(bag_path, quiet = TRUE,
+  postcode_geo <- sf::st_read(bag, quiet = TRUE,
                               query = paste0("SELECT geom, postcode FROM verblijfsobject WHERE postcode IN ",
                                              postcodes_query))
 
@@ -158,7 +157,12 @@ pollutionFromBag <- function(postcodes, bag_path, elapse_path, ...) {
   return(postcode_pollution)
 }
 
-#' Get air pollution data for a postcode with Postcode6 database.
+#' Estimate air pollution concentrations in a postcode with PC6 database.
+#'
+#' @description
+#' [Postcode6(PC6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
+#' by the CBS, contains the geographic region of every postcode in the Netherlands.
+#' `pollutionFromPc6()`
 #'
 #' @param postcodes string or vector of strings Containing PC6 postcodes.
 #' @param pc6_path string Path to the Postcode6 database.
