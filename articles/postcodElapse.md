@@ -130,35 +130,9 @@ head(estimates, 5)
 #> 5      16.56795
 ```
 
-Even tough I used PC6 the output is the same as BAG. If you want to test
-with more postcodes the file `postcodes1000.rda` is also present in
-extdata.
+Even tough I used PC6 the output will be structured the same. If you
+want to test with more postcodes the file `postcodes1000.rda` is also
+present in extdata.
 
-## Spacial plotting
-
-The data postcodElapse handles inherently has an spacial component so
-plotting the data is of interest in some cases. There is one problem
-tough base R plotting doesn’t handle spacial data well. I recommend you
-install the `tidyverse` and `tidyterra` packages, this equips us with
-ggplot2 and tidyterra enhances ggplot2 with spacial plotting.
-
-### ELAPSE
-
-Remember I said terra models air pollution concentration across Europe,
-well lets plot the internal one and took at the structure. See below.
-
-``` r
-
-# Remember to install these!
-library(tidyverse)
-library(tidyterra)
-
-elapse <- loadElapse()
-
-ggplot() +
-  geom_spatraster(data = elapse) +
-  facet_wrap(~ lyr)
-#> <SpatRaster> resampled to 500490 cells.
-```
-
-![](postcodElapse_files/figure-html/plotting%20ELAPSE-1.png)
+With this you know how to use postcodElapse, if you wish to plot spacial
+check the articles section.
