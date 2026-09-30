@@ -84,16 +84,15 @@ by CBS mapping postcodes to geographic areas.</li>
 Adressen en Gebouwen(BAG)</a> containing the postcode and geo-location
 for every building in the Netherlands.</li>
 </ol>
-<p>Enshure you downloat at-least one of threse.</p>
+<p>Ensure you download at-least one of these.</p>
 </div>
 <div class="section level2">
 <h2 id="effects-of-low-level-air-pollution-a-study-in-europe">Effects of Low-Level Air Pollution: A Study in Europe<a class="anchor" aria-label="anchor" href="#effects-of-low-level-air-pollution-a-study-in-europe"></a>
 </h2>
-<p>Or just ELAPSE is a Land Use Regression model. Estimating
-concentration of PM<sub>2.6</sub>, BC, NO<sub>2</sub> &amp;
-O<sub>3</sub> air pollutants, across Europe at 100x100meter resolution.
-ELAPSE was published by <a href="https://orcid.org/0000-0001-5974-2007" class="external-link">Kees de Hoogh</a> whom
-allowed it’s use in postcodElapse. The model itself is stored as an Tiff
+<p>ELAPSE is a Land Use Regression model. Estimating concentration of
+PM<sub>2.6</sub>, BC, NO<sub>2</sub> &amp; O<sub>3</sub> air pollutants,
+across Europe at 100x100meter resolution. Published by <a href="https://orcid.org/0000-0001-5974-2007" class="external-link">Kees de Hoogh</a> whom
+allowed it’s use in postcodElapse. The model itself is stored as an tiff
 grey-scale image with multiple layers:</p>
 <ul>
 <li>BCFULL</li>
@@ -104,23 +103,24 @@ grey-scale image with multiple layers:</p>
 <li>PM25FULLt</li>
 </ul>
 <p>ELAPSE contains three layers for O<sub>3</sub> due to it’s prescience
-in the atmosphere being affected by the seasons. Typically in warmer(w)
-climate O<sub>3</sub> concentration tend higher. In the layer names
+in the atmosphere being affected by the seasons. In an warmer climate
+O<sub>3</sub> concentration tends to be higher. In the layer names
 <em>w</em> is warm, <em>c</em> is cold and <em>a</em> is the
 average.</p>
-<p>The concentrations stored in ELAPSE all use the unit:
+<p>ELAPSE measures all air pollutant concentrations in:
 µg/m<sup>3</sup>.</p>
 </div>
 <div class="section level2">
 <h2 id="postcodelapse">postcodElapse<a class="anchor" aria-label="anchor" href="#postcodelapse"></a>
 </h2>
-<p>Now you have an idea of what postcodElapse does lets get some
-pollution estimates. For this demo I will assume you have downloaded
-both postcode database and postcodElapse itself.</p>
+<p>Now you have an idea of what postcodElapse does under the hood, lets
+generate some pollution estimates. For this demo I assume you have
+downloaded both postcode databases and postcodElapse itself.</p>
 <p>The main function is <code><a href="../reference/postcodElapse.html">postcodElapse()</a></code> pass a postcode and
-database and it return pollution estimates. Ill be using BAG and the
-postcode of UMCG Gronningen. See the code below, yes it is that simple.
-It does take a minute, before you get your data.</p>
+database, and it returns air pollution estimates for that postcode. Ill
+be using BAG and the postcode of UMCG Gronningen. See the code below,
+yes I made it simple. It does take a minute, before you get your
+data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">postcodElapse</span><span class="op">)</span></span>
 <span></span>
@@ -135,9 +135,9 @@ It does take a minute, before you get your data.</p>
 <span><span class="co">#&gt;   PM25FULLt_max</span></span>
 <span><span class="co">#&gt; 1       15.4238</span></span></code></pre></div>
 <p>Oke the function tells you what it thinks the database is. It only
-recognizes BAG or PC6, you can manually override the guessing by passing
-a databases acronym in the <em>database_type</em> argument.</p>
-<p>The pollution estimates are output as a data.frame. In the columns
+recognizes BAG or PC6, you can override the guessing by passing a
+databases acronym in the <em>database_type</em> argument.</p>
+<p>The pollution estimates are output as a data frame. In the columns
 all layers of ELAPSE have been split across an average(avg),
 minimum(min) and maximum(max) pollution concentration, each row contains
 a single postcode. The <em>n</em> column is the amount of buildings
@@ -150,13 +150,13 @@ them.</p>
 <span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/postcode100.rda"</span>, package <span class="op">=</span> <span class="st">"postcodElapse"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Its an 100 postcodes common between BAG &amp; PC6.</span></span>
+<span><span class="co"># the data contains 100 samples postcodes common between BAG &amp; PC6</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">postcode100</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 100</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">postcode100</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "2694BH" "9686NH" "2514LX" "6835MH" "9717LD" "3723EK"</span></span>
 <span></span>
-<span><span class="va">estimates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/postcodElapse.html">postcodElapse</a></span><span class="op">(</span><span class="va">postcode100</span>, <span class="st">"../../data/cbs_pc6_2024.gpkg"</span><span class="op">)</span> <span class="co">#Here I use PC6</span></span>
+<span><span class="va">estimates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/postcodElapse.html">postcodElapse</a></span><span class="op">(</span><span class="va">postcode100</span>, <span class="st">"../../data/cbs_pc6_2024.gpkg"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Guessed db type to be: PC6</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">estimates</span>, <span class="fl">5</span><span class="op">)</span></span>
@@ -187,8 +187,8 @@ them.</p>
 <p>Even tough I used PC6 the output will be structured the same. If you
 want to test with more postcodes the file <code>postcodes1000.rda</code>
 is also present in extdata.</p>
-<p>With this you know how to use postcodElapse, if you wish to plot
-spacial check the articles section.</p>
+<p>With this you know how to use postcodElapse, if you wish to learn
+more check the articles.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

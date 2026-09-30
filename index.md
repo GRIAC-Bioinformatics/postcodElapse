@@ -1,13 +1,5 @@
 # postcodElapse
 
-# UNDER CONSTRUCTION
-
-I am still working on the docs, the Quick start is complete so feel free
-to read. You can also view all the other docs but those **will** miss
-content.
-
-Here be dragons(and bugs)
-
 Estimate PM_(2.5), BC, NO₂ and O₃ concentrations for Dutch postal codes.
 Trough the [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model
 in addition with a postcode database containing the geographic location

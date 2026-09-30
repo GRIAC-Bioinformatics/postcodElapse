@@ -21,15 +21,15 @@ support two geopackages:
     containing the postcode and geo-location for every building in the
     Netherlands.
 
-Enshure you downloat at-least one of threse.
+Ensure you download at-least one of these.
 
 ## Effects of Low-Level Air Pollution: A Study in Europe
 
-Or just ELAPSE is a Land Use Regression model. Estimating concentration
-of PM_(2.6), BC, NO₂ & O₃ air pollutants, across Europe at 100x100meter
-resolution. ELAPSE was published by [Kees de
+ELAPSE is a Land Use Regression model. Estimating concentration of
+PM_(2.6), BC, NO₂ & O₃ air pollutants, across Europe at 100x100meter
+resolution. Published by [Kees de
 Hoogh](https://orcid.org/0000-0001-5974-2007) whom allowed it’s use in
-postcodElapse. The model itself is stored as an Tiff grey-scale image
+postcodElapse. The model itself is stored as an tiff grey-scale image
 with multiple layers:
 
 - BCFULL
@@ -40,23 +40,24 @@ with multiple layers:
 - PM25FULLt
 
 ELAPSE contains three layers for O₃ due to it’s prescience in the
-atmosphere being affected by the seasons. Typically in warmer(w) climate
-O₃ concentration tend higher. In the layer names *w* is warm, *c* is
+atmosphere being affected by the seasons. In an warmer climate O₃
+concentration tends to be higher. In the layer names *w* is warm, *c* is
 cold and *a* is the average.
 
-The concentrations stored in ELAPSE all use the unit: µg/m³.
+ELAPSE measures all air pollutant concentrations in: µg/m³.
 
 ## postcodElapse
 
-Now you have an idea of what postcodElapse does lets get some pollution
-estimates. For this demo I will assume you have downloaded both postcode
-database and postcodElapse itself.
+Now you have an idea of what postcodElapse does under the hood, lets
+generate some pollution estimates. For this demo I assume you have
+downloaded both postcode databases and postcodElapse itself.
 
 The main function is
 [`postcodElapse()`](https://griac-bioinformatics.github.io/postcodElapse/reference/postcodElapse.md)
-pass a postcode and database and it return pollution estimates. Ill be
-using BAG and the postcode of UMCG Gronningen. See the code below, yes
-it is that simple. It does take a minute, before you get your data.
+pass a postcode and database, and it returns air pollution estimates for
+that postcode. Ill be using BAG and the postcode of UMCG Gronningen. See
+the code below, yes I made it simple. It does take a minute, before you
+get your data.
 
 ``` r
 
@@ -75,10 +76,10 @@ postcodElapse("9713AV", "../../data/bag-light.gpkg")
 ```
 
 Oke the function tells you what it thinks the database is. It only
-recognizes BAG or PC6, you can manually override the guessing by passing
-a databases acronym in the *database_type* argument.
+recognizes BAG or PC6, you can override the guessing by passing a
+databases acronym in the *database_type* argument.
 
-The pollution estimates are output as a data.frame. In the columns all
+The pollution estimates are output as a data frame. In the columns all
 layers of ELAPSE have been split across an average(avg), minimum(min)
 and maximum(max) pollution concentration, each row contains a single
 postcode. The *n* column is the amount of buildings found in that
@@ -94,13 +95,13 @@ them.
 path <- system.file("extdata/postcode100.rda", package = "postcodElapse")
 load(path)
 
-# Its an 100 postcodes common between BAG & PC6.
+# the data contains 100 samples postcodes common between BAG & PC6
 length(postcode100)
 #> [1] 100
 head(postcode100)
 #> [1] "2694BH" "9686NH" "2514LX" "6835MH" "9717LD" "3723EK"
 
-estimates <- postcodElapse(postcode100, "../../data/cbs_pc6_2024.gpkg") #Here I use PC6
+estimates <- postcodElapse(postcode100, "../../data/cbs_pc6_2024.gpkg")
 #> Guessed db type to be: PC6
 
 head(estimates, 5)
@@ -134,5 +135,5 @@ Even tough I used PC6 the output will be structured the same. If you
 want to test with more postcodes the file `postcodes1000.rda` is also
 present in extdata.
 
-With this you know how to use postcodElapse, if you wish to plot spacial
-check the articles section.
+With this you know how to use postcodElapse, if you wish to learn more
+check the articles.

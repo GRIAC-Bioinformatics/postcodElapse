@@ -5,7 +5,11 @@
 library(postcodElapse)
 ```
 
-## Spacial plotting
+## :construction: UNDER CONSTRUCTION :construction:
+
+This article is incomplete!
+
+### Spacial plotting
 
 The data postcodElapse handles inherently has an spacial component so
 plotting the data is of interest in some cases. There is one problem
@@ -13,7 +17,7 @@ tough base R plotting doesn’t handle spacial data well. I recommend you
 install the `tidyverse` and `tidyterra` packages, this equips us with
 ggplot2 and tidyterra enhances ggplot2 with spacial plotting.
 
-### ELAPSE
+#### ELAPSE
 
 Remember I said terra models air pollution concentration across Europe,
 well lets plot the internal one and took at the structure. See below.
