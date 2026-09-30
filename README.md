@@ -3,13 +3,6 @@
 <!-- badges: start -->
 
 <!-- badges: end -->
-
-# UNDER CONSTRUCTION
-I am still working on the docs, the Quick start is complete so feel free to read.
-You can also view all the other docs but those **will** miss content. 
-
-Here be dragons(and bugs)
-
 Estimate PM<sub>2.5</sub>, BC, NO<sub>2</sub> and O<sub>3</sub> concentrations
 for Dutch postal codes. Trough
 the [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model in addition with
@@ -26,7 +19,7 @@ correctly installed for you OS. See [their guide](https://rspatial.github.io/ter
 
 ### Postcode database
 
-postcodElapse **requires** an extra database containing the location of Dutch postcodes.
+postcodElapse **requires** an extra database containing the location of Dutch postcodes. 
 Two are supported, download at-least one:
 
 - [Basisregistratie Adressen en Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml)(BAG) 
