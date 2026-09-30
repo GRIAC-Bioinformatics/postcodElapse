@@ -6,7 +6,7 @@
 
 Estimate PM<sub>2.5</sub>, BC, NO<sub>2</sub> and O<sub>3</sub> concentrations
 for Dutch postal codes. Trough
-the[ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model in addition with
+the [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model in addition with
 a postcode database containing the geographic location of every postcode in the
 Netherlands. My thanks go to [Kees de
 Hoogh](https://orcid.org/0000-0001-5974-2007) for developing & allowing the use
