@@ -4,7 +4,7 @@
 \alias{pollutionFromBag}
 \title{Estimate air pollution concentrations in a postcode with BAG database.}
 \usage{
-pollutionFromBag(postcodes, bag, elapse, ...)
+pollutionFromBag(postcodes, bag_path, elapse_path, ...)
 }
 \arguments{
 \item{postcodes}{string or vector of strings Containing Duch postcodes.}

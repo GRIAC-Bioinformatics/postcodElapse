@@ -4,19 +4,19 @@
 \alias{postcodElapse}
 \title{Estimate air pollutant concentraions for a given Dutch postcode.}
 \usage{
-postcodElapse(postcodes, database, type = "GUESS", elapse_path)
+postcodElapse(postcodes, database_path, database_type = "GUESS", elapse_path)
 }
 \arguments{
 \item{postcodes}{String containing Dutch postcode (1234AB) can also be a vector.}
+
+\item{elapse_path}{When empty ELAPSE stored in extdata is used. Otherwise use
+the one provided.}
 
 \item{database}{Path to the postcode database, see Postcode database below.}
 
 \item{type}{Type of the postcode database, defaults to "GUESS" where postcodElapse
 fills type in as "BAG" for Basisregistratie Adressen en Gebouwen or
 "PC6" for Postcode6.}
-
-\item{elapse_path}{When empty ELAPSE stored in extdata is used. Otherwise use
-the one provided.}
 }
 \description{
 Estimates air pollutant concentration for given Dutch postcodes. Using ELAPSE

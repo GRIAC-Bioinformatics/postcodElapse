@@ -30,29 +30,29 @@
 #' postcodElapse(c("8 9 3 3 DV", "9 713 Gz", "1071 xx"), "cbs_pc6_2024.gpkg")
 #' }
 #' @export
-postcodElapse <- function(postcodes, database, type = "GUESS", elapse_path) {
-  if(missing(database)) {
+postcodElapse <- function(postcodes, database_path, database_type = "GUESS", elapse_path) {
+  if(missing(database_path)) {
     stop("Extra postcode database required, see ?postcodElapse on downloading.")
   }
-  if(!file.exists(database)) {
-    stop(database, " does not exist.")
+  if(!file.exists(database_path)) {
+    stop(database_path, " does not exist.")
   }
-  if(!tools::file_ext(database) == "gpkg") {
-    stop(database, " Is not an gpkg file.")
+  if(!tools::file_ext(database_path) == "gpkg") {
+    stop(database_path, " Is not an gpkg file.")
   }
 
   elapse <- loadElapse(elapse_path)
 
   # Check the type of the database given by the user, so we know how to extract
   # the data. And whine about it when we cannot identify the db.
-  if(type == "GUESS") {
-    type <- checkDb(database)
+  if(database_type == "GUESS") {
+    database_type <- checkDb(database_path)
   }
 
-  type <- toupper(type)
-  if(type == "BAG") {
+  database_type <- toupper(database_type)
+  if(database_type == "BAG") {
     postcode_pollution <- pollutionFromBag(postcodes,
-                                           bag_path = database,
+                                           bag_path = database_path,
                                            elapse_path,
                                            pass_db_check = TRUE)
 
@@ -75,15 +75,15 @@ postcodElapse <- function(postcodes, database, type = "GUESS", elapse_path) {
               count_given_postcodes, ".")
     }
 
-  } else if(type == "PC6") {
+  } else if(database_type == "PC6") {
     # Due to PC6 containing areas the statistics happen in pollutionFromPc6()
     # Just need to remove the unwanted geometry.
     postcode_pollution_stats <- sf::st_drop_geometry(
-      pollutionFromPc6(postcodes,pc6_path = database, elapse_path,
+      pollutionFromPc6(postcodes,pc6_path = database_path, elapse_path,
                        pass_db_check = TRUE))
 
   } else {
-    stop("Nonsense db_type: ", type) # In case something goes wrong
+    stop("Nonsense db_type: ", database_type) # In case something goes wrong
   }
   rm(elapse) # Unload to prevent null-pointer errors.
   return(postcode_pollution_stats)
@@ -126,24 +126,24 @@ postcodElapse <- function(postcodes, database, type = "GUESS", elapse_path) {
 #' }
 #'
 #' @export
-pollutionFromBag <- function(postcodes, bag, elapse, ...) {
+pollutionFromBag <- function(postcodes, bag_path, elapse_path, ...) {
   pass_db_check <- list(...)$pass_db_check # grab optional parameter
 
   # if pass_db_check set assume that the parent did it's homework and checked the
   # database, otherwise we have to check ourselves. This is so we don't check the
   # db type twice, which is time consuming, each check takes 3100ms.
   if(is.null(pass_db_check)) {
-    if(checkDb(bag) != "BAG") {
-      stop(bag, " Does not seem to be an BAG database.")
+    if(checkDb(bag_path) != "BAG") {
+      stop(bag_path, " Does not seem to be an BAG database.")
     }
   }
 
   # Try to use ELAPSE from the parent-env, doesn't exist then.
-  if(missing(elapse) && !exists("elapse")) {
+  if(missing(elapse_path) && !exists("elapse")) {
     elapse <- loadElapse()
   }
   # when given a path for ELAPSE always use it.
-  if(!missing(elapse)) {
+  if(!missing(elapse_path)) {
     elapse <- loadElapse(elapse)
   }
 
@@ -157,7 +157,7 @@ pollutionFromBag <- function(postcodes, bag, elapse, ...) {
   # location and postcode. The R statements below builds the query.
   postcodes_query <- paste0("('", paste(postcodes, collapse = "','"), "')")
 
-  postcode_geo <- sf::st_read(bag, quiet = TRUE,
+  postcode_geo <- sf::st_read(bag_path, quiet = TRUE,
                               query = paste0("SELECT geom, postcode FROM verblijfsobject WHERE postcode IN ",
                                              postcodes_query))
 
