@@ -12,7 +12,7 @@ including the geo-location.
 ## Usage
 
 ``` r
-pollutionFromBag(postcodes, bag, elapse, ...)
+pollutionFromBag(postcodes, bag_path, elapse_path, ...)
 ```
 
 ## Arguments

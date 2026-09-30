@@ -13,7 +13,7 @@ set to "PC6" or "BAG".
 ## Usage
 
 ``` r
-postcodElapse(postcodes, database, type = "GUESS", elapse_path)
+postcodElapse(postcodes, database_path, database_type = "GUESS", elapse_path)
 ```
 
 ## Arguments
@@ -21,6 +21,11 @@ postcodElapse(postcodes, database, type = "GUESS", elapse_path)
 - postcodes:
 
   String containing Dutch postcode (1234AB) can also be a vector.
+
+- elapse_path:
+
+  When empty ELAPSE stored in extdata is used. Otherwise use the one
+  provided.
 
 - database:
 
@@ -31,11 +36,6 @@ postcodElapse(postcodes, database, type = "GUESS", elapse_path)
   Type of the postcode database, defaults to "GUESS" where postcodElapse
   fills type in as "BAG" for Basisregistratie Adressen en Gebouwen or
   "PC6" for Postcode6.
-
-- elapse_path:
-
-  When empty ELAPSE stored in extdata is used. Otherwise use the one
-  provided.
 
 ## Examples
 
