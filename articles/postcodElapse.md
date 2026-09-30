@@ -1,0 +1,56 @@
+# postcodElapse - Usage guide
+
+The goal of postcodElapse is to estimate air pollutant (PM_(2.6), BC,
+NO₂ & O₃) concentration for Dutch postal codes. As a alternative to at
+location measurements. This is achieved trough getting geo-location data
+from one of two postcode databases. And mapping those locations to
+ELAPSE an air quality model for Europe. Estimating postcode-level air
+quality.
+
+## Postcode databases
+
+As said the geographic location or area is **required** to estimate air
+pollutant concentration. This data is expected as geopackage (.gpkg)
+databases which specialize in storing spacial data. postcodElapse
+support two geopackages:
+
+1.  [Postcode6](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
+    by CBS mapping postcodes to geographic areas.
+2.  Kadaster’s [Basisregistratie Adressen en
+    Gebouwen(BAG)](https://service.pdok.nl/lv/bag/atom/bag.xml)
+    containing the postcode and geo-location for every building in the
+    Netherlands.
+
+Enshure you downloat at-least one of threse.
+
+## Effects of Low-Level Air Pollution: A Study in Europe
+
+Or just ELAPSE is a Land Use Regression model. Estimating concentration
+of PM_(2.6), BC, NO₂ & O₃ air pollutants, across Europe at 100x100meter
+resolution. ELAPSE was published by [Kees de
+Hoogh](https://orcid.org/0000-0001-5974-2007) whom allowed it’s use in
+postcodElapse. The model itself is stored as an Tiff grey-scale image
+with multiple layers:
+
+- BCFULL
+- NO2FULL
+- O3FULLa
+- O3FULLc
+- O3FULLw
+- PM25FULLt
+
+ELAPSE contains three layers for O₃ due to it’s prescience in the
+atmosphere being affected by the seasons. Typically in warmer(w) climate
+O₃ concentration tend higher. In the layer names *w* is warm, *c* is
+cold and *a* is the average.
+
+The concentrations stored in ELAPSE all use the unit: µg/m³.
+
+## postcodElapse
+
+Once you have
+
+``` r
+
+library(postcodElapse)
+```

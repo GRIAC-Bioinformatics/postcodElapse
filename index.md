@@ -1,5 +1,13 @@
 # postcodElapse
 
+# UNDER CONSTRUCTION
+
+I am still working on the docs, the Quick start is complete so feel free
+to read. You can also view all the other docs but those **will** miss
+content.
+
+Here be dragons(and bugs)
+
 Estimate PM_(2.5), BC, NO₂ and O₃ concentrations for Dutch postal codes.
 Trough the [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model
 in addition with a postcode database containing the geographic location
@@ -47,8 +55,9 @@ postcodElapse release. Press “Install”, and youre done.
 ## Examples
 
 The example below shows how to get air pollution estimates using the
-[`postcodElapse()`](reference/postcodElapse.md) function, using the BAG
-database. The same command works for PC6 just change the path.
+[`postcodElapse()`](https://griac-bioinformatics.github.io/postcodElapse/reference/postcodElapse.md)
+function, using the BAG database. The same command works for PC6 just
+change the path.
 
 ``` r
 library(postcodelapse)
@@ -100,7 +109,8 @@ Both postcodes are public locations!
 
 Remove the currently loaded ELAPSE variable from your environment with
 [`rm()`](https://rdrr.io/r/base/rm.html). And run
-[`loadElapse()`](reference/loadElapse.md) again.
+[`loadElapse()`](https://griac-bioinformatics.github.io/postcodElapse/reference/loadElapse.md)
+again.
 
 ELAPSE is loaded as an spatraster which contains a reference to the
 files containing the actual data. This reference also called an pointer
@@ -113,4 +123,5 @@ of spatrasters in your .Rdata and or at the end off your scripts run
 
 I recommend you use the [tidyverse](https://tidyverse.org/) &
 [tidyterra](https://dieghernan.github.io/tidyterra/) packages. See
-`vignette("postcodElapse")` for more info on plotting.
+[`vignette("postcodElapse")`](https://griac-bioinformatics.github.io/postcodElapse/articles/postcodElapse.md)
+for more info on plotting.

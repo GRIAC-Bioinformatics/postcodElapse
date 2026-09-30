@@ -1,8 +1,9 @@
 # ggplot annotation that draws an rect around a given spacial feature. Combine with `coord_zoomFeature()` for pretty insetting.
 
 ggplot annotation that draws an rect around a given spacial feature.
-Combine with [`coord_zoomFeature()`](coord_zoomFeature.md) for pretty
-insetting.
+Combine with
+[`coord_zoomFeature()`](https://griac-bioinformatics.github.io/postcodElapse/reference/coord_zoomFeature.md)
+for pretty insetting.
 
 ## Usage
 
