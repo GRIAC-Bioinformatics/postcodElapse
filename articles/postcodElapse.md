@@ -84,8 +84,9 @@ and maximum(max) pollution concentration, each row contains a single
 postcode. The *n* column is the amount of buildings found in that
 postcode.
 
-Now lets do an 100 postcodes which are included in the package. See the
-code below to load them.
+Now lets run trough an 100 postcodes with PC6. You don’t have to make up
+postcodes they are included as demo data. See the code below to load
+them.
 
 ``` r
 
@@ -132,3 +133,48 @@ head(estimates, 5)
 Even tough I used PC6 the output is the same as BAG. If you want to test
 with more postcodes the file `postcodes1000.rda` is also present in
 extdata.
+
+## Spacial plotting
+
+The data postcodElapse handles inherently has an spacial component so
+plotting the data is of interest in some cases. There is one problem
+tough base R plotting doesn’t handle spacial data well. I recommend you
+install the `tidyverse` and `tidyterra` packages, this equips us with
+ggplot2 and tidyterra enhances ggplot2 with spacial plotting.
+
+### ELAPSE
+
+Remember I said terra models air pollution concentration across Europe,
+well lets plot the internal one and took at the structure. See below.
+
+``` r
+
+# Remember to install these!
+library(tidyverse, quietly = TRUE)
+#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+#> ✔ dplyr     1.2.1     ✔ readr     2.2.0
+#> ✔ forcats   1.0.1     ✔ stringr   1.6.0
+#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+#> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+#> ✔ purrr     1.2.2     
+#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+#> ✖ dplyr::filter() masks stats::filter()
+#> ✖ dplyr::lag()    masks stats::lag()
+#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+library(tidyterra, quietly = TRUE)
+#> 
+#> Attaching package: 'tidyterra'
+#> 
+#> The following object is masked from 'package:stats':
+#> 
+#>     filter
+
+elapse <- loadElapse()
+
+ggplot() +
+  geom_spatraster(data = elapse) +
+  facet_wrap(~ lyr)
+#> <SpatRaster> resampled to 500490 cells.
+```
+
+![](postcodElapse_files/figure-html/plotting%20ELAPSE-1.png)

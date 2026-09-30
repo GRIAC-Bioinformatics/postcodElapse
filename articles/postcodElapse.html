@@ -60,7 +60,7 @@
             
       
 
-      <div class="d-none name"><code>postcodElapse.Rmd</code></div>
+      <div class="d-none name"><code>postcodElapse.rmd</code></div>
     </div>
 
     
@@ -144,8 +144,9 @@ all layers of ELAPSE have been split across an average(avg),
 minimum(min) and maximum(max) pollution concentration, each row contains
 a single postcode. The <em>n</em> column is the amount of buildings
 found in that postcode.</p>
-<p>Now lets do an 100 postcodes which are included in the package. See
-the code below to load them.</p>
+<p>Now lets run trough an 100 postcodes with PC6. You don’t have to make
+up postcodes they are included as demo data. See the code below to load
+them.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># The demo data is stored in extdata/postcod100.rda</span></span>
 <span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/postcode100.rda"</span>, package <span class="op">=</span> <span class="st">"postcodElapse"</span><span class="op">)</span></span>
@@ -188,6 +189,51 @@ the code below to load them.</p>
 <p>Even tough I used PC6 the output is the same as BAG. If you want to
 test with more postcodes the file <code>postcodes1000.rda</code> is also
 present in extdata.</p>
+</div>
+<div class="section level2">
+<h2 id="spacial-plotting">Spacial plotting<a class="anchor" aria-label="anchor" href="#spacial-plotting"></a>
+</h2>
+<p>The data postcodElapse handles inherently has an spacial component so
+plotting the data is of interest in some cases. There is one problem
+tough base R plotting doesn’t handle spacial data well. I recommend you
+install the <code>tidyverse</code> and <code>tidyterra</code> packages,
+this equips us with ggplot2 and tidyterra enhances ggplot2 with spacial
+plotting.</p>
+<div class="section level3">
+<h3 id="elapse">ELAPSE<a class="anchor" aria-label="anchor" href="#elapse"></a>
+</h3>
+<p>Remember I said terra models air pollution concentration across
+Europe, well lets plot the internal one and took at the structure. See
+below.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Remember to install these!</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Attaching core tidyverse packages</span> ──────────────────────── tidyverse 2.0.0 ──</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr    </span> 1.2.1     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr    </span> 2.2.0</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats  </span> 1.0.1     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr  </span> 1.6.0</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2  </span> 4.0.3     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble   </span> 3.3.1</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">lubridate</span> 1.9.5     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr    </span> 1.3.2</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr    </span> 1.2.2     </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span> masks <span style="color: #0000BB;">stats</span>::filter()</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>    masks <span style="color: #0000BB;">stats</span>::lag()</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use the conflicted package (<span style="color: #0000BB; font-style: italic;">&lt;http://conflicted.r-lib.org/&gt;</span>) to force all conflicts to become errors</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dieghernan.github.io/tidyterra/" class="external-link">tidyterra</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'tidyterra'</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter</span></span>
+<span></span>
+<span><span class="va">elapse</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadElapse.html">loadElapse</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elapse</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">lyr</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SpatRaster&gt;</span> resampled to <span style="color: #0000BB;">500490</span> cells.</span></span></code></pre></div>
+<p><img src="postcodElapse_files/figure-html/plotting%20ELAPSE-1.png" class="r-plt" alt="" width="700"></p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
