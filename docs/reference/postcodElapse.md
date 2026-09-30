@@ -1,48 +1,54 @@
-# Get the air pollution data for a given postcode.
+# Estimate air pollutant concentraions for a given Dutch postcode.
 
-Get the air pollution data for a given postcode.
+Estimates air pollutant concentration for given Dutch postcodes. Using
+ELAPSE (included) and a postcode database (not-included). Two postcode
+databases formatted as Geopackage (.gpkg) are supported
+[Postcode6(PC6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
+and [Basisregistratie Adressen en
+Gebouwen(BAG)](https://service.pdok.nl/lv/bag/atom/bag.xml) download one
+of these and point the `database ` argument to it's location.
+PostcodElapse automatically guesses the `type` argument, which you can
+set to "PC6" or "BAG".
 
 ## Usage
 
 ``` r
-postcodElapse(postcodes, db_path, db_type, elapse_path)
+postcodElapse(postcodes, database, type = "GUESS", elapse_path)
 ```
 
 ## Arguments
 
 - postcodes:
 
-  string or vector of strings Containing PC6 postcodes i.e. '1234AB'.
+  String containing Dutch postcode (1234AB) can also be a vector.
 
-- db_path:
+- database:
 
-  string Path to database containing postcode data.
+  Path to the postcode database, see Postcode database below.
 
-- db_type:
+- type:
 
-  *optional* string Type of the database, BAG or PC6.
+  Type of the postcode database, defaults to "GUESS" where postcodElapse
+  fills type in as "BAG" for Basisregistratie Adressen en Gebouwen or
+  "PC6" for Postcode6.
 
 - elapse_path:
 
-  *optional* string Path to ELAPSE expected as single tiff image.
+  When empty ELAPSE stored in extdata is used. Otherwise use the one
+  provided.
 
-## Value
+## Examples
 
-data.frame Containing air pollution statistics for the given
-`postcodes`.
+``` r
+if (FALSE) { # \dontrun{
+# Estimate air pollution for postcode "8933DV" with Postcode6.
+postcodElapse("8933DV", "cbs_pc6_2024.gpkg")
 
-## BAG
+# Estimate air pollution for multiple postcodes with BAG.
+postcodElapse(c("8933DV", "9713 GZ", "1071XX"), "bag-light.gpkg")
 
-Basisregistratie Adressen en Gebouwen (BAG) is a database published by
-kadaster containing the geolocation and postcode of all buildings in the
-Netherlands. Used to acquire geolocation so air pollution data can be
-extracted from ELAPSE. Download via [this
-link](https://service.pdok.nl/lv/bag/atom/bag.xml), note it's 8gigabyte.
-
-## PC6
-
-Postcode6 is a database published by CBS containing the geographic area
-and statistics on all postcodes in the Netherlands. Again used to
-acquire geolocations so air pollution data can be extracted from ELAPSE.
-Download via [this
-link](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
+# Note postcodes are valid a long as they are four numbers followed by two letters.
+# In addition any spaces will be removed and non-capital letters will be capitalized.
+postcodElapse(c("8 9 3 3 DV", "9 713 Gz", "1071 xx"), "cbs_pc6_2024.gpkg")
+} # }
+```

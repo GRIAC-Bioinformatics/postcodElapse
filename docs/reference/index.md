@@ -18,11 +18,11 @@
 - [`loadElapse()`](loadElapse.md) : Loads ELAPSE from the given path or
   from extdata.
 
-- [`pollutionFromBag()`](pollutionFromBag.md) : Get air pollution data
-  for a postcode with BAG database.
+- [`pollutionFromBag()`](pollutionFromBag.md) : Estimate air pollution
+  concentrations in a postcode with BAG database.
 
-- [`pollutionFromPc6()`](pollutionFromPc6.md) : Get air pollution data
-  for a postcode with Postcode6 database.
+- [`pollutionFromPc6()`](pollutionFromPc6.md) : Estimate air pollution
+  concentrations in a postcode with PC6 database.
 
-- [`postcodElapse()`](postcodElapse.md) : Get the air pollution data for
-  a given postcode.
+- [`postcodElapse()`](postcodElapse.md) : Estimate air pollutant
+  concentraions for a given Dutch postcode.

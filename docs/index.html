@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="index.html">postcodElapse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9750</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9770</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,69 +64,71 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>postcodElapse provides air pollution estimates for the Netherlands from Duch postal codes. It does this by querying a given postcodes geolocation from public databases. Subsequently this postition imformation is used to extract air pollution estimates from the Effects of Low-Level Air Pollution: A Study in Europe (ELAPSE) model.</p>
-<!-- [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) was published by
-[Kees de Hoogh](https://orcid.org/0000-0001-5974-2007)
-who has my gratitude for agreeing with it's use in postcodElapse. -->
+<p>Estimate PM<sub>2.5</sub>, BC, NO<sub>2</sub> and O<sub>3</sub> concentrations for Dutch postal codes. Trough the<a href="https://doi.org/10.1016/j.envint.2018.07.036" class="external-link">ELAPSE</a> model in addition with a postcode database containing the geographic location of every postcode in the Netherlands. My thanks go to <a href="https://orcid.org/0000-0001-5974-2007" class="external-link">Kees de Hoogh</a> for developing &amp; allowing the use of <a href="https://doi.org/10.1016/j.envint.2018.07.036" class="external-link">ELAPSE</a> in this package.</p>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
 <div class="section level3">
-<h3 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+<h3 id="r-spatial">R-spatial<a class="anchor" aria-label="anchor" href="#r-spatial"></a>
 </h3>
-<div class="section level4">
-<h4 id="r-spatial">R-spatial<a class="anchor" aria-label="anchor" href="#r-spatial"></a>
-</h4>
-<p>postcodElapse requires <a href="https://rspatial.github.io/terra/index.html" class="external-link">terra</a> witch you might have to install beforehand, for Windows and Mac run the command below.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'terra'</span>, repos<span class="op">=</span><span class="st">'https://rspatial.r-universe.dev'</span><span class="op">)</span></span></code></pre></div>
-<p>When R prompts: “Do you want to install from sources…” awnser <strong>no</strong> then it should install the package. If in doubt check the <a href="https://rspatial.github.io/terra/index.html#installation" class="external-link">installation guide</a> of terra.</p>
-</div>
+<p>Ensure you have the <a href="https://rspatial.github.io/terra/index.html" class="external-link">terra</a> R-package correctly installed for you OS. See <a href="https://rspatial.github.io/terra/index.html#installation" class="external-link">their guide</a></p>
 </div>
 <div class="section level3">
-<h3 id="databases">Databases<a class="anchor" aria-label="anchor" href="#databases"></a>
+<h3 id="postcode-database">Postcode database<a class="anchor" aria-label="anchor" href="#postcode-database"></a>
 </h3>
-<p>One of the extra databases below is <strong>required</strong>, chose one or both.</p>
+<p>postcodElapse <strong>requires</strong> an extra database containing the location of Dutch postcodes. Two are supported, download at-least one:</p>
 <ul>
 <li>
-<a href="https://service.pdok.nl/lv/bag/atom/bag.xml" class="external-link">Basisregistratie Adressen en Gebouwen</a>(BAG), Note 8Gigabyte in size.</li>
+<a href="https://service.pdok.nl/lv/bag/atom/bag.xml" class="external-link">Basisregistratie Adressen en Gebouwen</a>(BAG) Note 8Gigabyte in size.</li>
 <li>
 <a href="https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml" class="external-link">Postcode6</a>(PC6) Only 0.5Gigabyte.</li>
 </ul>
-<p>The ELAPSE model is optional it is included in postcodElapse, if you wish use your own that is possible. It is expected as an single tiff image containing multiple layers representing air pollution concentration.</p>
 </div>
 <div class="section level3">
 <h3 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
 </h3>
-<p>To install download the postcodElapse source package onto your device. Run the command below, ensure you are pointing at the file!</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>Download the latest <a href="https://github.com/GRIAC-Bioinformatics/postcodElapse/releases" class="external-link">release</a>of postcodElapse, run the command below pointing at the package install file.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"postcodElapse_0.0.0.9610.tar.gz"</span><span class="op">)</span></span></code></pre></div>
-<p>You can also use the Rstudio packages tab, navigate there press the “Install” button. Change “Install from:” to “Package Archive …”, open the file picker. Navigate to and open the postcodElapse package download. Press “Install”, and youre done.</p>
+<p>If you are using Rstudio you can use the packages tab, nativate there press the “Install” button. Change “Install from:” to “Package Archive …”, open the file picker. Navigate to and open the downloaded postcodElapse release. Press “Install”, and youre done.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <p>The example below shows how to get air pollution estimates using the <code><a href="reference/postcodElapse.html">postcodElapse()</a></code> function, using the BAG database. The same command works for PC6 just change the path.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">postcodelapse</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="reference/postcodElapse.html">postcodElapse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"8917DD"</span>, <span class="st">"9712CP"</span><span class="op">)</span>, <span class="st">"./bag-light.gpkg"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   postcode n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg</span></span>
-<span><span class="co">#&gt; 1   8917DD 5   1.637956    28.14168    60.92046    46.11469    76.49764</span></span>
-<span><span class="co">#&gt; 2   9712CP 8   1.735555    30.59054    62.10056    45.57095    78.96525</span></span>
-<span><span class="co">#&gt;   PM25FULLt_avg BCFULL_min NO2FULL_min O3FULLa_min O3FULLc_min O3FULLw_min</span></span>
-<span><span class="co">#&gt; 1      15.56012   1.587243    26.23440    59.97551    45.97074    75.85178</span></span>
-<span><span class="co">#&gt; 2      14.88488   1.731880    30.42194    61.52977    45.15801    78.12064</span></span>
-<span><span class="co">#&gt;   PM25FULLt_min BCFULL_max NO2FULL_max O3FULLa_max O3FULLc_max O3FULLw_max</span></span>
-<span><span class="co">#&gt; 1      15.34430   1.674501    29.16468    62.22285    46.32064    77.46275</span></span>
-<span><span class="co">#&gt; 2      14.84346   1.736912    30.79544    62.71158    45.99726    79.83811</span></span>
-<span><span class="co">#&gt;   PM25FULLt_max</span></span>
-<span><span class="co">#&gt; 1      15.64734</span></span>
-<span><span class="co">#&gt; 2      15.03059</span></span>
-<span></span>
-<span><span class="co"># Both postcodes are public locations!</span></span></code></pre></div>
-<p>The “n” column contains the amount of buildings in the given postcodes. The rest of the variables are the mean, maximum &amp; minimum air pollutant concentration for all layers in ELAPSE.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(postcodelapse)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">postcodElapse</span>(<span class="fu">c</span>(<span class="st">"8917DD"</span>, <span class="st">"9712CP"</span>), <span class="st">"bag-light.gpkg"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; Guessed db type to be: BAG</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt;   postcode n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 1   8917DD 5   1.637956    28.14168    60.92046    46.11469    76.49764</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 2   9712CP 8   1.735555    30.59054    62.10056    45.57095    78.96525</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt;   PM25FULLt_avg BCFULL_min NO2FULL_min O3FULLa_min O3FULLc_min O3FULLw_min</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 1      15.56012   1.587243    26.23440    59.97551    45.97074    75.85178</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; 2      14.88488   1.731880    30.42194    61.52977    45.15801    78.12064</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;   PM25FULLt_min BCFULL_max NO2FULL_max O3FULLa_max O3FULLc_max O3FULLw_max</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 1      15.34430   1.674501    29.16468    62.22285    46.32064    77.46275</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 2      14.84346   1.736912    30.79544    62.71158    45.99726    79.83811</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;   PM25FULLt_max</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 1      15.64734</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 2      15.03059</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>Both postcodes are public locations<span class="sc">!</span></span></code></pre></div>
+<p>Postcodes must be four numbers two letters, extra spaces are removed and all letters are capitalized. Keep this in mind when joining with other data.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">postcodElapse</span>(<span class="fu">c</span>(<span class="st">"9 7 2 6 A c"</span>, <span class="st">"8934 cj"</span>), <span class="st">"cbs_pc6_2024.gpkg"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; Guessed db type to be: PC6</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt;   postcode  n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg PM25FULLt_avg BCFULL_min</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; 1   8934CJ NA   1.758855    30.12195    59.48217    44.89864    75.59747      15.12021   1.655208</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; 2   9726AC NA   1.842203    34.03876    60.01628    44.65147    77.06836      15.67927   1.816390</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;   NO2FULL_min O3FULLa_min O3FULLc_min O3FULLw_min PM25FULLt_min BCFULL_max NO2FULL_max</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; 1    27.70151    58.78391    44.50707    74.77161      14.65690   1.773019    31.05828</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; 2    33.83566    59.20438    44.58334    76.94397      15.64022   1.887790    35.16822</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt;   O3FULLa_max O3FULLc_max O3FULLw_max PM25FULLt_max</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; 1    60.92498    45.37432    76.52650      15.20761</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; 2    60.04224    44.71480    77.29417      15.89977</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>Both postcodes are public locations<span class="sc">!</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level1">
@@ -150,7 +152,8 @@ who has my gratitude for agreeing with it's use in postcodElapse. -->
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>`use_mit_license()`, `use_gpl3_license()` or friends to pick a license</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small>AGPL (&gt;= 3)</small></li>
 </ul>
 </div>
 

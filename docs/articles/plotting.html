@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">postcodElapse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9750</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9770</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,8 +90,8 @@ can be plotted using <code><a href="https://ggplot2.tidyverse.org/reference/ggpl
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">elapse</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadElapse.html">loadElapse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_spatraster</span><span class="op">(</span>data <span class="op">=</span> <span class="va">elapse</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elapse</span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;SpatRaster&gt; resampled to 500490 cells.</span></span>
 <span><span class="co">#&gt; ! `tidyterra::geom_spatraster()`: Plotting 6 overlapping layers: BCFULL, </span></span>
 <span><span class="co">#&gt;              NO2FULL, O3FULLa, O3FULLc, O3FULLw, and PM25FULLt. Either:</span></span>
@@ -109,10 +109,10 @@ i.e. <code>data = elaspe$NO2FULL</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">elapse</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadElapse.html">loadElapse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_spatraster</span><span class="op">(</span>data <span class="op">=</span> <span class="va">elapse</span><span class="op">)</span> <span class="op">+</span> <span class="co"># Use subset "$" to plot a specific layer.</span></span>
-<span>  <span class="fu">scale_fill_grass_c</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">lyr</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elapse</span><span class="op">)</span> <span class="op">+</span> <span class="co"># Use subset "$" to plot a specific layer.</span></span>
+<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/scale_grass.html" class="external-link">scale_fill_grass_c</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">lyr</span><span class="op">)</span></span></code></pre></div>
 <p><img src="img/elapse.png"></p>
 <p>Lots better! Standard ggplot2 rules apply for editing these plots so
 have fun experimenting.</p>

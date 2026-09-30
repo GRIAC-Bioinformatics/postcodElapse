@@ -1,5 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>/404.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
 <url><loc>/articles/developement.html</loc></url>
 <url><loc>/articles/index.html</loc></url>
 <url><loc>/articles/plotting.html</loc></url>
@@ -14,6 +15,5 @@
 <url><loc>/reference/pollutionFromBag.html</loc></url>
 <url><loc>/reference/pollutionFromPc6.html</loc></url>
 <url><loc>/reference/postcodElapse.html</loc></url>
-<url><loc>/reference/zoomFeature.html</loc></url>
 </urlset>
 
