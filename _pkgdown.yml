@@ -1,6 +1,6 @@
 url: https://griac-bioinformatics.github.io/postcodElapse/
 template:
-  light-switch: true
+  light-switch: false
   bootstrap: 5
 
   navbar:
