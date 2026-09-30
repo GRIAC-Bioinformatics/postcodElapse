@@ -1,7 +1,7 @@
 # postcodElapse
 
 Estimate PM_(2.5), BC, NO₂ and O₃ concentrations for Dutch postal codes.
-Trough the[ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model
+Trough the [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model
 in addition with a postcode database containing the geographic location
 of every postcode in the Netherlands. My thanks go to [Kees de
 Hoogh](https://orcid.org/0000-0001-5974-2007) for developing & allowing
@@ -113,5 +113,4 @@ of spatrasters in your .Rdata and or at the end off your scripts run
 
 I recommend you use the [tidyverse](https://tidyverse.org/) &
 [tidyterra](https://dieghernan.github.io/tidyterra/) packages. See
-[`vignette("postcodElapse")`](articles/postcodElapse.md) for more info
-on plotting.
+`vignette("postcodElapse")` for more info on plotting.
