@@ -3,8 +3,10 @@ title: "postcodElapse - Usage guide"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{postcodElapse}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -39,10 +41,33 @@ ELAPSE contains three layers for O<sub>3</sub> due to it's prescience in the atm
 The concentrations stored in ELAPSE all use the unit: µg/m<sup>3</sup>.
 
 ## postcodElapse
-Once you have 
+Now you have an idea of what postcodElapse does lets get some pollution estimates. For this demo I will assume you have downloaded both postcode database and postcodElapse itself.
 
-
+The main function is `postcodElapse()` pass a postcode and database and it return pollution estimates. Ill be using BAG and the postcode of UMCG Gronningen. See the code below, yes it is that simple. It does take a minute, before you get your data.
 
 ```{r setup}
 library(postcodElapse)
+
+postcodElapse("9713AV", "../../data/bag-light.gpkg")
 ```
+
+Oke the function tells you what it thinks the database is. It only recognizes BAG or PC6, you can manually override the guessing by passing a databases acronym in the *database_type* argument.
+
+The pollution estimates are output as a data.frame. In the columns all layers of ELAPSE have been split across an average(avg), minimum(min) and maximum(max) pollution concentration, each row contains a single postcode. The *n* column is the amount of buildings found in that postcode.
+
+Now lets do an 100 postcodes which are included in the package. See the code below to load them.
+```{r hunderd postcodes}
+# The demo data is stored in extdata/postcod100.rda
+path <- system.file("extdata/postcode100.rda", package = "postcodElapse")
+load(path)
+
+# Its an 100 postcodes common between BAG & PC6.
+length(postcode100)
+head(postcode100)
+
+estimates <- postcodElapse(postcode100, "../../data/cbs_pc6_2024.gpkg") #Here I use PC6
+
+head(estimates, 5)
+```
+
+Even tough I used PC6 the output is the same as BAG. If you want to test with more postcodes the file `postcodes1000.rda` is also present in extdata.
