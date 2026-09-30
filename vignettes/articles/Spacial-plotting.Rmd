@@ -1,0 +1,41 @@
+---
+title: "Spacial plotting"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(postcodElapse)
+```
+
+## Spacial plotting
+The data postcodElapse handles inherently has an spacial component so plotting the data is of interest in some cases. There is one problem tough base R plotting doesn't handle spacial data well. I recommend you install the `tidyverse` and `tidyterra` packages, this equips us with ggplot2 and tidyterra enhances ggplot2 with spacial plotting.
+
+### ELAPSE
+Remember I said terra models air pollution concentration across Europe, well lets plot the internal one and took at the structure. See below.
+```{r plotting ELAPSE}
+# Remember to install these!
+library(tidyverse)
+library(tidyterra)
+
+elapse <- loadElapse()
+
+ggplot() +
+  geom_spatraster(data = elapse) +
+  facet_wrap(~ lyr)
+```
+
+We can see the shape of the Netherlands well, if you want to change the fill color I recommend reading the docs of `?tidyterra::scale_fill_grass_c`. Now we are going to plot the location of postcodes ontop of ELAPSE.
+
+For this we are using `pollutionFromPc6()` which is one layer deeper into postcodeLapse, first lets run it without plotting
+
+```{r layerd plotting}
+data_pc6 <- pollutionFromPc6("9713AV", "../../data/cbs_pc6_2024.gpkg")
+
+data_pc6
+```
