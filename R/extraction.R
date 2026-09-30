@@ -31,6 +31,9 @@
 #' }
 #' @export
 postcodElapse <- function(postcodes, database, type = "GUESS", elapse_path) {
+  if(missing(database)) {
+    stop("Extra postcode database required, see ?postcodElapse on downloading.")
+  }
   if(!file.exists(database)) {
     stop(database, " does not exist.")
   }
