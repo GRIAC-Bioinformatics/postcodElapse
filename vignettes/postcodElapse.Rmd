@@ -2,7 +2,7 @@
 title: "postcodElapse - Usage guide"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{postcodElapse}
+  %\VignetteIndexEntry{postcodElapse - Usage guide}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -12,8 +12,12 @@ editor_options:
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
-)
+  comment = "#>",
+  
+  )
+library(tidyverse)
+library(tidyterra)
+theme_set(theme_minimal())
 ```
 
 The goal of postcodElapse is to estimate air pollutant (PM<sub>2.6</sub>, BC, NO<sub>2</sub> & O<sub>3</sub>) concentration for Dutch postal codes. As a alternative to at location measurements. This is achieved trough getting geo-location data from one of two postcode databases. And mapping those locations to ELAPSE an air quality model for Europe. Estimating postcode-level air quality.
@@ -55,7 +59,7 @@ Oke the function tells you what it thinks the database is. It only recognizes BA
 
 The pollution estimates are output as a data.frame. In the columns all layers of ELAPSE have been split across an average(avg), minimum(min) and maximum(max) pollution concentration, each row contains a single postcode. The *n* column is the amount of buildings found in that postcode.
 
-Now lets do an 100 postcodes which are included in the package. See the code below to load them.
+Now lets run trough an 100 postcodes with PC6. You don't have to make up postcodes they are included as demo data. See the code below to load them.
 ```{r hunderd postcodes}
 # The demo data is stored in extdata/postcod100.rda
 path <- system.file("extdata/postcode100.rda", package = "postcodElapse")
@@ -71,3 +75,21 @@ head(estimates, 5)
 ```
 
 Even tough I used PC6 the output is the same as BAG. If you want to test with more postcodes the file `postcodes1000.rda` is also present in extdata.
+
+## Spacial plotting
+The data postcodElapse handles inherently has an spacial component so plotting the data is of interest in some cases. There is one problem tough base R plotting doesn't handle spacial data well. I recommend you install the `tidyverse` and `tidyterra` packages, this equips us with ggplot2 and tidyterra enhances ggplot2 with spacial plotting.
+
+### ELAPSE
+Remember I said terra models air pollution concentration across Europe, well lets plot the internal one and took at the structure. See below.
+```{r plotting ELAPSE}
+# Remember to install these!
+library(tidyverse)
+library(tidyterra)
+
+elapse <- loadElapse()
+
+ggplot() +
+  geom_spatraster(data = elapse) +
+  facet_wrap(~ lyr)
+```
+
