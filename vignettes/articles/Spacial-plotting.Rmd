@@ -35,7 +35,7 @@ We can see the shape of the Netherlands well, if you want to change the fill col
 For this we are using `pollutionFromPc6()` which is one layer deeper into postcodeLapse, first lets run it without plotting
 
 ```{r layerd plotting}
-data_pc6 <- pollutionFromPc6("9713AV", "../../data/cbs_pc6_2024.gpkg")
+data_pc6 <- pollutionFromPc6("9713AV", "../../../data/cbs_pc6_2024.gpkg")
 
 data_pc6
 ```
