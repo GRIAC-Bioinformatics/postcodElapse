@@ -1,14 +1,16 @@
-# Format as postcode6
-# Postcodes6 postcodes are 4 numbers followed by two capital letters. Example: "1234AB"
-#' Format an string or vec of strings as PC6.
+#' Format strings as Dutch postcodes.
 #'
-#' This function attempts to format a given string or vec of strings as Dutch postal
-#' addresses i.e. postcode6. Which is 4 numbers followed by two uppercase letters:
-#' "1234AB". The function removes extra spaces from the given postal codes and makes
-#' the letters uppercase. If it finds extra numbers or letters it errors.
+#' This attempts to format any given string as an Dutch postcodes. IE. four numbers
+#' followed by two capital letters, no spaces between each character. `formatPc6()`
+#' removes any spaces in a given string and capitalizes all letters. In addition
+#' extra numbers and or letters are checked for, resulting in an if they are present.
 #'
-#' @param postcodes string or vec containing strings To be formatted as postcodes
-#' @returns string or vec of srings Containing postcode6 formatted postal addresses.
+#' @param postcodes Strings to be formatted as postcode
+#' @returns Strings formatted as postcodes
+#'
+#' @examples
+#' formatPc6("8 9 3 3 DV", "9 713 Gz", "1071 xx")
+#'
 #' @export
 formatPc6 <- function(postcodes) {
   # Format all postcodes as PC6, e.g. for numbers directly followed by two capital letters
