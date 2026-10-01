@@ -56,7 +56,6 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
 #' ggplot annotation that draws an rect around a given spacial feature.
 #' Combine with `coord_zoomFeature()` for pretty insetting.
 #' @param data data to zoom on.
-#' @param id id of the data to zoom on
 #' @param size size of the rectangle.
 #'
 #' @examples
@@ -84,8 +83,8 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
 #' }
 #'
 #' @export
-geom_rectFeature <- function(data, id, size = 2000, colour = "red", fill = NA, ...) {
-  bbox <- sf::st_bbox(data$geom[[id]])
+geom_rectFeature <- function(data, size = 2000, colour = "red", fill = NA, ...) {
+  bbox <- sf::st_bbox(data$geom)
 
   df_bbox <- data.frame(
     xmin = bbox$xmin - size,
