@@ -56,7 +56,7 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
 #' ggplot annotation that draws an rect around a given spacial feature.
 #' Combine with `coord_zoomFeature()` for pretty insetting.
 #' @param data data to zoom on.
-#' @param size size of the rectangle.
+#' @param size size of the square.
 #'
 #' @examples
 #' \dontrun{
