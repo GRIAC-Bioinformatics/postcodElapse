@@ -5,14 +5,12 @@
 \title{ggplot annotation that draws an rect around a given spacial feature.
 Combine with \code{coord_zoomFeature()} for pretty insetting.}
 \usage{
-geom_rectFeature(data, id, size = 2000, colour = "red", fill = NA, ...)
+geom_rectFeature(data, size = 2000, colour = "red", fill = NA, ...)
 }
 \arguments{
 \item{data}{data to zoom on.}
 
-\item{id}{id of the data to zoom on}
-
-\item{size}{size of the rectangle.}
+\item{size}{size of the square.}
 }
 \description{
 ggplot annotation that draws an rect around a given spacial feature.
