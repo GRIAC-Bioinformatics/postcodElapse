@@ -30,7 +30,7 @@ Download the latest
 postcodElapse, run the command below pointing at the package install file.
 
 ``` r
-install.packages("postcodElapse_0.0.0.9610.tar.gz")
+install.packages("postcodElapse_0.1.0.tar.gz")
 ```
 
 If you are using Rstudio you can use the packages tab, nativate there press the
