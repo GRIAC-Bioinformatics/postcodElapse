@@ -25,4 +25,6 @@ VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)
 LazyData: true
+URL: https://github.com/GRIAC-Bioinformatics/postcodElapse
+BugReports: https://github.com/GRIAC-Bioinformatics/postcodElapse/issues
 Config/Needs/website: rmarkdown
