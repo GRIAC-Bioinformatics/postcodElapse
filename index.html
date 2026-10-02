@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="index.html">postcodElapse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,8 +54,6 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="postcodelapse">postcodElapse<a class="anchor" aria-label="anchor" href="#postcodelapse"></a>
 </h1></div>
-<!-- badges: start -->
-<!-- badges: end -->
 <p>Estimate PM<sub>2.5</sub>, BC, NO<sub>2</sub> and O<sub>3</sub> concentrations for Dutch postal codes. Trough the <a href="https://doi.org/10.1016/j.envint.2018.07.036" class="external-link">ELAPSE</a> model in addition with a postcode database containing the geographic location of every postcode in the Netherlands. My thanks go to <a href="https://orcid.org/0000-0001-5974-2007" class="external-link">Kees de Hoogh</a> for developing &amp; allowing the use of <a href="https://doi.org/10.1016/j.envint.2018.07.036" class="external-link">ELAPSE</a> in this package.</p>
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
@@ -81,7 +79,7 @@
 </h3>
 <p>Download the latest <a href="https://github.com/GRIAC-Bioinformatics/postcodElapse/releases" class="external-link">release</a>of postcodElapse, run the command below pointing at the package install file.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"postcodElapse_0.0.0.9610.tar.gz"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"postcodElapse_0.1.0.tar.gz"</span><span class="op">)</span></span></code></pre></div>
 <p>If you are using Rstudio you can use the packages tab, nativate there press the “Install” button. Change “Install from:” to “Package Archive …”, open the file picker. Navigate to and open the downloaded postcodElapse release. Press “Install”, and youre done.</p>
 </div>
 </div>
@@ -107,20 +105,7 @@
 <span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 2      15.03059</span></span>
 <span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a></span>
 <span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>Both postcodes are public locations<span class="sc">!</span></span></code></pre></div>
-<p>Postcodes must be four numbers two letters, extra spaces are removed and all letters are capitalized. Keep this in mind when joining with other data.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">postcodElapse</span>(<span class="fu">c</span>(<span class="st">"9 7 2 6 A c"</span>, <span class="st">"8934 cj"</span>), <span class="st">"cbs_pc6_2024.gpkg"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; Guessed db type to be: PC6</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt;   postcode  n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg PM25FULLt_avg BCFULL_min</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; 1   8934CJ NA   1.758855    30.12195    59.48217    44.89864    75.59747      15.12021   1.655208</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; 2   9726AC NA   1.842203    34.03876    60.01628    44.65147    77.06836      15.67927   1.816390</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;   NO2FULL_min O3FULLa_min O3FULLc_min O3FULLw_min PM25FULLt_min BCFULL_max NO2FULL_max</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; 1    27.70151    58.78391    44.50707    74.77161      14.65690   1.773019    31.05828</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; 2    33.83566    59.20438    44.58334    76.94397      15.64022   1.887790    35.16822</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt;   O3FULLa_max O3FULLc_max O3FULLw_max PM25FULLt_max</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; 1    60.92498    45.37432    76.52650      15.20761</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; 2    60.04224    44.71480    77.29417      15.89977</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>Both postcodes are public locations<span class="sc">!</span></span></code></pre></div>
+<p>Postcodes must be four numbers two letters an example: <code>1234AB</code>. postcodElapse will remove any added spaces and capitalize all letters, keep this in mind when joining data.</p>
 </div>
 </div>
 <div class="section level1">
@@ -137,7 +122,7 @@
 <div class="section level2">
 <h2 id="i-want-to-plot-elapse">I want to plot elapse<a class="anchor" aria-label="anchor" href="#i-want-to-plot-elapse"></a>
 </h2>
-<p>I recommend you use the <a href="https://tidyverse.org/" class="external-link">tidyverse</a> &amp; <a href="https://dieghernan.github.io/tidyterra/" class="external-link">tidyterra</a> packages. See <code><a href="articles/postcodElapse.html">vignette("postcodElapse")</a></code> for more info on plotting.</p>
+<p>I recommend you use the <a href="https://tidyverse.org/" class="external-link">tidyverse</a> &amp; <a href="https://dieghernan.github.io/tidyterra/" class="external-link">tidyterra</a> packages. See <code>vignette("Spacial-plotting")</code> for more info on plotting.</p>
 </div>
 </div>
 

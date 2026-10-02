@@ -5,12 +5,11 @@
 ### Set-up
 
 To develop postcodElapse you need Rstudio and the git large file storage
-[(LFS)](https://git-lfs.com/) plugin installed. Check their instructions
-or use your package manager of choice. In addition you need the install
-following R-packages:
-`usethis, pkgdown, roxygen, dplyr, terra, sf, rlang`. Most are
-dependences for postcodElapse usethis, pkgdown & roxygen are for
-development.
+[(LFS)](https://git-lfs.com/) installed, check their instructions. In
+addition you need the install some R-packages. For development:
+`install.packages(c("usethis", "pkgdown", "roxygen2"))` and dependency’s
+for postcodElapse:
+`install.packages(c("dplyr", "terra","sf", "rlang"))`.
 
 ### Cloning the repo
 

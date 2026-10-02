@@ -5,8 +5,8 @@
 - [`coord_zoomFeature()`](https://griac-bioinformatics.github.io/postcodElapse/reference/coord_zoomFeature.md)
   : Zoom into given feature
 
-- [`formatPc6()`](https://griac-bioinformatics.github.io/postcodElapse/reference/formatPc6.md)
-  : Format an string or vec of strings as PC6.
+- [`formatPostcode()`](https://griac-bioinformatics.github.io/postcodElapse/reference/formatPostcode.md)
+  : Format strings as Dutch postcodes.
 
 - [`geom_rectFeature()`](https://griac-bioinformatics.github.io/postcodElapse/reference/geom_rectFeature.md)
   :
@@ -17,7 +17,7 @@
   for pretty insetting.
 
 - [`loadElapse()`](https://griac-bioinformatics.github.io/postcodElapse/reference/loadElapse.md)
-  : Loads ELAPSE from the given path or from extdata.
+  : Load ELAPSE form given file or extdata.
 
 - [`pollutionFromBag()`](https://griac-bioinformatics.github.io/postcodElapse/reference/pollutionFromBag.md)
   : Estimate air pollution concentrations in a postcode with BAG

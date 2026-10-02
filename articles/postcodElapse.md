@@ -63,7 +63,7 @@ get your data.
 
 library(postcodElapse)
 
-postcodElapse("9713AV", "../../data/bag-light.gpkg")
+postcodElapse("9713 av", "./bag-light.gpkg")
 #> Guessed db type to be: BAG
 #>   postcode n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg
 #> 1   9713AV 1   1.878818    31.10718    60.04483     44.7972    77.85616
@@ -85,6 +85,19 @@ and maximum(max) pollution concentration, each row contains a single
 postcode. The *n* column is the amount of buildings found in that
 postcode.
 
+Also I gave “9713 av” and got back “9713AV”, the space was removed and
+the letters where capitalized. Any function that has the `postcodes`
+argument first formats the given postcodes with
+[`formatPostcode()`](https://griac-bioinformatics.github.io/postcodElapse/reference/formatPostcode.md).
+This function **will** remove all spaces and capitalizes all letters, in
+addition to checking if the postcodes consist of four letters two
+numbers. This formatted output is then used, keep this in mind when you
+want to join data.
+
+Any function that has an `postcodes` argument expects them to be
+structured as four numbers followed by two letters. Internally
+`formatPc6()` is used to removal all spaces and capitalize all letters.
+
 Now lets run trough an 100 postcodes with PC6. You don’t have to make up
 postcodes they are included as demo data. See the code below to load
 them.
@@ -98,6 +111,7 @@ load(path)
 # the data contains 100 samples postcodes common between BAG & PC6
 length(postcode100)
 #> [1] 100
+
 head(postcode100)
 #> [1] "2694BH" "9686NH" "2514LX" "6835MH" "9717LD" "3723EK"
 

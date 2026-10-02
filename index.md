@@ -36,7 +36,7 @@ file.
 
 ``` r
 
-install.packages("postcodElapse_0.0.0.9610.tar.gz")
+install.packages("postcodElapse_0.1.0.tar.gz")
 ```
 
 If you are using Rstudio you can use the packages tab, nativate there
@@ -72,25 +72,9 @@ postcodElapse(c("8917DD", "9712CP"), "bag-light.gpkg")
 Both postcodes are public locations!
 ```
 
-Postcodes must be four numbers two letters, extra spaces are removed and
-all letters are capitalized. Keep this in mind when joining with other
-data.
-
-``` r
-postcodElapse(c("9 7 2 6 A c", "8934 cj"), "cbs_pc6_2024.gpkg")
-#> Guessed db type to be: PC6
-#>   postcode  n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg PM25FULLt_avg BCFULL_min
-#> 1   8934CJ NA   1.758855    30.12195    59.48217    44.89864    75.59747      15.12021   1.655208
-#> 2   9726AC NA   1.842203    34.03876    60.01628    44.65147    77.06836      15.67927   1.816390
-#>   NO2FULL_min O3FULLa_min O3FULLc_min O3FULLw_min PM25FULLt_min BCFULL_max NO2FULL_max
-#> 1    27.70151    58.78391    44.50707    74.77161      14.65690   1.773019    31.05828
-#> 2    33.83566    59.20438    44.58334    76.94397      15.64022   1.887790    35.16822
-#>   O3FULLa_max O3FULLc_max O3FULLw_max PM25FULLt_max
-#> 1    60.92498    45.37432    76.52650      15.20761
-#> 2    60.04224    44.71480    77.29417      15.89977
-
-Both postcodes are public locations!
-```
+Postcodes must be four numbers two letters an example: `1234AB`.
+postcodElapse will remove any added spaces and capitalize all letters,
+keep this in mind when joining data.
 
 # FAQ
 
@@ -115,5 +99,4 @@ of spatrasters in your .Rdata and or at the end off your scripts run
 
 I recommend you use the [tidyverse](https://tidyverse.org/) &
 [tidyterra](https://dieghernan.github.io/tidyterra/) packages. See
-[`vignette("postcodElapse")`](https://griac-bioinformatics.github.io/postcodElapse/articles/postcodElapse.md)
-for more info on plotting.
+`vignette("Spacial-plotting")` for more info on plotting.

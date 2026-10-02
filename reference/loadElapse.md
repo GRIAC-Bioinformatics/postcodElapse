@@ -1,8 +1,8 @@
-# Loads ELAPSE from the given path or from extdata.
+# Load ELAPSE form given file or extdata.
 
-Load the ELAPSE dataset, expected as a single .tif image containing all
-layers off ELAPSE. When given no path the func loads the ELAPSE model
-stored in the package.
+Expects ELAPSE as a single tiff grey-scale image containing multiple
+layers. When path argument is not given loads ELAPSE from
+inst/ELAPSE.tif otherwise uses the given path.
 
 ## Usage
 
@@ -14,7 +14,7 @@ loadElapse(path)
 
 - path:
 
-  *optional* Path to folder containing ELAPSE dataset.
+  *optional* Path to .tif image containing ELAPSE
 
 ## Value
 

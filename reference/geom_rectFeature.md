@@ -8,7 +8,7 @@ for pretty insetting.
 ## Usage
 
 ``` r
-geom_rectFeature(data, id, size = 2000, colour = "red", fill = NA, ...)
+geom_rectFeature(data, size = 2000, colour = "red", fill = NA, ...)
 ```
 
 ## Arguments
@@ -17,13 +17,9 @@ geom_rectFeature(data, id, size = 2000, colour = "red", fill = NA, ...)
 
   data to zoom on.
 
-- id:
-
-  id of the data to zoom on
-
 - size:
 
-  size of the rectangle.
+  size of the square.
 
 ## Examples
 
