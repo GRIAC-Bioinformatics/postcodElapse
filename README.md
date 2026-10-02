@@ -1,8 +1,5 @@
 # postcodElapse
 
-<!-- badges: start -->
-
-<!-- badges: end -->
 Estimate PM<sub>2.5</sub>, BC, NO<sub>2</sub> and O<sub>3</sub> concentrations
 for Dutch postal codes. Trough
 the [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model in addition with
