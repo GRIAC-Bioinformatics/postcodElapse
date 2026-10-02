@@ -147,7 +147,7 @@ pollutionFromBag <- function(postcodes, bag_path, elapse_path, ...) {
     elapse <- loadElapse(elapse)
   }
 
-  postcodes <- formatPc6(postcodes)
+  postcodes <- formatPostcode(postcodes)
 
   # The .gpkg file is an sqlite database, st_read() default loads the entire 8gb
   # database. Only the given postcodes are needed, st_read() supports using an
@@ -236,7 +236,7 @@ pollutionFromPc6 <- function(postcodes, pc6_path, elapse_path, ...) {
 
   # Build and SQL-query that for the wanted postcodes selects the area, postcode
   # and the amount of buildings stored in PC6.
-  postcodes <- formatPc6(postcodes)
+  postcodes <- formatPostcode(postcodes)
   postcodes_query <- paste0("('", paste(postcodes, collapse = "','"), "')")
 
   postcode_geo <- sf::st_read(pc6_path, quiet = TRUE,
