@@ -1,0 +1,28 @@
+Package: postcodElapse
+Title: calculate air quaility estimates for Duch postal codes using ELAPSE
+Version: 0.1.0
+Authors@R: 
+    person("Berend", "Veldthuis", , "b.veldthuis@umcg.nl", role = c("aut", "cre"))
+Author: Berend Veldthuis [aut, cre]
+Maintainer: Berend Veldthuis <b.veldthuis@umcg.nl>
+Description: Calculate estimated concentration of PM2.5, BC, NO2, O3 air
+  pollutants for Duch postal addreses. Air pollution data is extracted from the 
+  ELAPSE model published by K de Hoogh. Locations of postal codes are queryed 
+  from the Basisregistratie Adressen en Gebouwen or Postcode6 databases.
+License: AGPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Imports:
+  dplyr (>= 1.2.1),
+  terra (>= 1.9),
+  sf (>= 1.1),
+  rlang
+Config/roxygen2/version: 8.1.0
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Depends: 
+    R (>= 3.5)
+LazyData: true
+Config/Needs/website: rmarkdown
