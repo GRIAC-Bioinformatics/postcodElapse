@@ -85,4 +85,4 @@ and or at the end off your scripts run `rm(<your elapse varabele>)`.
 
 ## I want to plot elapse
 I recommend you use the [tidyverse](https://tidyverse.org/) & [tidyterra](https://dieghernan.github.io/tidyterra/)
-packages. See `vignette("postcodElapse")` for more info on plotting.
+packages. See `vignette("Spacial-plotting")` for more info on plotting.
