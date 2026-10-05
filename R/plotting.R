@@ -78,7 +78,8 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
 #' entire row!
 #'
 #' @param data data to zoom on.
-#' @param size size of the rect.
+#' @param size size of the rectangle.
+#' @param colour border colour of the rectangle.
 #'
 #' @examples
 #' \dontrun{
@@ -105,7 +106,7 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
 #' }
 #'
 #' @export
-geom_rectFeature <- function(data, size = 2000, colour = "red", fill = NA, ...) {
+geom_rectFeature <- function(data, size = 4000, colour = "red", fill = NA, ...) {
   bbox <- sf::st_bbox(data$geom)
 
   df_bbox <- data.frame(
