@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
 
 ## Dev environment
 ### Set-up
-To develop postcodElapse you need Rstudio and the git large file storage [(LFS)](https://git-lfs.com/) installed, check their instructions. In addition you need the install some R-packages. For development: ```install.packages(c("usethis", "pkgdown", "roxygen2"))``` and dependency's for postcodElapse: ```install.packages(c("dplyr", "terra","sf", "rlang"))```.
+To develop postcodElapse you need Rstudio and the git large file storage [(LFS)](https://git-lfs.com/) installed, check their instructions. In addition you need the install some R-packages. For development: ```install.packages(c("usethis", "pkgdown", "roxygen2"))``` and dependency's for postcodElapse: ```install.packages(c("dplyr", "terra","sf", "rlang", "tidyverse", "tidyterra", "ggpubr"))```.
 
 ### Cloning the repo
 When you're done install clone the [repo](https://github.com/GRIAC-Bioinformatics/postcodElapse), you must enable lfs for the repo and pull the large file. See shell commands below.
