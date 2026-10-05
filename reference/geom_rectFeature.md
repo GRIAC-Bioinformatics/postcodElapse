@@ -1,14 +1,16 @@
-# ggplot annotation that draws an rect around a given spacial feature. Combine with `coord_zoomFeature()` for pretty insetting.
+# ggplot annotation that draws an rect around a given spacial feature.
 
-ggplot annotation that draws an rect around a given spacial feature.
-Combine with
+Computes the center of a set of given spacial features then creates a
+[`geom_rect()`](https://ggplot2.tidyverse.org/reference/geom_tile.html)
+centered and encompassing those spacial features. Meant to mark
+locations on spacial plots. Or used in combination with
 [`coord_zoomFeature()`](https://griac-bioinformatics.github.io/postcodElapse/reference/coord_zoomFeature.md)
-for pretty insetting.
+to create inset plots.
 
 ## Usage
 
 ``` r
-geom_rectFeature(data, size = 2000, colour = "red", fill = NA, ...)
+geom_rectFeature(data, size = 4000, colour = "red", fill = NA, ...)
 ```
 
 ## Arguments
@@ -19,7 +21,17 @@ geom_rectFeature(data, size = 2000, colour = "red", fill = NA, ...)
 
 - size:
 
-  size of the square.
+  size of the rectangle.
+
+- colour:
+
+  border colour of the rectangle.
+
+## IMPORTANT NOTE
+
+When passing a specific feature ensure you index using `[2, ]`. Add the
+comma otherwise R does not pass the entire row. `geom_rectFeature()`
+expects the entire row!
 
 ## Examples
 

@@ -36,7 +36,7 @@ file.
 
 ``` r
 
-install.packages("postcodElapse_0.1.0.tar.gz")
+install.packages("postcodElapse_0.1.1.tar.gz")
 ```
 
 If you are using Rstudio you can use the packages tab, nativate there

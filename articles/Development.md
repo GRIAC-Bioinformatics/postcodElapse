@@ -9,7 +9,7 @@ To develop postcodElapse you need Rstudio and the git large file storage
 addition you need the install some R-packages. For development:
 `install.packages(c("usethis", "pkgdown", "roxygen2"))` and dependency’s
 for postcodElapse:
-`install.packages(c("dplyr", "terra","sf", "rlang"))`.
+`install.packages(c("dplyr", "terra","sf", "rlang", "tidyverse", "tidyterra", "ggpubr"))`.
 
 ### Cloning the repo
 
@@ -68,3 +68,9 @@ To publish the documentation first push your changes to the repo. Then
 run `pkdown::deploy_to_branch()`, and wait for github to deploy the
 page. You can check it’s status in the
 [deploments](https://github.com/GRIAC-Bioinformatics/postcodElapse/deployments).
+
+## Code walk
+
+### BAG
+
+Oke for I am going to walk trough the code for “8933DV” with BAG.

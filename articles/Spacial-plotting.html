@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">postcodElapse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,13 +81,19 @@ plotting.</p>
 <div class="section level4">
 <h4 id="elapse">ELAPSE<a class="anchor" aria-label="anchor" href="#elapse"></a>
 </h4>
-<p>Remember I said terra models air pollution concentration across
-Europe, well lets plot the internal one and took at the structure. See
-below.</p>
+<p>Remember I said ELAPSE models air pollution concentration across
+Europe, well lets plot the internal one and took at the structure. Small
+side-note when working ELAPSE I recommend unloading by running
+<code>rm(elapse)</code> before saving you environment. The way ELAPSE is
+stored by R it will lead to errors when you re-load it from a fresh R
+session.</p>
+<p>Now lets get plotting, the block below loads packages, then ELAPSE
+subsequently plotting it.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Remember to install these!</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dieghernan.github.io/tidyterra/" class="external-link">tidyterra</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">postcodElapse</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">elapse</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadElapse.html">loadElapse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -160,7 +166,7 @@ geo-graphic position of a building.</p>
 <p>Now we understand the <code>pollutionFrom*()</code> functions we do
 some spacial plotting with layers. I have selected some postcodes form
 public locations across the Netherlands and we are going to plot then on
-ELAPSE.</p>
+the NO<sub>2</sub> layer of ELAPSE.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">postcodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"9714AV"</span>, <span class="st">"1071XX"</span>, <span class="st">"8934CJ"</span>, <span class="st">"1789AX"</span><span class="op">)</span></span>
 <span></span>
@@ -172,17 +178,20 @@ ELAPSE.</p>
 <span><span class="co">#&gt; Guessed db type to be: BAG</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elapse</span><span class="op">$</span><span class="va">NO2FULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elapse</span><span class="op">$</span><span class="va">NO2FULL</span><span class="op">)</span> <span class="op">+</span> <span class="co"># index to a specific layer with '$'</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pc6</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"purple"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bag</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/scale_grass.html" class="external-link">scale_fill_grass_c</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SpatRaster&gt;</span> resampled to <span style="color: #0000BB;">500490</span> cells.</span></span></code></pre></div>
 <p><img src="Spacial-plotting_files/figure-html/basic%20layers-1.png" class="r-plt" alt="" width="700"></p>
+<div class="section level4">
+<h4 id="zooming">Zooming<a class="anchor" aria-label="anchor" href="#zooming"></a>
+</h4>
 <p>Oke we can see ELAPSE and see orange points, where are the purple
 areas? And shouldn’t there be many points? They are both in the plot
-just very small and fighting over the same space. Lets zoom in on the
-Rijskmuseum the 1st postcode. Postcodes are always output in alpha
-numecic fastion!</p>
+just very small and fighting over the same space. A note postcodes are
+always returned sorted in alpha numeric fastion, check the data
+first.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">postcodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"9714AV"</span>, <span class="st">"1071XX"</span>, <span class="st">"8934CJ"</span>, <span class="st">"1789AX"</span><span class="op">)</span></span>
 <span></span>
@@ -197,10 +206,64 @@ numecic fastion!</p>
 <span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elapse</span><span class="op">$</span><span class="va">NO2FULL</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pc6</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"purple"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bag</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/coord_zoomFeature.html">coord_zoomFeature</a></span><span class="op">(</span><span class="va">pc6</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/coord_zoomFeature.html">coord_zoomFeature</a></span><span class="op">(</span><span class="va">pc6</span><span class="op">[</span><span class="fl">3</span>, <span class="op">]</span>, <span class="fl">1000</span><span class="op">)</span> <span class="op">+</span> <span class="co"># Very important to index using [3, ]!</span></span>
 <span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/scale_grass.html" class="external-link">scale_fill_grass_c</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SpatRaster&gt;</span> resampled to <span style="color: #0000BB;">500490</span> cells.</span></span></code></pre></div>
 <p><img src="Spacial-plotting_files/figure-html/Zooming-1.png" class="r-plt" alt="" width="700"></p>
+<p>Now we have zoomed, another important note.
+<code>coord_zoomFreature()</code> and it’s counterpart
+<code><a href="../reference/geom_rectFeature.html">geom_rectFeature()</a></code> expect the <strong>entire row</strong>
+from the <code>pollutionForm*()</code> functions. So a trailing comma
+<strong>must</strong> be used when you are indexing.
+(i.e. <code>pc6[1, ]</code>)</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="insetting">Insetting<a class="anchor" aria-label="anchor" href="#insetting"></a>
+</h3>
+<p>Oke when zooming you might want to show the un-zoomed plot to give
+context. But when multiple location are plotted it is hard to identify
+the relevent one. <code><a href="../reference/coord_zoomFeature.html">coord_zoomFeature()</a></code> add a rectangle to
+you plot centered at the given spacial data. Toghether with a package
+like ggpubr you can plot pretty looking insets!</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/ggpubr/" class="external-link">ggpubr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">postcodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"9714AV"</span>, <span class="st">"1071XX"</span>, <span class="st">"8934CJ"</span>, <span class="st">"1789AX"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">elapse</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadElapse.html">loadElapse</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pc6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pollutionFromPc6.html">pollutionFromPc6</a></span><span class="op">(</span><span class="va">postcodes</span>, <span class="st">"../../../data/cbs_pc6_2024.gpkg"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Guessed db type to be: PC6</span></span>
+<span><span class="va">bag</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pollutionFromBag.html">pollutionFromBag</a></span><span class="op">(</span><span class="va">postcodes</span>, <span class="st">"../../../data/bag-light.gpkg"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Guessed db type to be: BAG</span></span>
+<span></span>
+<span><span class="co"># Same as with Zooming just saving it to a var.</span></span>
+<span><span class="va">inset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elapse</span><span class="op">$</span><span class="va">NO2FULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pc6</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"purple"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bag</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/coord_zoomFeature.html">coord_zoomFeature</a></span><span class="op">(</span><span class="va">pc6</span><span class="op">[</span><span class="fl">3</span>, <span class="op">]</span>, <span class="fl">1000</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/scale_grass.html" class="external-link">scale_fill_grass_c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SpatRaster&gt;</span> resampled to <span style="color: #0000BB;">500490</span> cells.</span></span>
+<span></span>
+<span><span class="co"># Now the overview</span></span>
+<span><span class="va">main</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">elapse</span><span class="op">$</span><span class="va">NO2FULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pc6</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"purple"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bag</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_rectFeature.html">geom_rectFeature</a></span><span class="op">(</span><span class="va">pc6</span><span class="op">[</span><span class="fl">3</span>, <span class="op">]</span>, size <span class="op">=</span> <span class="fl">4000</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/scale_grass.html" class="external-link">scale_fill_grass_c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SpatRaster&gt;</span> resampled to <span style="color: #0000BB;">500490</span> cells.</span></span>
+<span></span>
+<span><span class="co"># Put the two plot together in one figure</span></span>
+<span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html" class="external-link">ggarrange</a></span><span class="op">(</span><span class="va">main</span>, <span class="va">inset</span>, ncol <span class="op">=</span> <span class="fl">2</span>, common.legend <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Spacial-plotting_files/figure-html/insetting-1.png" class="r-plt" alt="" width="700"></p>
+<p>Voila now you can make as many insets as possible. All arguments of
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_rect()</a></code> apply, so many options are available. When
+working with multiple insets I recommend changing the border colour of
+the corresponding plots. <code><a href="../reference/geom_rectFeature.html">geom_rectFeature()</a></code> can also be
+used to annotate your plots.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
