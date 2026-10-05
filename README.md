@@ -56,7 +56,7 @@ postcodElapse(c("8917DD", "9712CP"), "bag-light.gpkg")
 ```
 
 ## Spacial plotting
-For visualization, we recommend using the [tidyverse](https://tidyverse.org/) ecosystem in conjunction with [tidyterra](https://dieghernan.github.io/tidyterra/). Further details and examples are provided in the `vignette("Spacial-plotting")`.
+For visualization, we recommend using the [tidyverse](https://tidyverse.org/) ecosystem in conjunction with [tidyterra](https://dieghernan.github.io/tidyterra/). Further details and examples are provided in the [spacial plotting](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html) article.
 
 # FAQ
 ## I am getting null-pointer errors!
