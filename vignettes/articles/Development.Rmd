@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
 
 ## Dev environment
 ### Set-up
-To develop postcodElapse you need Rstudio and the git large file storage [(LFS)](https://git-lfs.com/) installed, check their instructions. In addition you need the install some R-packages. For development: ```install.packages(c("usethis", "pkgdown", "roxygen2"))``` and dependency's for postcodElapse: ```install.packages(c("dplyr", "terra","sf", "rlang"))```.
+To develop postcodElapse you need Rstudio and the git large file storage [(LFS)](https://git-lfs.com/) installed, check their instructions. In addition you need the install some R-packages. For development: ```install.packages(c("usethis", "pkgdown", "roxygen2"))``` and dependency's for postcodElapse: ```install.packages(c("dplyr", "terra","sf", "rlang", "tidyverse", "tidyterra", "ggpubr"))```.
 
 ### Cloning the repo
 When you're done install clone the [repo](https://github.com/GRIAC-Bioinformatics/postcodElapse), you must enable lfs for the repo and pull the large file. See shell commands below.
@@ -38,3 +38,7 @@ In package documentation is what you read when you run ?postcodElapse. It is mad
 GitHub pages is where you found this article in addition to the more expanded guide style documentation. This is made using `pkgdown`. Creating new articles or vignettes is done with `usethis`, by running in the R console `usethis::use_article` or `usethis::use_vignette`.
 
 Building the site locally can be done by running `pkgdown::build_site`. To publish the documentation first push your changes to the repo. Then run `pkdown::deploy_to_branch()`, and wait for github to deploy the page. You can check it's status in the [deploments](https://github.com/GRIAC-Bioinformatics/postcodElapse/deployments).
+
+## Code walk
+### BAG
+Oke for I am going to walk trough the code for "8933DV" with BAG.

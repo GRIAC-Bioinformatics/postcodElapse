@@ -1,5 +1,7 @@
 ---
 title: "Spacial plotting"
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include = FALSE}
@@ -9,7 +11,6 @@ knitr::opts_chunk$set(
 )
 library(tidyverse)
 library(tidyterra)
-library(postcodElapse)
 ```
 
 # :construction: UNDER CONSTRUCTION :construction:
@@ -19,11 +20,15 @@ This article is incomplete!
 The data postcodElapse handles inherently has an spacial component so plotting the data is of interest in some cases. There is one problem tough base R plotting doesn't handle spacial data well. I recommend you install the `tidyverse` and `tidyterra` packages, this equips us with ggplot2 and tidyterra enhances ggplot2 with spacial plotting.
 
 ### ELAPSE
-Remember I said terra models air pollution concentration across Europe, well lets plot the internal one and took at the structure. See below.
+Remember I said ELAPSE models air pollution concentration across Europe, well lets plot the internal one and took at the structure. Small side-note when working ELAPSE I recommend unloading by running `rm(elapse)` before saving you environment. The way ELAPSE is stored by R it will lead to errors when you re-load it from a fresh R session.
+
+Now lets get plotting, the block below loads packages, then ELAPSE subsequently plotting it.
+
 ```{r plotting ELAPSE}
 # Remember to install these!
 library(tidyverse)
 library(tidyterra)
+library(postcodElapse)
 
 elapse <- loadElapse()
 
@@ -53,7 +58,7 @@ head(data, 4)
 BAG has way less columns than PC6 that is due to bag containing points. It is not practical to convert points to areas. So I built `pollutionFromBag()` to output the raw data collected from BAG and ELAPSE. It does provide a-lot more rows one per building in a postcodes for all postcodes. The geom column contains effectively the geo-graphic position of a building.
 
 ## Plotting
-Now we understand the `pollutionFrom*()` functions we do some spacial plotting with layers. I have selected some postcodes form public locations across the Netherlands and we are going to plot then on ELAPSE.
+Now we understand the `pollutionFrom*()` functions we do some spacial plotting with layers. I have selected some postcodes form public locations across the Netherlands and we are going to plot then on the NO<sub>2</sub> layer of ELAPSE.
 
 ```{r basic layers}
 postcodes <- c("9714AV", "1071XX", "8934CJ", "1789AX")
@@ -64,14 +69,15 @@ pc6 <- pollutionFromPc6(postcodes, "../../../data/cbs_pc6_2024.gpkg")
 bag <- pollutionFromBag(postcodes, "../../../data/bag-light.gpkg")
 
 ggplot() +
-  geom_spatraster(data = elapse$NO2FULL) +
+  geom_spatraster(data = elapse$NO2FULL) + # index to a specific layer with '$'
   geom_sf(data = pc6, aes(geometry = geom), fill = "purple", alpha = 0.7) +
   geom_sf(data = bag, aes(geometry = geom), colour = "orange") +
   scale_fill_grass_c()
 ```
 
-Oke we can see ELAPSE and see orange points, where are the purple areas? And shouldn't there be many points? They are both in the plot just very small and fighting over the same space. Lets zoom in on the Rijskmuseum the 1st postcode.
-Postcodes are always output in alpha numecic fastion!
+### Zooming
+
+Oke we can see ELAPSE and see orange points, where are the purple areas? And shouldn't there be many points? They are both in the plot just very small and fighting over the same space. A note postcodes are always returned sorted in alpha numeric fastion, check the data first. 
 
 ```{r Zooming}
 postcodes <- c("9714AV", "1071XX", "8934CJ", "1789AX")
@@ -85,6 +91,43 @@ ggplot() +
   geom_spatraster(data = elapse$NO2FULL) +
   geom_sf(data = pc6, aes(geometry = geom), fill = "purple", alpha = 0.7) +
   geom_sf(data = bag, aes(geometry = geom), colour = "orange") +
-  coord_zoomFeature(pc6[1]) +
+  coord_zoomFeature(pc6[3, ], 1000) + # Very important to index using [3, ]!
   scale_fill_grass_c()
 ```
+
+Now we have zoomed, another important note. `coord_zoomFreature()` and it's counterpart `geom_rectFeature()` expect the **entire row** from the `pollutionForm*()` functions. So a trailing comma **must** be used when you are indexing. (i.e. `pc6[1, ]`)
+
+## Insetting
+Oke when zooming you might want to show the un-zoomed plot to give context. But when multiple location are plotted it is hard to identify the relevent one. `coord_zoomFeature()` add a rectangle to you plot centered at the given spacial data. Toghether with a package like ggpubr you can plot pretty looking insets!
+
+```{r insetting}
+library(ggpubr)
+
+postcodes <- c("9714AV", "1071XX", "8934CJ", "1789AX")
+
+elapse <- loadElapse()
+
+pc6 <- pollutionFromPc6(postcodes, "../../../data/cbs_pc6_2024.gpkg")
+bag <- pollutionFromBag(postcodes, "../../../data/bag-light.gpkg")
+
+# Same as with Zooming just saving it to a var.
+inset <- ggplot() +
+  geom_spatraster(data = elapse$NO2FULL) +
+  geom_sf(data = pc6, aes(geometry = geom), fill = "purple", alpha = 0.7) +
+  geom_sf(data = bag, aes(geometry = geom), colour = "orange") +
+  coord_zoomFeature(pc6[3, ], 1000) +
+  scale_fill_grass_c()
+
+# Now the overview
+main <- ggplot() +
+  geom_spatraster(data = elapse$NO2FULL) +
+  geom_sf(data = pc6, aes(geometry = geom), fill = "purple", alpha = 0.7) +
+  geom_sf(data = bag, aes(geometry = geom), colour = "orange") +
+  geom_rectFeature(pc6[3, ], size = 4000) +
+  scale_fill_grass_c()
+
+# Put the two plot together in one figure
+ggarrange(main, inset, ncol = 2, common.legend = TRUE)
+```
+
+Voila now you can make as many insets as possible. All arguments of `geom_rect()` apply, so many options are available. When working with multiple insets I recommend changing the border colour of the corresponding plots. `geom_rectFeature()` can also be used to annotate your plots.
