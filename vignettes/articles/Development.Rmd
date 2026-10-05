@@ -38,3 +38,7 @@ In package documentation is what you read when you run ?postcodElapse. It is mad
 GitHub pages is where you found this article in addition to the more expanded guide style documentation. This is made using `pkgdown`. Creating new articles or vignettes is done with `usethis`, by running in the R console `usethis::use_article` or `usethis::use_vignette`.
 
 Building the site locally can be done by running `pkgdown::build_site`. To publish the documentation first push your changes to the repo. Then run `pkdown::deploy_to_branch()`, and wait for github to deploy the page. You can check it's status in the [deploments](https://github.com/GRIAC-Bioinformatics/postcodElapse/deployments).
+
+## Code walk
+### BAG
+Oke for I am going to walk trough the code for "8933DV" with BAG.
