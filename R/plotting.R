@@ -1,5 +1,16 @@
 #' Zoom into given feature
 #'
+#' @description
+#' Takes an simple features collection, i.e. the output form the polltionFrom*()
+#' functions. Computes the center of the given features and builds a coordinate
+#' transform that zooms into the given features.
+#'
+#' @section IMPORTANT NOTE:
+#' When passing a specific feature ensure you index using `[2, ]`. Add the comma
+#' otherwise R does not pass the entire row. `coord_zoomFeature()` expects the
+#' entire row!
+#'
+#'
 #' @param data data to zoom on.
 #' @param r radius of the zoom.
 #'
@@ -18,13 +29,13 @@
 #' ggplot() +
 #'    geom_spatraster(data = elapse$NO2FULL) +
 #'    geom_sf(data = data, aes(geometry = geom), colour = "red") +
-#'    coord_zoomFeature(data[3])
+#'    coord_zoomFeature(data[3, ]) # you must index with `[3, ]` the entire row is expected!
 #'
 #' # On the 5th trough 10th buildings
 #' ggplot() +
 #'    geom_spatraster(data = elapse$NO2FULL) +
 #'    geom_sf(data = data, aes(geometry = geom), colour = "red") +
-#'    coord_zoomFeature(data[5:10])
+#'    coord_zoomFeature(data[5:10, ])
 #' }
 #'
 #' @export
@@ -54,9 +65,20 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
 }
 
 #' ggplot annotation that draws an rect around a given spacial feature.
-#' Combine with `coord_zoomFeature()` for pretty insetting.
+#'
+#' @description
+#' Computes the center of a set of given spacial features then creates a
+#' `geom_rect()` centered and encompassing those spacial features. Meant to mark
+#' locations on spacial plots. Or used in combination with `coord_zoomFeature()`
+#' to create inset plots.
+#'
+#' @section IMPORTANT NOTE:
+#' When passing a specific feature ensure you index using `[2, ]`. Add the comma
+#' otherwise R does not pass the entire row. `geom_rectFeature()` expects the
+#' entire row!
+#'
 #' @param data data to zoom on.
-#' @param size size of the square.
+#' @param size size of the rect.
 #'
 #' @examples
 #' \dontrun{
