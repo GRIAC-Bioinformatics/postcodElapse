@@ -2,20 +2,30 @@
 % Please edit documentation in R/plotting.R
 \name{geom_rectFeature}
 \alias{geom_rectFeature}
-\title{ggplot annotation that draws an rect around a given spacial feature.
-Combine with \code{coord_zoomFeature()} for pretty insetting.}
+\title{ggplot annotation that draws an rect around a given spacial feature.}
 \usage{
-geom_rectFeature(data, size = 2000, colour = "red", fill = NA, ...)
+geom_rectFeature(data, size = 4000, colour = "red", fill = NA, ...)
 }
 \arguments{
 \item{data}{data to zoom on.}
 
-\item{size}{size of the square.}
+\item{size}{size of the rectangle.}
+
+\item{colour}{border colour of the rectangle.}
 }
 \description{
-ggplot annotation that draws an rect around a given spacial feature.
-Combine with \code{coord_zoomFeature()} for pretty insetting.
+Computes the center of a set of given spacial features then creates a
+\code{geom_rect()} centered and encompassing those spacial features. Meant to mark
+locations on spacial plots. Or used in combination with \code{coord_zoomFeature()}
+to create inset plots.
 }
+\section{IMPORTANT NOTE}{
+
+When passing a specific feature ensure you index using \verb{[2, ]}. Add the comma
+otherwise R does not pass the entire row. \code{geom_rectFeature()} expects the
+entire row!
+}
+
 \examples{
 \dontrun{
 # Some plotting basics
