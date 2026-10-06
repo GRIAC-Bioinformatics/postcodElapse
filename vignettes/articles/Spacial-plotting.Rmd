@@ -14,10 +14,6 @@ library(tidyverse)
 library(tidyterra)
 ```
 
-# :construction: UNDER CONSTRUCTION :construction:
-This article is incomplete!
-
-
 Within this article the methods to plot the underlying spacial data postcodElapse work with will be explained. For this some preperation is required, we recommend installing the [tidyverse](https://tidyverse.org/), [tidyterra](https://dieghernan.github.io/tidyterra/articles/tidyterra.html) and [ggpubr](https://rpkgs.datanovia.com/ggpubr/) R-packages. These work together for spacial plotting in R.
 
 ## ELAPSE
