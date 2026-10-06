@@ -23,7 +23,7 @@ guide.](https://rspatial.github.io/terra/index.html#installation)
 ### Postcode database
 
 postcodElapse **requires** an external database with the spatial
-locations of Dutch postcodes. Two data sources are currently supported;
+locations of Dutch postcodes. Two databases are currently supported,
 download at least one of the following:
 
 - [Basisregistratie Adressen en
@@ -39,7 +39,7 @@ of postcodElapse, and install the package using:
 
 ``` r
 
-install.packages("postcodElapse_0.1.1.tar.gz")
+install.packages("postcodElapse_0.1.3.tar.gz")
 ```
 
 If you are using RStudio, you can also install via the *Packages* pane:
@@ -71,6 +71,11 @@ postcodElapse(c("8917DD", "9712CP"), "bag-light.gpkg")
 #> 1      15.64734
 #> 2      15.03059
 ```
+
+Above we estimated the pollution concentration in two postcodes with
+BAG. The `n` column contains the amount of buildings per postcode, all
+estimates are in µg/m³. When using PC6 the output is structured the
+same, missing data is marked with NA.
 
 ## Spacial plotting
 

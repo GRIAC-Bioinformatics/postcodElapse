@@ -33,7 +33,7 @@ Currently, postcodElapse supports two GeoPackages:
 
 2.  [PC6
     (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)\
-    provides the geographic area for every Dutch postcode.
+    provides the geographic area for every Dutch postcode. Size 0.6GB
 
 The package assumes that these GeoPackages have been stored locally in a
 location accessible to your R session.
@@ -126,5 +126,6 @@ head(estimates, 5)
 ## Further information
 
 With the material above, you can utilize postcodElapse for basic
-exposure estimations. For plotting spacial data an extra article is
-provided.
+exposure estimations. For plotting spacial data an extra
+[article](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html)
+is provided.

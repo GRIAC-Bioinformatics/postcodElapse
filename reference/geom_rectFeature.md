@@ -50,12 +50,12 @@ elapse <- loadElapse()
 ggplot() +
    geom_spatraster(data = elapse$NO2FULL) +
    geom_sf(data = data, aes(geometry = geom), colour = "red") +
-   geom_reactFeature(data[3])
+   geom_reactFeature(data[3, ])
 
 # On the 5th trough 10th buildings
 ggplot() +
    geom_spatraster(data = elapse$NO2FULL) +
    geom_sf(data = data, aes(geometry = geom), colour = "red") +
-   geom_rectFeature(data[5:10])
+   geom_rectFeature(data[5:10, ])
 } # }
 ```

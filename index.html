@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="index.html">postcodElapse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,7 @@
 <div class="section level3">
 <h3 id="postcode-database">Postcode database<a class="anchor" aria-label="anchor" href="#postcode-database"></a>
 </h3>
-<p>postcodElapse <strong>requires</strong> an external database with the spatial locations of Dutch postcodes. Two data sources are currently supported; download at least one of the following:</p>
+<p>postcodElapse <strong>requires</strong> an external database with the spatial locations of Dutch postcodes. Two databases are currently supported, download at least one of the following:</p>
 <ul>
 <li>
 <a href="https://service.pdok.nl/lv/bag/atom/bag.xml" class="external-link">Basisregistratie Adressen en Gebouwen</a>(BAG) size: 8GB</li>
@@ -81,7 +81,7 @@
 </h3>
 <p>Download the latest <a href="https://github.com/GRIAC-Bioinformatics/postcodElapse/releases" class="external-link">release</a> of postcodElapse, and install the package using:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"postcodElapse_0.1.1.tar.gz"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"postcodElapse_0.1.3.tar.gz"</span><span class="op">)</span></span></code></pre></div>
 <p>If you are using RStudio, you can also install via the <em>Packages</em> pane:</p>
 <ol style="list-style-type: decimal">
 <li>Open the <em>Packages</em> pane and click <em>Install</em>.</li>
@@ -111,6 +111,7 @@
 <span><span class="co">#&gt;   PM25FULLt_max</span></span>
 <span><span class="co">#&gt; 1      15.64734</span></span>
 <span><span class="co">#&gt; 2      15.03059</span></span></code></pre></div>
+<p>Above we estimated the pollution concentration in two postcodes with BAG. The <code>n</code> column contains the amount of buildings per postcode, all estimates are in µg/m<sup>3</sup>. When using PC6 the output is structured the same, missing data is marked with NA.</p>
 </div>
 <div class="section level2">
 <h2 id="spacial-plotting">Spacial plotting<a class="anchor" aria-label="anchor" href="#spacial-plotting"></a>

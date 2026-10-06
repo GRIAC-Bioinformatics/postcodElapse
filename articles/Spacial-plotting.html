@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">postcodElapse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,18 +65,14 @@
 
     
     
-<div class="section level2">
-<h2 id="construction-under-construction-construction">:construction: UNDER CONSTRUCTION :construction:<a class="anchor" aria-label="anchor" href="#construction-under-construction-construction"></a>
-</h2>
-<p>This article is incomplete!</p>
 <p>Within this article the methods to plot the underlying spacial data
-postcodElapse work with will be explained. For this some preperation is
+postcodElapse work with will be explained. For this some preparation is
 required, we recommend installing the <a href="https://tidyverse.org/" class="external-link">tidyverse</a>, <a href="https://dieghernan.github.io/tidyterra/articles/tidyterra.html" class="external-link">tidyterra</a>
 and <a href="https://rpkgs.datanovia.com/ggpubr/" class="external-link">ggpubr</a> R-packages.
-These work together for spacial plotting in R.</p>
-<div class="section level3">
-<h3 id="elapse">ELAPSE<a class="anchor" aria-label="anchor" href="#elapse"></a>
-</h3>
+These work together to enable spacial plotting in R.</p>
+<div class="section level2">
+<h2 id="elapse">ELAPSE<a class="anchor" aria-label="anchor" href="#elapse"></a>
+</h2>
 <p>To understand the spacial relation of postcodes some map is required,
 the best equivalent postcodElapse provides is ELAPSE. See the block
 below to load and plot ELAPSE.</p>
@@ -96,12 +92,12 @@ below to load and plot ELAPSE.</p>
 with the data argument. When no facet is added the average of all layers
 in ELAPSE will be plotted to a single figure. Use the <code>$</code>
 operator to specify which layer to plot. All concentrations are in the
-fill aesthetic with the unit: µg/m<sup>3</sup>. We recommend to assign
-the fill colour with: <code>?tidyterra::scale_fill_grass_c()</code>.</p>
+fill aesthetic, we recommend to scale the fill colour with:
+<code>?tidyterra::scale_fill_grass_c()</code>.</p>
 </div>
-<div class="section level3">
-<h3 id="accessing-postcode-geo-locations">Accessing postcode geo-locations<a class="anchor" aria-label="anchor" href="#accessing-postcode-geo-locations"></a>
-</h3>
+<div class="section level2">
+<h2 id="accessing-postcode-geo-locations">Accessing postcode geo-locations<a class="anchor" aria-label="anchor" href="#accessing-postcode-geo-locations"></a>
+</h2>
 <p>To plot the location of postcodes on ELAPSE the geo-location is
 <em>required</em> these are provided trough:
 <code><a href="../reference/pollutionFromBag.html">pollutionFromBag()</a></code> and <code><a href="../reference/pollutionFromPc6.html">pollutionFromPc6()</a></code>.
@@ -124,13 +120,13 @@ block below.</p>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SpatRaster&gt;</span> resampled to <span style="color: #0000BB;">500490</span> cells.</span></span></code></pre></div>
 <p><img src="Spacial-plotting_files/figure-html/layerd-1.png" class="r-plt" alt="" width="700"></p>
 </div>
-<div class="section level3">
-<h3 id="zooming-and-insetting">Zooming and insetting<a class="anchor" aria-label="anchor" href="#zooming-and-insetting"></a>
-</h3>
-<p>Due to the scale of ELAPSE in many situations it is hard to visualize
-the data. To alleviate this we recommend creating an inset plot and
-marking the location of the zoom on the main plot. postcodElapse
-provides helpers to do this see the block below.</p>
+<div class="section level2">
+<h2 id="zooming-and-insetting">Zooming and insetting<a class="anchor" aria-label="anchor" href="#zooming-and-insetting"></a>
+</h2>
+<p>Due to the scale of ELAPSE it may be hard to visualize the data. To
+alleviate this we recommend creating an inset plot and marking the
+location of the zoom on the main plot. postcodElapse provides helpers to
+do this see the block below.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/ggpubr/" class="external-link">ggpubr</a></span><span class="op">)</span> <span class="co">#used to arrange plots into one figure.</span></span>
 <span></span>
@@ -139,7 +135,7 @@ provides helpers to do this see the block below.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pc6</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"purple"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bag</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"orange"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/scale_grass.html" class="external-link">scale_fill_grass_c</a></span><span class="op">(</span>transform <span class="op">=</span> <span class="st">"log10"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/geom_rectFeature.html">geom_rectFeature</a></span><span class="op">(</span><span class="va">pc6</span><span class="op">[</span><span class="fl">100</span>, <span class="op">]</span>, <span class="fl">5000</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_rectFeature.html">geom_rectFeature</a></span><span class="op">(</span><span class="va">pc6</span><span class="op">[</span><span class="fl">100</span>, <span class="op">]</span>, <span class="fl">5000</span><span class="op">)</span> <span class="op">+</span> <span class="co"># Mark the location of interest</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/bquote.html" class="external-link">bquote</a></span><span class="op">(</span><span class="st">"log"</span><span class="op">[</span><span class="fl">10</span><span class="op">]</span><span class="op">~</span><span class="st">" Concentration NO"</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">~</span><span class="st">"µg/m"</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SpatRaster&gt;</span> resampled to <span style="color: #0000BB;">500490</span> cells.</span></span>
@@ -149,9 +145,10 @@ provides helpers to do this see the block below.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pc6</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"purple"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bag</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geom</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"orange"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/scale_grass.html" class="external-link">scale_fill_grass_c</a></span><span class="op">(</span>transform <span class="op">=</span> <span class="st">"log10"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/coord_zoomFeature.html">coord_zoomFeature</a></span><span class="op">(</span><span class="va">pc6</span><span class="op">[</span><span class="fl">100</span>, <span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/coord_zoomFeature.html">coord_zoomFeature</a></span><span class="op">(</span><span class="va">pc6</span><span class="op">[</span><span class="fl">100</span>, <span class="op">]</span><span class="op">)</span> <span class="co"># Zoom into the location of interest</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SpatRaster&gt;</span> resampled to <span style="color: #0000BB;">500490</span> cells.</span></span>
 <span></span>
+<span><span class="co"># Make and annotate the combined figure.</span></span>
 <span><span class="va">fig</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html" class="external-link">ggarrange</a></span><span class="op">(</span><span class="va">main</span>, <span class="va">inset</span>, ncol <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>                 common.legend <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                 legend.grob <span class="op">=</span> <span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/get_legend.html" class="external-link">get_legend</a></span><span class="op">(</span><span class="va">main</span><span class="op">)</span><span class="op">)</span></span>
@@ -164,7 +161,6 @@ provides helpers to do this see the block below.</p>
 <code><a href="../reference/coord_zoomFeature.html">coord_zoomFeature()</a></code> ensure you subset entire rows using
 <code>[12, ]</code>. Additionally air pollution estimate are always
 returned in alpha numeric order.</p>
-</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
