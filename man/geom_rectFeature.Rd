@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotting.R
 \name{geom_rectFeature}
 \alias{geom_rectFeature}
-\title{ggplot annotation that draws an rect around a given spacial feature.}
+\title{Draws squares encompassing spacial features.}
 \usage{
 geom_rectFeature(data, size = 4000, colour = "red", fill = NA, ...)
 }
@@ -14,10 +14,9 @@ geom_rectFeature(data, size = 4000, colour = "red", fill = NA, ...)
 \item{colour}{border colour of the rectangle.}
 }
 \description{
-Computes the center of a set of given spacial features then creates a
-\code{geom_rect()} centered and encompassing those spacial features. Meant to mark
-locations on spacial plots. Or used in combination with \code{coord_zoomFeature()}
-to create inset plots.
+Takes a collection of spacial features calculates the position and size of an
+square encompassing all given spacial features. Builds and outputs ggplot
+geom_rect to draw that square on a plot.
 }
 \section{IMPORTANT NOTE}{
 
@@ -37,7 +36,7 @@ data <- pollutionFromBag("9726AC", "bag-light.gpkg")
 
 elapse <- loadElapse()
 
-# We are drawing a box around 3rd building.
+# Draw a box around 3rd building.
 ggplot() +
    geom_spatraster(data = elapse$NO2FULL) +
    geom_sf(data = data, aes(geometry = geom), colour = "red") +

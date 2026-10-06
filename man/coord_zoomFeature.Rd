@@ -2,19 +2,19 @@
 % Please edit documentation in R/plotting.R
 \name{coord_zoomFeature}
 \alias{coord_zoomFeature}
-\title{Zoom into given feature}
+\title{Zoom into given spacial feature}
 \usage{
 coord_zoomFeature(data, r = 2000, ...)
 }
 \arguments{
 \item{data}{data to zoom on.}
 
-\item{r}{radius of the zoom.}
+\item{r}{radius of the zoom, is always a square.}
 }
 \description{
-Takes an simple features collection, i.e. the output form the polltionFrom*()
-functions. Computes the center of the given features and builds a coordinate
-transform that zooms into the given features.
+Takes the output from ether \verb{pollutionFrom*()} function, calculates the center
+of all given special features. Outputs ggplot coord to zoom into the given features.
+Works best when sub-setting a lager data-set zooming into a feature of interest.
 }
 \section{IMPORTANT NOTE}{
 

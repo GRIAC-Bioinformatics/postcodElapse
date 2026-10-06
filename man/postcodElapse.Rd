@@ -35,8 +35,8 @@ postcodElapse("8933DV", "cbs_pc6_2024.gpkg")
 # Estimate air pollution for multiple postcodes with BAG.
 postcodElapse(c("8933DV", "9713 GZ", "1071XX"), "bag-light.gpkg")
 
-# Note postcodes are valid a long as they are four numbers followed by two letters.
-# In addition any spaces will be removed and non-capital letters will be capitalized.
+# Postcodes are valid a long as they are four numbers followed by two letters.
+# Any spaces will be removed and non-capital letters will be capitalized.
 postcodElapse(c("8 9 3 3 DV", "9 713 Gz", "1071 xx"), "cbs_pc6_2024.gpkg")
 }
 }
