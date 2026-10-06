@@ -10,7 +10,6 @@
 #' otherwise R does not pass the entire row. `coord_zoomFeature()` expects the
 #' entire row!
 #'
-#'
 #' @param data data to zoom on.
 #' @param r radius of the zoom.
 #'
@@ -96,13 +95,13 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
 #' ggplot() +
 #'    geom_spatraster(data = elapse$NO2FULL) +
 #'    geom_sf(data = data, aes(geometry = geom), colour = "red") +
-#'    geom_reactFeature(data[3])
+#'    geom_reactFeature(data[3, ])
 #'
 #' # On the 5th trough 10th buildings
 #' ggplot() +
 #'    geom_spatraster(data = elapse$NO2FULL) +
 #'    geom_sf(data = data, aes(geometry = geom), colour = "red") +
-#'    geom_rectFeature(data[5:10])
+#'    geom_rectFeature(data[5:10, ])
 #' }
 #'
 #' @export
