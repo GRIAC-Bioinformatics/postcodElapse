@@ -4,7 +4,7 @@
 
 The goal of postcodElapse package is to estimate concentrations of fine
 particulate matter (PM_(2.5)), black carbon (BC), nitrogen dioxide (NO₂)
-& ozone (O₃) for Dutch postcodes ,as an alternative to on-site
+& ozone (O₃) for Dutch postcodes, as an alternative to on-site
 measurements.
 
 This is achieved by:
@@ -78,8 +78,7 @@ Columns include:
 
 - The postcode
 - Number of buildings in that postcode `n`.
-- summary statistics (mean, minimum & maximum) for each pollutant
-  extracted from ELAPSE, concentration are in µg/m³.
+- Mean, minimum & maximum air pollutant concentration in µg/m³.
 
 If you wish to experiment with lager sets of postcodes, the files
 `postcode100.rda` & `postcode1000.rda` are available in the package’s
