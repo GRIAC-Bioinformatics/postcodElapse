@@ -62,12 +62,12 @@ postcodElapse <- function(postcodes, database_path, database_type = "GUESS", ela
       dplyr::summarise_at(tools::file_path_sans_ext(terra::names(elapse)),
                           list(avg = mean, min = min, max = max))
 
-    # Adding how many homes per postcodes just makes sense
+    # Counting how many homes per postcodes just makes sense
     postcode_pollution_stats <- postcode_pollution |>
       dplyr::count(postcode) |>
       dplyr::inner_join(postcode_pollution_stats, by = dplyr::join_by(postcode))
 
-    # In case we miss postcodes warn about it.
+    # In case are missing postcodes warn about it.
     count_given_postcodes <- length(postcodes)
     count_found_postcodes <- nrow(postcode_pollution_stats)
     if(count_found_postcodes != count_given_postcodes) {
@@ -173,7 +173,8 @@ pollutionFromBag <- function(postcodes, bag_path, elapse_path, ...) {
   # A simple cbind() will do the data is already lined up.
   postcode_pollution <- cbind(geo_pollution, postcode_geo)
 
-  # Cleanup
+  # terra::extract add an ID column to the data for aligning purposes.
+  # We don't need it in the output
   postcode_pollution <- postcode_pollution |>
     dplyr::select(!c(ID))
 
@@ -229,17 +230,16 @@ pollutionFromPc6 <- function(postcodes, pc6_path, elapse_path, ...) {
     }
   }
 
-  # Use ELAPSE from the parent-env, doesn't exist then load the internal.
   if(missing(elapse_path) && !exists("elapse")) {
     elapse <- loadElapse()
   }
-  # when given a path for ELAPSE always use it.
   if(!missing(elapse_path)) {
     elapse <- loadElapse(elapse_path)
   }
 
   # Build and SQL-query that for the wanted postcodes selects the area, postcode
-  # and the amount of buildings stored in PC6.
+  # and the amount of buildings stored in PC6. I figrued this out by looking at
+  # the database schema.
   postcodes <- formatPostcode(postcodes)
   postcodes_query <- paste0("('", paste(postcodes, collapse = "','"), "')")
 
@@ -259,6 +259,7 @@ pollutionFromPc6 <- function(postcodes, pc6_path, elapse_path, ...) {
   names(geo_pollution_max) <- paste0(names(geo_pollution_max), "_max")
 
   # Put all statistics together and the postcodes.
+  # No join_by() is needed the output is consistent
   geo_pollution_stats <- cbind(geo_pollution_mean,
                                geo_pollution_min,
                                geo_pollution_max)
