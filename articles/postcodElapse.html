@@ -65,68 +65,63 @@
 
     
     
-<p>The goal of postcodElapse is to estimate air pollutant
-(PM<sub>2.6</sub>, BC, NO<sub>2</sub> &amp; O<sub>3</sub>) concentration
-for Dutch postal codes. As a alternative to at location measurements.
-This is achieved trough getting geo-location data from one of two
-postcode databases. And mapping those locations to ELAPSE an air quality
-model for Europe. Estimating postcode-level air quality.</p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>The goal of postcodElapse package is to estimate concentrations of
+fine particulate matter (PM<sub>2.5</sub>), black carbon (BC), nitrogen
+dioxide (NO<sub>2</sub>) &amp; ozone (O<sub>3</sub>) for Dutch postcodes
+,as an alternative to on-site measurements.</p>
+<p>This is achieved by:</p>
+<ol style="list-style-type: decimal">
+<li>Obtaining geo-location information (points or areas) from one of two
+supported postcodes databases.</li>
+<li>Linking these locations to the ELAPSE air quality model.</li>
+<li>Calculate postcode-level air pollutant concentration estimates.</li>
+</ol>
+<p>This vignette is a guide on setting up, running and utilizing
+postcodElapse.</p>
+</div>
 <div class="section level2">
 <h2 id="postcode-databases">Postcode databases<a class="anchor" aria-label="anchor" href="#postcode-databases"></a>
 </h2>
-<p>As said the geographic location or area is <strong>required</strong>
-to estimate air pollutant concentration. This data is expected as
-geopackage (.gpkg) databases which specialize in storing spacial data.
-postcodElapse support two geopackages:</p>
-<ol style="list-style-type: decimal">
-<li>
-<a href="https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml" class="external-link">Postcode6</a>
-by CBS mapping postcodes to geographic areas.</li>
-<li>Kadaster’s <a href="https://service.pdok.nl/lv/bag/atom/bag.xml" class="external-link">Basisregistratie
-Adressen en Gebouwen(BAG)</a> containing the postcode and geo-location
-for every building in the Netherlands.</li>
-</ol>
-<p>Ensure you download at-least one of these.</p>
-</div>
-<div class="section level2">
-<h2 id="effects-of-low-level-air-pollution-a-study-in-europe">Effects of Low-Level Air Pollution: A Study in Europe<a class="anchor" aria-label="anchor" href="#effects-of-low-level-air-pollution-a-study-in-europe"></a>
-</h2>
-<p>ELAPSE is a Land Use Regression model. Estimating concentration of
-PM<sub>2.6</sub>, BC, NO<sub>2</sub> &amp; O<sub>3</sub> air pollutants,
-across Europe at 100x100meter resolution. Published by <a href="https://orcid.org/0000-0001-5974-2007" class="external-link">Kees de Hoogh</a> whom
-allowed it’s use in postcodElapse. The model itself is stored as an tiff
-grey-scale image with multiple layers:</p>
-<ul>
-<li>BCFULL</li>
-<li>NO2FULL</li>
-<li>O3FULLa</li>
-<li>O3FULLc</li>
-<li>O3FULLw</li>
-<li>PM25FULLt</li>
-</ul>
-<p>ELAPSE contains three layers for O<sub>3</sub> due to it’s prescience
-in the atmosphere being affected by the seasons. In an warmer climate
-O<sub>3</sub> concentration tends to be higher. In the layer names
-<em>w</em> is warm, <em>c</em> is cold and <em>a</em> is the
-average.</p>
-<p>ELAPSE measures all air pollutant concentrations in:
-µg/m<sup>3</sup>.</p>
-</div>
-<div class="section level2">
-<h2 id="postcodelapse">postcodElapse<a class="anchor" aria-label="anchor" href="#postcodelapse"></a>
-</h2>
-<p>Now you have an idea of what postcodElapse does under the hood, lets
-generate some pollution estimates. For this demo I assume you have
-downloaded both postcode databases and postcodElapse itself.</p>
-<p>The main function is <code><a href="../reference/postcodElapse.html">postcodElapse()</a></code> pass a postcode and
-database, and it returns air pollution estimates for that postcode. Ill
-be using BAG and the postcode of UMCG Gronningen. See the code below,
-yes I made it simple. It does take a minute, before you get your
+<p>As described above, the geographic location or area of an postcode is
+<strong>required</strong> in order to estimate air pollutant
+concentrations. postcodElapse expects this data to be provided as
+GeoPackage (.gpkg) files, a format commonly used for storing spatial
 data.</p>
+<p>Currently, postcodElapse supports two GeoPackages:</p>
+<ol style="list-style-type: decimal">
+<li><p><a href="https://service.pdok.nl/lv/bag/atom/bag.xml" class="external-link">BAG
+(Basisregistratie Adressen en Gebouwen</a> <br>The bag data set contains
+for every building in the Netherlands its location &amp; postcode. Size
+8GB</p></li>
+<li><p><a href="https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml" class="external-link">PC6
+(Postcode6)</a> <br> provides the geographic area for every Dutch
+postcode.</p></li>
+</ol>
+<p>The package assumes that these GeoPackages have been stored locally
+in a location accessible to your R session.</p>
+</div>
+<div class="section level2">
+<h2 id="estimating-exposures">Estimating exposures<a class="anchor" aria-label="anchor" href="#estimating-exposures"></a>
+</h2>
+<p>To estimate air pollutant concentration, call the main function
+<code><a href="../reference/postcodElapse.html">postcodElapse()</a></code> with a postcode (can also be a vector) and
+the path to the relevant GeoPackage.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">postcodElapse</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GRIAC-Bioinformatics/postcodElapse" class="external-link">postcodElapse</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/postcodElapse.html">postcodElapse</a></span><span class="op">(</span><span class="st">"9713 av"</span>, <span class="st">"./bag-light.gpkg"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/postcodElapse.html">postcodElapse</a></span><span class="op">(</span><span class="st">"9713AV"</span>, <span class="st">"bag-light.gpkg"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Guessed db type to be: BAG</span></span>
+<span><span class="co">#&gt;   postcode n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg</span></span>
+<span><span class="co">#&gt; 1   9713AV 1   1.878818    31.10718    60.04483     44.7972    77.85616</span></span>
+<span><span class="co">#&gt;   PM25FULLt_avg BCFULL_min NO2FULL_min O3FULLa_min O3FULLc_min O3FULLw_min</span></span>
+<span><span class="co">#&gt; 1       15.4238   1.878818    31.10718    60.04483     44.7972    77.85616</span></span>
+<span><span class="co">#&gt;   PM25FULLt_min BCFULL_max NO2FULL_max O3FULLa_max O3FULLc_max O3FULLw_max</span></span>
+<span><span class="co">#&gt; 1       15.4238   1.878818    31.10718    60.04483     44.7972    77.85616</span></span>
+<span><span class="co">#&gt;   PM25FULLt_max</span></span>
+<span><span class="co">#&gt; 1       15.4238</span></span>
 <span><span class="co">#&gt; Guessed db type to be: BAG</span></span>
 <span><span class="co">#&gt;   postcode n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg</span></span>
 <span><span class="co">#&gt; 1   9713AV 1   1.878818    31.10718    60.04483     44.7972    77.85616</span></span>
@@ -136,41 +131,27 @@ data.</p>
 <span><span class="co">#&gt; 1       15.4238   1.878818    31.10718    60.04483     44.7972    77.85616</span></span>
 <span><span class="co">#&gt;   PM25FULLt_max</span></span>
 <span><span class="co">#&gt; 1       15.4238</span></span></code></pre></div>
-<p>Oke the function tells you what it thinks the database is. It only
-recognizes BAG or PC6, you can override the guessing by passing a
-databases acronym in the <em>database_type</em> argument.</p>
-<p>The pollution estimates are output as a data frame. In the columns
-all layers of ELAPSE have been split across an average(avg),
-minimum(min) and maximum(max) pollution concentration, each row contains
-a single postcode. The <em>n</em> column is the amount of buildings
-found in that postcode.</p>
-<p>Also I gave “9713 av” and got back “9713AV”, the space was removed
-and the letters where capitalized. Any function that has the
-<code>postcodes</code> argument first formats the given postcodes with
-<code><a href="../reference/formatPostcode.html">formatPostcode()</a></code>. This function <strong>will</strong>
-remove all spaces and capitalizes all letters, in addition to checking
-if the postcodes consist of four letters two numbers. This formatted
-output is then used, keep this in mind when you want to join data.</p>
-<p>Any function that has an <code>postcodes</code> argument expects them
-to be structured as four numbers followed by two letters. Internally
-<code>formatPc6()</code> is used to removal all spaces and capitalize
-all letters.</p>
-<p>Now lets run trough an 100 postcodes with PC6. You don’t have to make
-up postcodes they are included as demo data. See the code below to load
-them.</p>
+<p>In this example, the BAG GeoPackage is use. The output structure is
+identical when using PC6; only the database path needs adjusting.
+<code><a href="../reference/postcodElapse.html">postcodElapse()</a></code> returns a data frame in which each row
+corresponds to a postcode. Columns include:</p>
+<ul>
+<li>The postcode</li>
+<li>Number of buildings in that postcode <code>n</code>.</li>
+<li>summary statistics (mean, minimum &amp; maximum) for each pollutant
+extracted from ELAPSE, concentration are in µg/m<sup>3</sup>.</li>
+</ul>
+<p>If you wish to experiment with lager sets of postcodes, the files
+<code>postcodes100.rda</code> &amp; <code>postcodes1000.rda</code> are
+available in the package’s extdata. See below for an example.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># The demo data is stored in extdata/postcod100.rda</span></span>
-<span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/postcode100.rda"</span>, package <span class="op">=</span> <span class="st">"postcodElapse"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/postcode100.rda"</span>, package <span class="op">=</span> <span class="st">"postcodElapse"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># the data contains 100 samples postcodes common between BAG &amp; PC6</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">postcode100</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 100</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">postcode100</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "2694BH" "9686NH" "2514LX" "6835MH" "9717LD" "3723EK"</span></span>
 <span></span>
-<span><span class="va">estimates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/postcodElapse.html">postcodElapse</a></span><span class="op">(</span><span class="va">postcode100</span>, <span class="st">"../../data/cbs_pc6_2024.gpkg"</span><span class="op">)</span></span>
+<span><span class="va">estimates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/postcodElapse.html">postcodElapse</a></span><span class="op">(</span><span class="va">postcode100</span>, <span class="st">"cbs_pc6_2024.gpkg"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Guessed db type to be: PC6</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">estimates</span>, <span class="fl">5</span><span class="op">)</span></span>
@@ -198,11 +179,13 @@ them.</p>
 <span><span class="co">#&gt; 3      17.53084</span></span>
 <span><span class="co">#&gt; 4      15.79089</span></span>
 <span><span class="co">#&gt; 5      16.56795</span></span></code></pre></div>
-<p>Even tough I used PC6 the output will be structured the same. If you
-want to test with more postcodes the file <code>postcodes1000.rda</code>
-is also present in extdata.</p>
-<p>With this you know how to use postcodElapse, if you wish to learn
-more check the articles.</p>
+</div>
+<div class="section level2">
+<h2 id="further-information">Further information<a class="anchor" aria-label="anchor" href="#further-information"></a>
+</h2>
+<p>With the material above, you can utilize postcodElapse for basic
+exposure estimations. For plotting spacial data an extra article is
+provided.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

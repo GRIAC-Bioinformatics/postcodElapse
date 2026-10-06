@@ -71,25 +71,28 @@
 <div class="section level3">
 <h3 id="set-up">Set-up<a class="anchor" aria-label="anchor" href="#set-up"></a>
 </h3>
-<p>To develop postcodElapse you need Rstudio and the git large file
+<p>To develop postcodElapse you need <a href="https://posit.co/downloads" class="external-link">Rstudio</a> and the git large file
 storage <a href="https://git-lfs.com/" class="external-link">(LFS)</a> installed, check their
-instructions. In addition you need the install some R-packages. For
-development:
-<code>install.packages(c("usethis", "pkgdown", "roxygen2"))</code> and
-dependency’s for postcodElapse:
-<code>install.packages(c("dplyr", "terra","sf", "rlang", "tidyverse", "tidyterra", "ggpubr"))</code>.</p>
+instructions. In addition you need the install the R-packages below.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"usethis"</span>, <span class="st">"pkgdown"</span>, <span class="st">"roxygen2"</span><span class="op">)</span><span class="op">)</span> <span class="co">#devtools</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dplyr"</span>, <span class="st">"terra"</span>,<span class="st">"sf"</span>, <span class="st">"rlang"</span><span class="op">)</span><span class="op">)</span> <span class="co">#required by postcodElapse</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"tidyterra"</span>, <span class="st">"ggpubr"</span><span class="op">)</span><span class="op">)</span> <span class="co">#used in the docs</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="cloning-the-repo">Cloning the repo<a class="anchor" aria-label="anchor" href="#cloning-the-repo"></a>
+<h3 id="cloning">Cloning<a class="anchor" aria-label="anchor" href="#cloning"></a>
 </h3>
-<p>When you’re done install clone the <a href="https://github.com/GRIAC-Bioinformatics/postcodElapse" class="external-link">repo</a>,
-you must enable lfs for the repo and pull the large file. See shell
-commands below.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">git</span> lfs install</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">git</span> lfs pull</span></code></pre></div>
+<p>When you’re done install clone:
+<code>https://github.com/GRIAC-Bioinformatics/postcodElapse</code>, you
+must enable lfs for the repo and pull the large file. See shell commands
+below.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">git</span> lfs install</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">git</span> lfs pull</span></code></pre></div>
 <p>This will download ELAPSE.tif it’s 125mb, too large for a normal
-commit but necessary for postcodElapse. If you wish to work on the
+commit but required by postcodElapse. If you wish to work on the
 development version switch to the <code>dev</code> branch.</p>
 </div>
 <div class="section level3">
@@ -100,47 +103,39 @@ on the <code>dev</code> branch. To quickly install the package in the
 Rstudio ribbon navigate: Build &gt; Load All, this quickly loads the
 package into your R session. Or you can use the keybind:
 <code>Control + Shift + L</code>.</p>
-<p>This does not build the documentation to do that build the package:
-Build &gt; Install package or <code>Control + Shift + B</code>.</p>
+<p>To build the package fully in the ribbon: Build &gt; Install package
+or use the <code>Control + Shift + B</code> keybind, this also updates
+any changed documentation.</p>
 <p>If you are done developing and wish to build postcodElapse for
 release on GitHub. Run Build &gt; Build Source Package, this will create
 an archive (.tar.gz or .zip) in the parent directory of the repo. This
-file is the built package, add this file to the new release.</p>
+file is the built package, add this file to the new release. Don’t
+forget to merge dev to main, and update the documentation.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="creating-documentation">Creating documentation<a class="anchor" aria-label="anchor" href="#creating-documentation"></a>
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
 <div class="section level3">
 <h3 id="in-package">In package<a class="anchor" aria-label="anchor" href="#in-package"></a>
 </h3>
 <p>In package documentation is what you read when you run
 ?postcodElapse. It is made using roxygen from the comment blocks above
-the function definitions in the package. See their <a href="https://roxygen2.r-lib.org/" class="external-link">page</a> on how to use.</p>
+the function definitions in the postcodElapse. See their <a href="https://roxygen2.r-lib.org/" class="external-link">page</a> on usage.</p>
 </div>
 <div class="section level3">
 <h3 id="github-pages">GitHub pages<a class="anchor" aria-label="anchor" href="#github-pages"></a>
 </h3>
-<p>GitHub pages is where you found this article in addition to the more
+<p>GitHub pages is where you find this article in addition to the more
 expanded guide style documentation. This is made using
 <code>pkgdown</code>. Creating new articles or vignettes is done with
 <code>usethis</code>, by running in the R console
-<code><a href="https://usethis.r-lib.org/reference/use_vignette.html" class="external-link">usethis::use_article</a></code> or
-<code><a href="https://usethis.r-lib.org/reference/use_vignette.html" class="external-link">usethis::use_vignette</a></code>.</p>
-<p>Building the site locally can be done by running
-<code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site</a></code>. To publish the documentation first
-push your changes to the repo. Then run
-<code>pkdown::deploy_to_branch()</code>, and wait for github to deploy
-the page. You can check it’s status in the <a href="https://github.com/GRIAC-Bioinformatics/postcodElapse/deployments" class="external-link">deploments</a>.</p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="code-walk">Code walk<a class="anchor" aria-label="anchor" href="#code-walk"></a>
-</h2>
-<div class="section level3">
-<h3 id="bag">BAG<a class="anchor" aria-label="anchor" href="#bag"></a>
-</h3>
-<p>Oke for I am going to walk trough the code for “8933DV” with BAG.</p>
+<code><a href="https://usethis.r-lib.org/reference/use_vignette.html" class="external-link">usethis::use_article()</a></code> or
+<code><a href="https://usethis.r-lib.org/reference/use_vignette.html" class="external-link">usethis::use_vignette()</a></code>. For usage refer to the <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> and <a href="https://usethis.r-lib.org/" class="external-link">usethis</a> documentation.</p>
+<p>Building the and viewing the site locally can be done by running
+<code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code>. To publish the documentation on
+GitHub pages run <code><a href="https://pkgdown.r-lib.org/reference/deploy_to_branch.html" class="external-link">pkgdown::deploy_to_branch()</a></code> and wait till
+GitHub fully deploys the page.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

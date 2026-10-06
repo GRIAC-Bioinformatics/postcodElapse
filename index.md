@@ -1,57 +1,59 @@
 # postcodElapse
 
-Estimate PM_(2.5), BC, NO₂ and O₃ concentrations for Dutch postal codes.
-Trough the [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model
-in addition with a postcode database containing the geographic location
-of every postcode in the Netherlands. My thanks go to [Kees de
-Hoogh](https://orcid.org/0000-0001-5974-2007) for developing & allowing
-the use of [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) in
-this package.
+postcodElapse is an R-package for estimating concentrations of fine
+particulate matter (PM_(2.5)), black carbon (BC), nitrogen dioxide (NO₂)
+& ozone (O₃) at the level of Dutch postcodes. The package utilizes the
+ELAPSE model and a postcode database containing the geographic
+coordinate fo all postcodes in the Netherlands.
+
+We gratefully acknowledge [Kees de
+Hoogh](https://orcid.org/0000-0001-5974-2007) for developing the
+[ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model and for
+granting permission to use it within this package.
 
 ## Quick start
 
 ### R-spatial
 
-Ensure you have the [terra](https://rspatial.github.io/terra/index.html)
-R-package correctly installed for you OS. See [their
-guide](https://rspatial.github.io/terra/index.html#installation)
+postcodElapse relies on the terra package for spatial data handling.
+Ensure that terra is correctly install for your operating system,
+detailed instructions are available in the [terra installation
+guide.](https://rspatial.github.io/terra/index.html#installation)
 
 ### Postcode database
 
-postcodElapse **requires** an extra database containing the location of
-Dutch postcodes. Two are supported, download at-least one:
+postcodElapse **requires** an external database with the spatial
+locations of Dutch postcodes. Two data sources are currently supported;
+download at least one of the following:
 
 - [Basisregistratie Adressen en
-  Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml)(BAG) Note
-  8Gigabyte in size.
+  Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml)(BAG) size: 8GB
 - [Postcode6](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)(PC6)
-  Only 0.5Gigabyte.
+  size: 0.5GB
 
-### Install
+### Installation
 
 Download the latest
-[release](https://github.com/GRIAC-Bioinformatics/postcodElapse/releases)of
-postcodElapse, run the command below pointing at the package install
-file.
+[release](https://github.com/GRIAC-Bioinformatics/postcodElapse/releases)
+of postcodElapse, and install the package using:
 
 ``` r
 
 install.packages("postcodElapse_0.1.1.tar.gz")
 ```
 
-If you are using Rstudio you can use the packages tab, nativate there
-press the “Install” button. Change “Install from:” to “Package Archive
-…”, open the file picker. Navigate to and open the downloaded
-postcodElapse release. Press “Install”, and youre done.
+If you are using RStudio, you can also install via the *Packages* pane:
 
-## Examples
+1.  Open the *Packages* pane and click *Install*.
+2.  Set *Install from* to *Package Archive File (.zip; .tar.gz)*.
+3.  Use the file picker to navigate to the downloaded postcodElapse
+    release.
+4.  Select the file an click *Install*.
 
-The example below shows how to get air pollution estimates using the
-[`postcodElapse()`](https://griac-bioinformatics.github.io/postcodElapse/reference/postcodElapse.md)
-function, using the BAG database. The same command works for PC6 just
-change the path.
+## Example
 
 ``` r
+
 library(postcodelapse)
 
 postcodElapse(c("8917DD", "9712CP"), "bag-light.gpkg")
@@ -68,13 +70,16 @@ postcodElapse(c("8917DD", "9712CP"), "bag-light.gpkg")
 #>   PM25FULLt_max
 #> 1      15.64734
 #> 2      15.03059
-
-Both postcodes are public locations!
 ```
 
-Postcodes must be four numbers two letters an example: `1234AB`.
-postcodElapse will remove any added spaces and capitalize all letters,
-keep this in mind when joining data.
+## Spacial plotting
+
+For visualization, we recommend using the
+[tidyverse](https://tidyverse.org/) ecosystem in conjunction with
+[tidyterra](https://dieghernan.github.io/tidyterra/). Further details
+and examples are provided in the [spacial
+plotting](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html)
+article.
 
 # FAQ
 
@@ -94,9 +99,3 @@ it is not saved in .Rdata when restarting R or Rstudio, thus you get the
 null-pointer errors. In the future ensure you don’t save any instances
 of spatrasters in your .Rdata and or at the end off your scripts run
 `rm(<your elapse varabele>)`.
-
-## I want to plot elapse
-
-I recommend you use the [tidyverse](https://tidyverse.org/) &
-[tidyterra](https://dieghernan.github.io/tidyterra/) packages. See
-`vignette("Spacial-plotting")` for more info on plotting.

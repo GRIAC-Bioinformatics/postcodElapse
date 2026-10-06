@@ -55,58 +55,67 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="postcodelapse">postcodElapse<a class="anchor" aria-label="anchor" href="#postcodelapse"></a>
 </h1></div>
-<p>Estimate PM<sub>2.5</sub>, BC, NO<sub>2</sub> and O<sub>3</sub> concentrations for Dutch postal codes. Trough the <a href="https://doi.org/10.1016/j.envint.2018.07.036" class="external-link">ELAPSE</a> model in addition with a postcode database containing the geographic location of every postcode in the Netherlands. My thanks go to <a href="https://orcid.org/0000-0001-5974-2007" class="external-link">Kees de Hoogh</a> for developing &amp; allowing the use of <a href="https://doi.org/10.1016/j.envint.2018.07.036" class="external-link">ELAPSE</a> in this package.</p>
+<p>postcodElapse is an R-package for estimating concentrations of fine particulate matter (PM<sub>2.5</sub>), black carbon (BC), nitrogen dioxide (NO<sub>2</sub>) &amp; ozone (O<sub>3</sub>) at the level of Dutch postcodes. The package utilizes the ELAPSE model and a postcode database containing the geographic coordinate fo all postcodes in the Netherlands.</p>
+<p>We gratefully acknowledge <a href="https://orcid.org/0000-0001-5974-2007" class="external-link">Kees de Hoogh</a> for developing the <a href="https://doi.org/10.1016/j.envint.2018.07.036" class="external-link">ELAPSE</a> model and for granting permission to use it within this package.</p>
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
 <div class="section level3">
 <h3 id="r-spatial">R-spatial<a class="anchor" aria-label="anchor" href="#r-spatial"></a>
 </h3>
-<p>Ensure you have the <a href="https://rspatial.github.io/terra/index.html" class="external-link">terra</a> R-package correctly installed for you OS. See <a href="https://rspatial.github.io/terra/index.html#installation" class="external-link">their guide</a></p>
+<p>postcodElapse relies on the terra package for spatial data handling. Ensure that terra is correctly install for your operating system, detailed instructions are available in the <a href="https://rspatial.github.io/terra/index.html#installation" class="external-link">terra installation guide.</a></p>
 </div>
 <div class="section level3">
 <h3 id="postcode-database">Postcode database<a class="anchor" aria-label="anchor" href="#postcode-database"></a>
 </h3>
-<p>postcodElapse <strong>requires</strong> an extra database containing the location of Dutch postcodes. Two are supported, download at-least one:</p>
+<p>postcodElapse <strong>requires</strong> an external database with the spatial locations of Dutch postcodes. Two data sources are currently supported; download at least one of the following:</p>
 <ul>
 <li>
-<a href="https://service.pdok.nl/lv/bag/atom/bag.xml" class="external-link">Basisregistratie Adressen en Gebouwen</a>(BAG) Note 8Gigabyte in size.</li>
+<a href="https://service.pdok.nl/lv/bag/atom/bag.xml" class="external-link">Basisregistratie Adressen en Gebouwen</a>(BAG) size: 8GB</li>
 <li>
-<a href="https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml" class="external-link">Postcode6</a>(PC6) Only 0.5Gigabyte.</li>
+<a href="https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml" class="external-link">Postcode6</a>(PC6) size: 0.5GB</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
+<h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
-<p>Download the latest <a href="https://github.com/GRIAC-Bioinformatics/postcodElapse/releases" class="external-link">release</a>of postcodElapse, run the command below pointing at the package install file.</p>
+<p>Download the latest <a href="https://github.com/GRIAC-Bioinformatics/postcodElapse/releases" class="external-link">release</a> of postcodElapse, and install the package using:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"postcodElapse_0.1.1.tar.gz"</span><span class="op">)</span></span></code></pre></div>
-<p>If you are using Rstudio you can use the packages tab, nativate there press the “Install” button. Change “Install from:” to “Package Archive …”, open the file picker. Navigate to and open the downloaded postcodElapse release. Press “Install”, and youre done.</p>
+<p>If you are using RStudio, you can also install via the <em>Packages</em> pane:</p>
+<ol style="list-style-type: decimal">
+<li>Open the <em>Packages</em> pane and click <em>Install</em>.</li>
+<li>Set <em>Install from</em> to <em>Package Archive File (.zip; .tar.gz)</em>.</li>
+<li>Use the file picker to navigate to the downloaded postcodElapse release.</li>
+<li>Select the file an click <em>Install</em>.</li>
+</ol>
 </div>
 </div>
 <div class="section level2">
-<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>The example below shows how to get air pollution estimates using the <code><a href="reference/postcodElapse.html">postcodElapse()</a></code> function, using the BAG database. The same command works for PC6 just change the path.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(postcodelapse)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">postcodElapse</span>(<span class="fu">c</span>(<span class="st">"8917DD"</span>, <span class="st">"9712CP"</span>), <span class="st">"bag-light.gpkg"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; Guessed db type to be: BAG</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt;   postcode n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 1   8917DD 5   1.637956    28.14168    60.92046    46.11469    76.49764</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 2   9712CP 8   1.735555    30.59054    62.10056    45.57095    78.96525</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt;   PM25FULLt_avg BCFULL_min NO2FULL_min O3FULLa_min O3FULLc_min O3FULLw_min</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 1      15.56012   1.587243    26.23440    59.97551    45.97074    75.85178</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; 2      14.88488   1.731880    30.42194    61.52977    45.15801    78.12064</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;   PM25FULLt_min BCFULL_max NO2FULL_max O3FULLa_max O3FULLc_max O3FULLw_max</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 1      15.34430   1.674501    29.16468    62.22285    46.32064    77.46275</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 2      14.84346   1.736912    30.79544    62.71158    45.99726    79.83811</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;   PM25FULLt_max</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 1      15.64734</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 2      15.03059</span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>Both postcodes are public locations<span class="sc">!</span></span></code></pre></div>
-<p>Postcodes must be four numbers two letters an example: <code>1234AB</code>. postcodElapse will remove any added spaces and capitalize all letters, keep this in mind when joining data.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">postcodelapse</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/postcodElapse.html">postcodElapse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"8917DD"</span>, <span class="st">"9712CP"</span><span class="op">)</span>, <span class="st">"bag-light.gpkg"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Guessed db type to be: BAG</span></span>
+<span><span class="co">#&gt;   postcode n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg</span></span>
+<span><span class="co">#&gt; 1   8917DD 5   1.637956    28.14168    60.92046    46.11469    76.49764</span></span>
+<span><span class="co">#&gt; 2   9712CP 8   1.735555    30.59054    62.10056    45.57095    78.96525</span></span>
+<span><span class="co">#&gt;   PM25FULLt_avg BCFULL_min NO2FULL_min O3FULLa_min O3FULLc_min O3FULLw_min</span></span>
+<span><span class="co">#&gt; 1      15.56012   1.587243    26.23440    59.97551    45.97074    75.85178</span></span>
+<span><span class="co">#&gt; 2      14.88488   1.731880    30.42194    61.52977    45.15801    78.12064</span></span>
+<span><span class="co">#&gt;   PM25FULLt_min BCFULL_max NO2FULL_max O3FULLa_max O3FULLc_max O3FULLw_max</span></span>
+<span><span class="co">#&gt; 1      15.34430   1.674501    29.16468    62.22285    46.32064    77.46275</span></span>
+<span><span class="co">#&gt; 2      14.84346   1.736912    30.79544    62.71158    45.99726    79.83811</span></span>
+<span><span class="co">#&gt;   PM25FULLt_max</span></span>
+<span><span class="co">#&gt; 1      15.64734</span></span>
+<span><span class="co">#&gt; 2      15.03059</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="spacial-plotting">Spacial plotting<a class="anchor" aria-label="anchor" href="#spacial-plotting"></a>
+</h2>
+<p>For visualization, we recommend using the <a href="https://tidyverse.org/" class="external-link">tidyverse</a> ecosystem in conjunction with <a href="https://dieghernan.github.io/tidyterra/" class="external-link">tidyterra</a>. Further details and examples are provided in the <a href="https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html">spacial plotting</a> article.</p>
 </div>
 </div>
 <div class="section level1">
@@ -119,11 +128,6 @@
   NULL value passed as symbol address</code></pre>
 <p>Remove the currently loaded ELAPSE variable from your environment with <code><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm()</a></code>. And run <code><a href="reference/loadElapse.html">loadElapse()</a></code> again.</p>
 <p>ELAPSE is loaded as an spatraster which contains a reference to the files containing the actual data. This reference also called an pointer it is not saved in .Rdata when restarting R or Rstudio, thus you get the null-pointer errors. In the future ensure you don’t save any instances of spatrasters in your .Rdata and or at the end off your scripts run <code>rm(&lt;your elapse varabele&gt;)</code>.</p>
-</div>
-<div class="section level2">
-<h2 id="i-want-to-plot-elapse">I want to plot elapse<a class="anchor" aria-label="anchor" href="#i-want-to-plot-elapse"></a>
-</h2>
-<p>I recommend you use the <a href="https://tidyverse.org/" class="external-link">tidyverse</a> &amp; <a href="https://dieghernan.github.io/tidyterra/" class="external-link">tidyterra</a> packages. See <code>vignette("Spacial-plotting")</code> for more info on plotting.</p>
 </div>
 </div>
 
