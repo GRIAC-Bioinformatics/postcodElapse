@@ -69,7 +69,7 @@ In this example, the BAG GeoPackage is use. The output structure is identical wh
 
 - The postcode
 - Number of buildings in that postcode `n`.
-- Mean, minimum & maximum pollutant concentration in µg/m<sup>3</sup>.
+- Mean, minimum & maximum air pollutant concentration in µg/m<sup>3</sup>.
 
 If you wish to experiment with lager sets of postcodes, the files `postcode100.rda` & `postcode1000.rda` are available in the package's extdata. See below for an example.
 
