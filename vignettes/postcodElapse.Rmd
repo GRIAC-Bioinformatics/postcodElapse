@@ -112,4 +112,4 @@ head(estimates, 5)
 ```
 
 ## Further information
-With the material above, you can utilize postcodElapse for basic exposure estimations. For plotting spacial data an extra article is provided.
+With the material above, you can utilize postcodElapse for basic exposure estimations. For plotting spacial data an extra [article](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html) is provided.
