@@ -26,19 +26,15 @@ This will download ELAPSE.tif it's 125mb, too large for a normal commit but nece
 ### Building
 Again if you are implementing new features or fixing bugs please work on the `dev` branch. To quickly install the package in the Rstudio ribbon navigate: Build > Load All, this quickly loads the package into your R session. Or you can use the keybind: `Control + Shift + L`. 
 
-This does not build the documentation to do that build the package: Build > Install package or `Control + Shift + B`.
+To build the package fully in the ribbon: Build > Install package or use the `Control + Shift + B` keybind, this also updates any changed documentation.
 
-If you are done developing and wish to build postcodElapse for release on GitHub. Run Build > Build Source Package, this will create an archive (.tar.gz or .zip) in the parent directory of the repo. This file is the built package, add this file to the new release.
+If you are done developing and wish to build postcodElapse for release on GitHub. Run Build > Build Source Package, this will create an archive (.tar.gz or .zip) in the parent directory of the repo. This file is the built package, add this file to the new release. Don't forget to merge dev to main, and update the documentation.
 
-## Creating documentation
+## Documentation
 ### In package
-In package documentation is what you read when you run ?postcodElapse. It is made using roxygen from the comment blocks above the function definitions in the package. See their [page](https://roxygen2.r-lib.org/) on how to use.
+In package documentation is what you read when you run ?postcodElapse. It is made using roxygen from the comment blocks above the function definitions in the package. See their [page](https://roxygen2.r-lib.org/) on usage.
 
 ### GitHub pages
-GitHub pages is where you found this article in addition to the more expanded guide style documentation. This is made using `pkgdown`. Creating new articles or vignettes is done with `usethis`, by running in the R console `usethis::use_article` or `usethis::use_vignette`.
+GitHub pages is where you found this article in addition to the more expanded guide style documentation. This is made using `pkgdown`. Creating new articles or vignettes is done with `usethis`, by running in the R console `usethis::use_article` or `usethis::use_vignette`. For full usage see their [docs](https://pkgdown.r-lib.org/)
 
 Building the site locally can be done by running `pkgdown::build_site`. To publish the documentation first push your changes to the repo. Then run `pkdown::deploy_to_branch()`, and wait for github to deploy the page. You can check it's status in the [deploments](https://github.com/GRIAC-Bioinformatics/postcodElapse/deployments).
-
-## Code walk
-### BAG
-Oke for I am going to walk trough the code for "8933DV" with BAG.
