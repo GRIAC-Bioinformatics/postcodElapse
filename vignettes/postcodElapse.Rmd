@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```
 
 ## Overview
-The goal of postcodElapse package is to estimate concentrations of fine particulate matter (PM<sub>2.5</sub>), black carbon (BC), nitrogen dioxide (NO<sub>2</sub>) & ozone (O<sub>3</sub>) for Dutch postcodes ,as an alternative to on-site measurements.
+The goal of postcodElapse package is to estimate concentrations of fine particulate matter (PM<sub>2.5</sub>), black carbon (BC), nitrogen dioxide (NO<sub>2</sub>) & ozone (O<sub>3</sub>) for Dutch postcodes, as an alternative to on-site measurements.
 
 This is achieved by:
 
