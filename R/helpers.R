@@ -3,7 +3,7 @@
 #' This attempts to format any given string as an Dutch postcodes. IE. four numbers
 #' followed by two capital letters, no spaces between each character. `formatPostcode()`
 #' removes any spaces in a given string and capitalizes all letters. In addition
-#' extra numbers and or letters are checked for, resulting in an if they are present.
+#' checks for unwanted extra numbers and letters, errors in case one is found.
 #'
 #' @param postcodes Strings to be formatted as postcode
 #' @returns Strings formatted as postcodes
