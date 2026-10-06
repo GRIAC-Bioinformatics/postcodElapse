@@ -173,6 +173,10 @@ pollutionFromBag <- function(postcodes, bag_path, elapse_path, ...) {
   # A simple cbind() will do the data is already lined up.
   postcode_pollution <- cbind(geo_pollution, postcode_geo)
 
+  # Cleanup
+  postcode_pollution <- postcode_pollution |>
+    dplyr::select(!c(ID))
+
   return(postcode_pollution)
 }
 

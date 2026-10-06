@@ -1,6 +1,6 @@
 Package: postcodElapse
-Title: calculate air quaility estimates for Duch postal codes using ELAPSE
-Version: 0.1.1
+Title: Estimate air pollution concentrations for Dutch postcodes using ELAPSE.
+Version: 0.1.2
 Authors@R: 
     person("Berend", "Veldthuis", , "b.veldthuis@umcg.nl", role = c("aut", "cre"))
 Author: Berend Veldthuis [aut, cre]
