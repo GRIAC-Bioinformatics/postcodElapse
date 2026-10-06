@@ -1,6 +1,6 @@
 Package: postcodElapse
 Title: Estimate air pollution concentrations for Dutch postcodes using ELAPSE.
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: 
     person("Berend", "Veldthuis", , "b.veldthuis@umcg.nl", role = c("aut", "cre"))
 Author: Berend Veldthuis [aut, cre]
