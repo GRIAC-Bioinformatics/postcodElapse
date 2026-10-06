@@ -53,7 +53,7 @@ loadElapse <- function(path) {
   return(elapse_stack)
 }
 
-# Simple helper that attempts to guess the type of an given gpkg database.
+# Simple helper that attempts to guess the type of an given GeoPackage.
 # I would like to use hashing but that doesn't play nice with differing R versions
 # and platforms.
 checkDb <- function(path) {
