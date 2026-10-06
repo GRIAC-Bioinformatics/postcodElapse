@@ -14,11 +14,7 @@ library(tidyverse)
 library(tidyterra)
 ```
 
-# :construction: UNDER CONSTRUCTION :construction:
-This article is incomplete!
-
-
-Within this article the methods to plot the underlying spacial data postcodElapse work with will be explained. For this some preperation is required, we recommend installing the [tidyverse](https://tidyverse.org/), [tidyterra](https://dieghernan.github.io/tidyterra/articles/tidyterra.html) and [ggpubr](https://rpkgs.datanovia.com/ggpubr/) R-packages. These work together for spacial plotting in R.
+Within this article the methods to plot the underlying spacial data postcodElapse work with will be explained. For this some preparation is required, we recommend installing the [tidyverse](https://tidyverse.org/), [tidyterra](https://dieghernan.github.io/tidyterra/articles/tidyterra.html) and [ggpubr](https://rpkgs.datanovia.com/ggpubr/) R-packages. These work together to enable spacial plotting in R.
 
 ## ELAPSE
 To understand the spacial relation of postcodes some map is required, the best equivalent postcodElapse provides is ELAPSE. See the block below to load and plot ELAPSE.
@@ -35,7 +31,7 @@ ggplot() +
   facet_wrap(~ lyr)
 ```
 
-When plotting we recommend passing your data directly to the geom with the data argument. When no facet is added the average of all layers in ELAPSE will be plotted to a single figure. Use the `$` operator to specify which layer to plot. All concentrations are in the fill aesthetic with the unit: µg/m<sup>3</sup>. We recommend to assign the fill colour with: `?tidyterra::scale_fill_grass_c()`. 
+When plotting we recommend passing your data directly to the geom with the data argument. When no facet is added the average of all layers in ELAPSE will be plotted to a single figure. Use the `$` operator to specify which layer to plot. All concentrations are in the fill aesthetic, we recommend to scale the fill colour with: `?tidyterra::scale_fill_grass_c()`.
 
 ## Accessing postcode geo-locations
 To plot the location of postcodes on ELAPSE the geo-location is *required* these are provided trough: `pollutionFromBag()` and `pollutionFromPc6()`. These function output spacial data in the `geom` column. Plotting this data is achieved with `geom_sf()`, see the block below.
@@ -54,7 +50,7 @@ ggplot() +
 ```
 
 ## Zooming and insetting
-Due to the scale of ELAPSE in many situations it is hard to visualize the data. To alleviate this we recommend creating an inset plot and marking the location of the zoom on the main plot. postcodElapse provides helpers to do this see the block below.
+Due to the scale of ELAPSE it may be hard to visualize the data. To alleviate this we recommend creating an inset plot and marking the location of the zoom on the main plot. postcodElapse provides helpers to do this see the block below.
 
 ```{r insetting}
 library(ggpubr) #used to arrange plots into one figure.
@@ -64,7 +60,7 @@ main <- ggplot() +
   geom_sf(data = pc6, aes(geometry = geom), fill = "purple", alpha = 0.7) +
   geom_sf(data = bag, aes(geometry = geom), colour = "orange", alpha = 0.7) +
   scale_fill_grass_c(transform = "log10") +
-  geom_rectFeature(pc6[100, ], 5000) +
+  geom_rectFeature(pc6[100, ], 5000) + # Mark the location of interest
   labs(fill = bquote("log"[10]~" Concentration NO"[2]~"µg/m"^3)) +
   theme(legend.position = "top")
 
@@ -73,8 +69,9 @@ inset <- ggplot() +
   geom_sf(data = pc6, aes(geometry = geom), fill = "purple", alpha = 0.7) +
   geom_sf(data = bag, aes(geometry = geom), colour = "orange", alpha = 0.7) +
   scale_fill_grass_c(transform = "log10") +
-  coord_zoomFeature(pc6[100, ])
+  coord_zoomFeature(pc6[100, ]) # Zoom into the location of interest
 
+# Make and annotate the combined figure.
 fig <- ggarrange(main, inset, ncol = 2,
                  common.legend = TRUE,
                  legend.grob = get_legend(main))

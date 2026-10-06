@@ -34,7 +34,7 @@ Currently, postcodElapse supports two GeoPackages:
 
 1. [BAG (Basisregistratie Adressen en Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml) <br>The bag data set contains for every building in the Netherlands its location & postcode. Size 8GB
 
-1. [PC6 (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml) <br> provides the geographic area for every Dutch postcode.
+1. [PC6 (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml) <br> provides the geographic area for every Dutch postcode. Size 0.6GB
 
 The package assumes that these GeoPackages have been stored locally in a location accessible to your R session.
 
@@ -112,4 +112,4 @@ head(estimates, 5)
 ```
 
 ## Further information
-With the material above, you can utilize postcodElapse for basic exposure estimations. For plotting spacial data an extra article is provided.
+With the material above, you can utilize postcodElapse for basic exposure estimations. For plotting spacial data an extra [article](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html) is provided.
