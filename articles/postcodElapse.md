@@ -82,7 +82,7 @@ Columns include:
   extracted from ELAPSE, concentration are in µg/m³.
 
 If you wish to experiment with lager sets of postcodes, the files
-`postcodes100.rda` & `postcodes1000.rda` are available in the package’s
+`postcode100.rda` & `postcode1000.rda` are available in the package’s
 extdata. See below for an example.
 
 ``` r
