@@ -16,11 +16,13 @@ formatPostcode <- function(postcodes) {
   # Format all postcodes as PC6, e.g. for numbers directly followed by two capital letters
   postcodes_pc6 <- toupper(gsub(" ", "", postcodes))
 
-  # Check if we did it correctly using regex. Otherwise error
-  for(index in length(postcodes_pc6)) {
-    if(!grepl("^[1-9][0-9]{3}?[A-Z]{2}$", postcodes_pc6[index])) {
-      stop("Unable to format: \"", postcodes[index], "\" as PC6")
-    }
+  # We need to check if we have more van 4 numbers and 2 capital-letters.
+  # The formatting can't fix that, but we can error about it.
+  badly_formatted <- !grepl("^[1-9][0-9]{3}?[A-Z]{2}$", postcodes_pc6)
+  if(TRUE %in% badly_formatted) {
+
+    cat("Error: failed to format postcodes:", postcodes[badly_formatted])
+    stop()
   }
 
   return(postcodes_pc6)
