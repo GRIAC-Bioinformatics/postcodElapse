@@ -3,8 +3,8 @@
 postcodElapse is an R-package for estimating concentrations of fine
 particulate matter (PM_(2.5)), black carbon (BC), nitrogen dioxide (NO₂)
 & ozone (O₃) at the level of Dutch postcodes. The package utilizes the
-ELAPSE model and a postcode database containing the geographic
-coordinate fo all postcodes in the Netherlands.
+ELAPSE model and an GeoPackage containing spatial data on all postcodes
+in the Netherlands.
 
 We gratefully acknowledge [Kees de
 Hoogh](https://orcid.org/0000-0001-5974-2007) for developing the
@@ -22,9 +22,9 @@ guide.](https://rspatial.github.io/terra/index.html#installation)
 
 ### Postcode database
 
-postcodElapse **requires** an external database with the spatial
-locations of Dutch postcodes. Two databases are currently supported,
-download at least one of the following:
+postcodElapse **requires** an external database with the spatial data on
+Dutch postcodes. Two databases are currently supported, download at
+least one of the following:
 
 - [Basisregistratie Adressen en
   Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml)(BAG) size: 8GB
@@ -75,7 +75,7 @@ postcodElapse(c("8917DD", "9712CP"), "bag-light.gpkg")
 Above we estimated the pollution concentration in two postcodes with
 BAG. The `n` column contains the amount of buildings per postcode, all
 estimates are in µg/m³. When using PC6 the output is structured the
-same, missing data is marked with NA.
+same, missing data is marked with *NA*.
 
 ## Spacial plotting
 

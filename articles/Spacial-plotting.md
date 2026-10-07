@@ -1,7 +1,7 @@
 # Spacial plotting
 
 Within this article the methods to plot the underlying spacial data
-postcodElapse work with will be explained. For this some preparation is
+postcodElapse works with will be explored. For this some preparation is
 required, we recommend installing the
 [tidyverse](https://tidyverse.org/),
 [tidyterra](https://dieghernan.github.io/tidyterra/articles/tidyterra.html)
@@ -30,12 +30,12 @@ ggplot() +
 
 ![](Spacial-plotting_files/figure-html/plotting%20ELAPSE-1.png)
 
-When plotting we recommend passing your data directly to the geom with
-the data argument. When no facet is added the average of all layers in
-ELAPSE will be plotted to a single figure. Use the `$` operator to
-specify which layer to plot. All concentrations are in the fill
-aesthetic, we recommend to scale the fill colour with:
-`?tidyterra::scale_fill_grass_c()`.
+When plotting pass the data directly to the geom with the data argument.
+When no facet is added the average of all layers in ELAPSE will be
+plotted to a single figure. Use the `$` operator on the ELAPSE variable
+to plot an specific layer. Default values retrieved form ELAPSE are
+mapped to the fill aesthetic, we recommend to scale the fill colour
+with: `?tidyterra::scale_fill_grass_c()`.
 
 ## Accessing postcode geo-locations
 
@@ -45,7 +45,7 @@ To plot the location of postcodes on ELAPSE the geo-location is
 and
 [`pollutionFromPc6()`](https://griac-bioinformatics.github.io/postcodElapse/reference/pollutionFromPc6.md).
 These function output spacial data in the `geom` column. Plotting this
-data is achieved with
+data can be done with
 [`geom_sf()`](https://ggplot2.tidyverse.org/reference/ggsf.html), see
 the block below.
 
@@ -114,3 +114,9 @@ When using `geom_rectFeatrue()` and
 [`coord_zoomFeature()`](https://griac-bioinformatics.github.io/postcodElapse/reference/coord_zoomFeature.md)
 ensure you subset entire rows using `[12, ]`. Additionally air pollution
 estimate are always returned in alpha numeric order.
+
+With this material you can plot the spacial data of postcodes and
+ELAPSE. To see all plotting options we recommend the documentation of
+[ggplot](https://ggplot2.tidyverse.org/),
+[tidyterra](https://dieghernan.github.io/tidyterra/articles/tidyterra.html)
+and [ggpubr](https://rpkgs.datanovia.com/ggpubr/index.html_)

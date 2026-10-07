@@ -66,7 +66,7 @@
     
     
 <p>Within this article the methods to plot the underlying spacial data
-postcodElapse work with will be explained. For this some preparation is
+postcodElapse works with will be explored. For this some preparation is
 required, we recommend installing the <a href="https://tidyverse.org/" class="external-link">tidyverse</a>, <a href="https://dieghernan.github.io/tidyterra/articles/tidyterra.html" class="external-link">tidyterra</a>
 and <a href="https://rpkgs.datanovia.com/ggpubr/" class="external-link">ggpubr</a> R-packages.
 These work together to enable spacial plotting in R.</p>
@@ -88,12 +88,12 @@ below to load and plot ELAPSE.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">lyr</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SpatRaster&gt;</span> resampled to <span style="color: #0000BB;">500490</span> cells.</span></span></code></pre></div>
 <p><img src="Spacial-plotting_files/figure-html/plotting%20ELAPSE-1.png" class="r-plt" alt="" width="700"></p>
-<p>When plotting we recommend passing your data directly to the geom
-with the data argument. When no facet is added the average of all layers
-in ELAPSE will be plotted to a single figure. Use the <code>$</code>
-operator to specify which layer to plot. All concentrations are in the
-fill aesthetic, we recommend to scale the fill colour with:
-<code>?tidyterra::scale_fill_grass_c()</code>.</p>
+<p>When plotting pass the data directly to the geom with the data
+argument. When no facet is added the average of all layers in ELAPSE
+will be plotted to a single figure. Use the <code>$</code> operator on
+the ELAPSE variable to plot an specific layer. Default values retrieved
+form ELAPSE are mapped to the fill aesthetic, we recommend to scale the
+fill colour with: <code>?tidyterra::scale_fill_grass_c()</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="accessing-postcode-geo-locations">Accessing postcode geo-locations<a class="anchor" aria-label="anchor" href="#accessing-postcode-geo-locations"></a>
@@ -102,7 +102,7 @@ fill aesthetic, we recommend to scale the fill colour with:
 <em>required</em> these are provided trough:
 <code><a href="../reference/pollutionFromBag.html">pollutionFromBag()</a></code> and <code><a href="../reference/pollutionFromPc6.html">pollutionFromPc6()</a></code>.
 These function output spacial data in the <code>geom</code> column.
-Plotting this data is achieved with <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf()</a></code>, see the
+Plotting this data can be done with <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf()</a></code>, see the
 block below.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/postcode100.rds"</span>, package <span class="op">=</span> <span class="st">"postcodElapse"</span><span class="op">)</span></span>
@@ -162,6 +162,9 @@ do this see the block below.</p>
 <code><a href="../reference/coord_zoomFeature.html">coord_zoomFeature()</a></code> ensure you subset entire rows using
 <code>[12, ]</code>. Additionally air pollution estimate are always
 returned in alpha numeric order.</p>
+<p>With this material you can plot the spacial data of postcodes and
+ELAPSE. To see all plotting options we recommend the documentation of <a href="https://ggplot2.tidyverse.org/" class="external-link">ggplot</a>, <a href="https://dieghernan.github.io/tidyterra/articles/tidyterra.html" class="external-link">tidyterra</a>
+and <a href="https://rpkgs.datanovia.com/ggpubr/index.html_" class="external-link">ggpubr</a></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

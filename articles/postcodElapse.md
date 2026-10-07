@@ -2,29 +2,29 @@
 
 ## Overview
 
-The goal of postcodElapse package is to estimate concentrations of fine
+The goal of postcodElapse is to estimate concentrations of fine
 particulate matter (PM_(2.5)), black carbon (BC), nitrogen dioxide (NO₂)
-& ozone (O₃) for Dutch postcodes, as an alternative to on-site
-measurements.
+& ozone (O₃) at the level of Dutch postcodes, as an alternative to
+on-site measurements.
 
 This is achieved by:
 
-1.  Obtaining geo-location information (points or areas) from one of two
-    supported postcodes databases.
+1.  Obtaining spatial information (points or areas) from one of two
+    supported GeoPackages.
 2.  Linking these locations to the ELAPSE air quality model.
 3.  Calculate postcode-level air pollutant concentration estimates.
 
 This vignette is a guide on setting up, running and utilizing
 postcodElapse.
 
-## Postcode databases
+## GeoPackages
 
-As described above, the geographic location or area of an postcode is
-**required** in order to estimate air pollutant concentrations.
-postcodElapse expects this data to be provided as GeoPackage (.gpkg)
-files, a format commonly used for storing spatial data.
+As described above, the spatial data on a postcode is **required** in
+order to estimate air pollutant concentrations. postcodElapse expects
+this data to be provided in GeoPackage (.gpkg) files, a format commonly
+used for storing spatial data.
 
-Currently, postcodElapse supports two GeoPackages:
+Currently, postcodElapse supports two:
 
 1.  [BAG (Basisregistratie Adressen en
     Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml)\
@@ -33,7 +33,7 @@ Currently, postcodElapse supports two GeoPackages:
 
 2.  [PC6
     (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)\
-    provides the geographic area for every Dutch postcode. Size 0.6GB
+    provides the geographic area for every Dutch postcode. Size 0.5GB
 
 The package assumes that these GeoPackages have been stored locally in a
 location accessible to your R session.
@@ -70,15 +70,16 @@ postcodElapse("9713AV", "bag-light.gpkg")
 #> 1       15.4238
 ```
 
-In this example, the BAG GeoPackage is use. The output structure is
-identical when using PC6; only the database path needs adjusting.
+In this example, the BAG is used. The output structure is identical when
+using PC6; only the database path needs adjusting.
 [`postcodElapse()`](https://griac-bioinformatics.github.io/postcodElapse/reference/postcodElapse.md)
 returns a data frame in which each row corresponds to a postcode.
 Columns include:
 
 - The postcode
 - Number of buildings in that postcode `n`.
-- Mean, minimum & maximum air pollutant concentration in µg/m³.
+- Mean, minimum & maximum concentration for all air pollutants, in
+  µg/m³.
 
 If you wish to experiment with lager sets of postcodes, the files
 `postcode100.rds` & `postcode1000.rds` are available in the package’s
@@ -124,7 +125,7 @@ head(estimates, 5)
 
 ## Further information
 
-With the material above, you can utilize postcodElapse for basic
-exposure estimations. For plotting spacial data an extra
+With the material above, you can utilize the core functionality
+postcodElapse provides. For plotting spacial data an extra
 [article](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html)
 is provided.
