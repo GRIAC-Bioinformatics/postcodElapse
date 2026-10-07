@@ -1,11 +1,8 @@
-# ggplot annotation that draws an rect around a given spacial feature.
+# Draws squares encompassing spacial features.
 
-Computes the center of a set of given spacial features then creates a
-[`geom_rect()`](https://ggplot2.tidyverse.org/reference/geom_tile.html)
-centered and encompassing those spacial features. Meant to mark
-locations on spacial plots. Or used in combination with
-[`coord_zoomFeature()`](https://griac-bioinformatics.github.io/postcodElapse/reference/coord_zoomFeature.md)
-to create inset plots.
+Takes a collection of spacial features calculates the position and size
+of an square encompassing all given spacial features. Builds and outputs
+ggplot geom_rect to draw that square on a plot.
 
 ## Usage
 
@@ -46,7 +43,7 @@ data <- pollutionFromBag("9726AC", "bag-light.gpkg")
 
 elapse <- loadElapse()
 
-# We are drawing a box around 3rd building.
+# Draw a box around 3rd building.
 ggplot() +
    geom_spatraster(data = elapse$NO2FULL) +
    geom_sf(data = data, aes(geometry = geom), colour = "red") +

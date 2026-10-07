@@ -51,7 +51,8 @@ the block below.
 
 ``` r
 
-load(system.file("extdata/postcode100.rda", package = "postcodElapse"))
+path <- system.file("extdata/postcode100.rds", package = "postcodElapse")
+postcode100 <- readRDS(path)
 
 pc6 <- pollutionFromPc6(postcode100, "../../../data/cbs_pc6_2024.gpkg")
 #> Guessed db type to be: PC6

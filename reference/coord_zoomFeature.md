@@ -1,8 +1,9 @@
-# Zoom into given feature
+# Zoom into given spacial feature
 
-Takes an simple features collection, i.e. the output form the
-polltionFrom\*() functions. Computes the center of the given features
-and builds a coordinate transform that zooms into the given features.
+Takes the output from ether `pollutionFrom*()` function, calculates the
+center of all given special features. Outputs ggplot coord to zoom into
+the given features. Works best when sub-setting a lager data-set zooming
+into a feature of interest.
 
 ## Usage
 
@@ -18,7 +19,7 @@ coord_zoomFeature(data, r = 2000, ...)
 
 - r:
 
-  radius of the zoom.
+  radius of the zoom, is always a square.
 
 ## IMPORTANT NOTE
 

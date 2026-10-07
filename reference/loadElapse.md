@@ -1,8 +1,9 @@
-# Load ELAPSE form given file or extdata.
+# Load ELAPSE from given file or internal.
 
-Expects ELAPSE as a single tiff grey-scale image containing multiple
-layers. When path argument is not given loads ELAPSE from
-inst/ELAPSE.tif otherwise uses the given path.
+ELAPSE is a model representing air pollutant concentrations across
+Europe, published by Kees de Hoogh. This function expects it as a tiff
+grey-scale image with multiple layers per modeled air pollutant. When no
+file is given the internal verion is loaded.
 
 ## Usage
 

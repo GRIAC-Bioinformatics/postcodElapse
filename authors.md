@@ -11,12 +11,12 @@ Source:
 
 Veldthuis B (2026). *postcodElapse: Estimate air pollution
 concentrations for Dutch postcodes using ELAPSE.*. R package version
-0.1.3, <https://github.com/GRIAC-Bioinformatics/postcodElapse>.
+0.1.4, <https://github.com/GRIAC-Bioinformatics/postcodElapse>.
 
     @Manual{,
       title = {postcodElapse: Estimate air pollution concentrations for Dutch postcodes using ELAPSE.},
       author = {Berend Veldthuis},
       year = {2026},
-      note = {R package version 0.1.3},
+      note = {R package version 0.1.4},
       url = {https://github.com/GRIAC-Bioinformatics/postcodElapse},
     }

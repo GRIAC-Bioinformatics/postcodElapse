@@ -3,13 +3,13 @@
 ## All functions
 
 - [`coord_zoomFeature()`](https://griac-bioinformatics.github.io/postcodElapse/reference/coord_zoomFeature.md)
-  : Zoom into given feature
+  : Zoom into given spacial feature
 - [`formatPostcode()`](https://griac-bioinformatics.github.io/postcodElapse/reference/formatPostcode.md)
   : Format strings as Dutch postcodes.
 - [`geom_rectFeature()`](https://griac-bioinformatics.github.io/postcodElapse/reference/geom_rectFeature.md)
-  : ggplot annotation that draws an rect around a given spacial feature.
+  : Draws squares encompassing spacial features.
 - [`loadElapse()`](https://griac-bioinformatics.github.io/postcodElapse/reference/loadElapse.md)
-  : Load ELAPSE form given file or extdata.
+  : Load ELAPSE from given file or internal.
 - [`pollutionFromBag()`](https://griac-bioinformatics.github.io/postcodElapse/reference/pollutionFromBag.md)
   : Estimate air pollution concentrations in a postcode with BAG
   database.

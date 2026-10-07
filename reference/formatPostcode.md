@@ -3,8 +3,8 @@
 This attempts to format any given string as an Dutch postcodes. IE. four
 numbers followed by two capital letters, no spaces between each
 character. `formatPostcode()` removes any spaces in a given string and
-capitalizes all letters. In addition extra numbers and or letters are
-checked for, resulting in an if they are present.
+capitalizes all letters. In addition checks for unwanted extra numbers
+and letters, errors in case one is found.
 
 ## Usage
 

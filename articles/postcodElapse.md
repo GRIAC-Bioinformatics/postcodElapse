@@ -81,13 +81,13 @@ Columns include:
 - Mean, minimum & maximum air pollutant concentration in µg/m³.
 
 If you wish to experiment with lager sets of postcodes, the files
-`postcode100.rda` & `postcode1000.rda` are available in the package’s
+`postcode100.rds` & `postcode1000.rds` are available in the package’s
 extdata. See below for an example.
 
 ``` r
 
-path <- system.file("extdata/postcode100.rda", package = "postcodElapse")
-load(path)
+path <- system.file("extdata/postcode100.rds", package = "postcodElapse")
+postcode100 <- readRDS(path)
 
 head(postcode100)
 #> [1] "2694BH" "9686NH" "2514LX" "6835MH" "9717LD" "3723EK"
