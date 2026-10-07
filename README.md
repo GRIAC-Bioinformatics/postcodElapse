@@ -24,7 +24,7 @@ Download the latest
 postcodElapse, and install the package using:
 
 ``` r
-install.packages("postcodElapse_0.1.3.tar.gz")
+install.packages("postcodElapse_0.1.4.tar.gz")
 ```
 
 If you are using RStudio, you can also install via the *Packages* pane:
