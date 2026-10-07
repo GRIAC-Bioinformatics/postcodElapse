@@ -1,9 +1,9 @@
-#' Zoom into given feature
+#' Zoom into given spacial feature
 #'
 #' @description
-#' Takes an simple features collection, i.e. the output form the polltionFrom*()
-#' functions. Computes the center of the given features and builds a coordinate
-#' transform that zooms into the given features.
+#' Takes the output from ether `pollutionFrom*()` function, calculates the center
+#' of all given special features. Outputs ggplot coord to zoom into the given features.
+#' Works best when sub-setting a lager data-set zooming into a feature of interest.
 #'
 #' @section IMPORTANT NOTE:
 #' When passing a specific feature ensure you index using `[2, ]`. Add the comma
@@ -11,7 +11,7 @@
 #' entire row!
 #'
 #' @param data data to zoom on.
-#' @param r radius of the zoom.
+#' @param r radius of the zoom, is always a square.
 #'
 #' @examples
 #' \dontrun{
@@ -63,13 +63,12 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
   )
 }
 
-#' ggplot annotation that draws an rect around a given spacial feature.
+#' Draws squares encompassing spacial features.
 #'
 #' @description
-#' Computes the center of a set of given spacial features then creates a
-#' `geom_rect()` centered and encompassing those spacial features. Meant to mark
-#' locations on spacial plots. Or used in combination with `coord_zoomFeature()`
-#' to create inset plots.
+#' Takes a collection of spacial features calculates the position and size of an
+#' square encompassing all given spacial features. Builds and outputs ggplot
+#' geom_rect to draw that square on a plot.
 #'
 #' @section IMPORTANT NOTE:
 #' When passing a specific feature ensure you index using `[2, ]`. Add the comma
@@ -91,7 +90,7 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
 #'
 #' elapse <- loadElapse()
 #'
-#' # We are drawing a box around 3rd building.
+#' # Draw a box around 3rd building.
 #' ggplot() +
 #'    geom_spatraster(data = elapse$NO2FULL) +
 #'    geom_sf(data = data, aes(geometry = geom), colour = "red") +

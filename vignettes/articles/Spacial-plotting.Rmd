@@ -37,7 +37,8 @@ When plotting we recommend passing your data directly to the geom with the data 
 To plot the location of postcodes on ELAPSE the geo-location is *required* these are provided trough: `pollutionFromBag()` and `pollutionFromPc6()`. These function output spacial data in the `geom` column. Plotting this data is achieved with `geom_sf()`, see the block below.
 
 ```{r layerd}
-load(system.file("extdata/postcode100.rda", package = "postcodElapse"))
+path <- system.file("extdata/postcode100.rds", package = "postcodElapse")
+postcode100 <- readRDS(path)
 
 pc6 <- pollutionFromPc6(postcode100, "../../../data/cbs_pc6_2024.gpkg")
 bag <- pollutionFromBag(postcode100, "../../../data/bag-light.gpkg")

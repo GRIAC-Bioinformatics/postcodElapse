@@ -3,7 +3,7 @@
 #' This attempts to format any given string as an Dutch postcodes. IE. four numbers
 #' followed by two capital letters, no spaces between each character. `formatPostcode()`
 #' removes any spaces in a given string and capitalizes all letters. In addition
-#' extra numbers and or letters are checked for, resulting in an if they are present.
+#' checks for unwanted extra numbers and letters, errors in case one is found.
 #'
 #' @param postcodes Strings to be formatted as postcode
 #' @returns Strings formatted as postcodes
@@ -16,22 +16,25 @@ formatPostcode <- function(postcodes) {
   # Format all postcodes as PC6, e.g. for numbers directly followed by two capital letters
   postcodes_pc6 <- toupper(gsub(" ", "", postcodes))
 
-  # Check if we did it correctly using regex. Otherwise error
-  for(index in length(postcodes_pc6)) {
-    if(!grepl("^[1-9][0-9]{3}?[A-Z]{2}$", postcodes_pc6[index])) {
-      stop("Unable to format: \"", postcodes[index], "\" as PC6")
-    }
+  # We need to check if we have more van 4 numbers and 2 capital-letters.
+  # The formatting can't fix that, but we can error about it.
+  badly_formatted <- !grepl("^[1-9][0-9]{3}?[A-Z]{2}$", postcodes_pc6)
+  if(TRUE %in% badly_formatted) {
+
+    cat("Error: failed to format postcodes:", postcodes[badly_formatted])
+    stop()
   }
 
   return(postcodes_pc6)
 }
 
-#' Load ELAPSE form given file or extdata.
+#' Load ELAPSE from given file or internal.
 #'
 #' @description
-#' Expects ELAPSE as a single tiff grey-scale image containing multiple layers.
-#' When path argument is not given loads ELAPSE from inst/ELAPSE.tif otherwise
-#' uses the given path.
+#' ELAPSE is a model representing air pollutant concentrations across Europe,
+#' published by Kees de Hoogh. This function expects it as a tiff grey-scale image
+#' with multiple layers per modeled air pollutant. When no file is given the internal
+#' verion is loaded.
 #'
 #' @param path *optional* Path to .tif image containing ELAPSE
 #' @return terra spatraster
@@ -51,7 +54,7 @@ loadElapse <- function(path) {
   return(elapse_stack)
 }
 
-# Simple helper that attempts to guess the type of an given gpkg database.
+# Simple helper that attempts to guess the type of an given GeoPackage.
 # I would like to use hashing but that doesn't play nice with differing R versions
 # and platforms.
 checkDb <- function(path) {
