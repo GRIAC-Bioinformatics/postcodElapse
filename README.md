@@ -1,17 +1,27 @@
 # postcodElapse
 
-postcodElapse is an R-package for estimating concentrations of fine particulate matter (PM<sub>2.5</sub>), black carbon (BC), nitrogen dioxide (NO<sub>2</sub>) & ozone (O<sub>3</sub>) at the level of Dutch postcodes. The package utilizes the ELAPSE model and a postcode database containing the geographic coordinate fo all postcodes in the Netherlands.
+postcodElapse is an R-package for estimating concentrations of fine particulate
+matter (PM<sub>2.5</sub>), black carbon (BC), nitrogen dioxide (NO<sub>2</sub>)
+& ozone (O<sub>3</sub>) at the level of Dutch postcodes. The package utilizes
+  the ELAPSE model and an GeoPackage containing spatial data on all postcodes in
+  the Netherlands.
 
-We gratefully acknowledge [Kees de Hoogh](https://orcid.org/0000-0001-5974-2007) for developing the [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model and for granting permission to use it within this package.
+We gratefully acknowledge [Kees de Hoogh](https://orcid.org/0000-0001-5974-2007)
+for developing the [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model
+and for granting permission to use it within this package.
 
 ## Quick start
 
 ### R-spatial
-postcodElapse relies on the terra package for spatial data handling. Ensure that terra is correctly install for your operating system, detailed instructions are available in the [terra installation guide.](https://rspatial.github.io/terra/index.html#installation)
+postcodElapse relies on the terra package for spatial data handling. Ensure that
+terra is correctly install for your operating system, detailed instructions are
+available in the [terra installation guide.](https://rspatial.github.io/terra/index.html#installation)
 
 ### Postcode database
 
-postcodElapse **requires** an external database with the spatial locations of Dutch postcodes. Two databases are currently supported, download at least one of the following:
+postcodElapse **requires** an external database with the spatial data on Dutch
+postcodes. Two databases are currently supported, download at least one of the
+following:
 
 - [Basisregistratie Adressen en Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml)(BAG) 
   size: 8GB
@@ -19,7 +29,7 @@ postcodElapse **requires** an external database with the spatial locations of Du
   size: 0.5GB
 
 ### Installation
-Download the latest 
+Download the latest
 [release](https://github.com/GRIAC-Bioinformatics/postcodElapse/releases) of
 postcodElapse, and install the package using:
 
@@ -55,10 +65,17 @@ postcodElapse(c("8917DD", "9712CP"), "bag-light.gpkg")
 #> 2      15.03059
 ```
 
-Above we estimated the pollution concentration in two postcodes with BAG. The `n` column contains the amount of buildings per postcode, all estimates are in µg/m<sup>3</sup>. When using PC6 the output is structured the same, missing data is marked with NA.
+Above we estimated the pollution concentration in two postcodes with BAG. The
+`n` column contains the amount of buildings per postcode, all estimates are in
+µg/m<sup>3</sup>. When using PC6 the output is structured the same, missing data
+is marked with *NA*.
 
 ## Spacial plotting
-For visualization, we recommend using the [tidyverse](https://tidyverse.org/) ecosystem in conjunction with [tidyterra](https://dieghernan.github.io/tidyterra/). Further details and examples are provided in the [spacial plotting](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html) article.
+For visualization, we recommend using the [tidyverse](https://tidyverse.org/)
+ecosystem in conjunction with
+[tidyterra](https://dieghernan.github.io/tidyterra/). Further details and
+examples are provided in the [spacial plotting](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html)
+article.
 
 # FAQ
 ## I am getting null-pointer errors!
@@ -67,10 +84,10 @@ Error in .Call(list(name = "CppField__get", address = <pointer: (nil)>,  :
   NULL value passed as symbol address
 ```
 Remove the currently loaded ELAPSE variable from your environment with `rm()`.
-And run `loadElapse()` again. 
+And run `loadElapse()` again.
 
-ELAPSE is loaded as an spatraster which contains a reference to the files 
-containing the actual data. This reference also called an pointer it is not saved 
-in .Rdata when restarting R or Rstudio, thus you get the null-pointer errors. 
-In the future ensure you don't save any instances of spatrasters in your .Rdata
-and or at the end off your scripts run `rm(<your elapse varabele>)`.
+ELAPSE is loaded as an spatraster which contains a reference to the files
+containing the actual data. This reference also called an pointer it is not
+saved in .Rdata when restarting R or Rstudio, thus you get the null-pointer
+errors. In the future ensure you don't save any instances of spatrasters in your
+.Rdata and or at the end off your scripts run `rm(<your elapse varabele>)`.
