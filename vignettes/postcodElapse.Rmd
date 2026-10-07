@@ -74,7 +74,7 @@ In this example, the BAG GeoPackage is use. The output structure is identical wh
 If you wish to experiment with lager sets of postcodes, the files `postcode100.rds` & `postcode1000.rds` are available in the package's extdata. See below for an example.
 
 ```r
-path <- system.file("extdata/postcode100.rda", package = "postcodElapse")
+path <- system.file("extdata/postcode100.rds", package = "postcodElapse")
 postcode100 <- readRDS(path)
 
 head(postcode100)
