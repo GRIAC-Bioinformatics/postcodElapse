@@ -93,9 +93,9 @@ data.</p>
 <p>Currently, postcodElapse supports two:</p>
 <ol style="list-style-type: decimal">
 <li><p><a href="https://service.pdok.nl/lv/bag/atom/bag.xml" class="external-link">BAG
-(Basisregistratie Adressen en Gebouwen</a> <br> The bag data set
-contains for every building in the Netherlands its location &amp;
-postcode. Size 8GB</p></li>
+(Basisregistratie Adressen en Gebouwen</a> <br> Contains for every
+building in the Netherlands its location &amp; postcode. Size
+8GB</p></li>
 <li><p><a href="https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml" class="external-link">PC6
 (Postcode6)</a> <br> provides the geographic area for every Dutch
 postcode. Size 0.5GB</p></li>
@@ -121,15 +121,6 @@ the path to the relevant GeoPackage.</p>
 <span><span class="co">#&gt;   PM25FULLt_min BCFULL_max NO2FULL_max O3FULLa_max O3FULLc_max O3FULLw_max</span></span>
 <span><span class="co">#&gt; 1       15.4238   1.878818    31.10718    60.04483     44.7972    77.85616</span></span>
 <span><span class="co">#&gt;   PM25FULLt_max</span></span>
-<span><span class="co">#&gt; 1       15.4238</span></span>
-<span><span class="co">#&gt; Guessed db type to be: BAG</span></span>
-<span><span class="co">#&gt;   postcode n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg</span></span>
-<span><span class="co">#&gt; 1   9713AV 1   1.878818    31.10718    60.04483     44.7972    77.85616</span></span>
-<span><span class="co">#&gt;   PM25FULLt_avg BCFULL_min NO2FULL_min O3FULLa_min O3FULLc_min O3FULLw_min</span></span>
-<span><span class="co">#&gt; 1       15.4238   1.878818    31.10718    60.04483     44.7972    77.85616</span></span>
-<span><span class="co">#&gt;   PM25FULLt_min BCFULL_max NO2FULL_max O3FULLa_max O3FULLc_max O3FULLw_max</span></span>
-<span><span class="co">#&gt; 1       15.4238   1.878818    31.10718    60.04483     44.7972    77.85616</span></span>
-<span><span class="co">#&gt;   PM25FULLt_max</span></span>
 <span><span class="co">#&gt; 1       15.4238</span></span></code></pre></div>
 <p>In this example, the BAG is used. The output structure is identical
 when using PC6; only the database path needs adjusting.
@@ -143,7 +134,8 @@ corresponds to a postcode. Columns include:</p>
 </ul>
 <p>If you wish to experiment with lager sets of postcodes, the files
 <code>postcode100.rds</code> &amp; <code>postcode1000.rds</code> are
-available in the package’s extdata. See below for an example.</p>
+available in the package’s extdata. See the example below on
+loading.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/postcode100.rds"</span>, package <span class="op">=</span> <span class="st">"postcodElapse"</span><span class="op">)</span></span>
 <span><span class="va">postcode100</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span>
@@ -179,10 +171,6 @@ available in the package’s extdata. See below for an example.</p>
 <span><span class="co">#&gt; 3      17.53084</span></span>
 <span><span class="co">#&gt; 4      15.79089</span></span>
 <span><span class="co">#&gt; 5      16.56795</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="further-information">Further information<a class="anchor" aria-label="anchor" href="#further-information"></a>
-</h2>
 <p>With the material above, you can utilize the core functionality
 postcodElapse provides. For plotting spacial data an extra <a href="https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html">article</a>
 is provided.</p>

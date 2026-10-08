@@ -30,12 +30,13 @@ ggplot() +
 
 ![](Spacial-plotting_files/figure-html/plotting%20ELAPSE-1.png)
 
-When plotting pass the data directly to the geom with the data argument.
-When no facet is added the average of all layers in ELAPSE will be
-plotted to a single figure. Use the `$` operator on the ELAPSE variable
-to plot an specific layer. Default values retrieved form ELAPSE are
-mapped to the fill aesthetic, we recommend to scale the fill colour
-with: `?tidyterra::scale_fill_grass_c()`.
+When plotting we recommend passing the data directly to an geom via the
+*data* argument, this makes layering multiple datasets into one figure
+easy. The concentration retrieved from ELAPSE are mapped to the fill
+aestetic, to change the colour scheme we recommend
+`?tidyterra::scale_fill_grass_c()`. When no facet is used a single panel
+will be plotted containing mean pollutant concentrations. Subset ELAPSE
+with the `$` operator to plot a single layer.
 
 ## Accessing postcode geo-locations
 
@@ -73,8 +74,12 @@ ggplot() +
 
 Due to the scale of ELAPSE it may be hard to visualize the data. To
 alleviate this we recommend creating an inset plot and marking the
-location of the zoom on the main plot. postcodElapse provides helpers to
-do this see the block below.
+location of the zoom on the main plot. postcodElapse provides
+[`geom_rectFeature()`](https://griac-bioinformatics.github.io/postcodElapse/reference/geom_rectFeature.md)
+and
+[`coord_zoomFeature()`](https://griac-bioinformatics.github.io/postcodElapse/reference/coord_zoomFeature.md)
+to annotate and zoom into specific spatial features. Below is an example
+showing how to use these helpers with ggpubr to build an inset.
 
 ``` r
 

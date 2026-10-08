@@ -28,8 +28,8 @@ Currently, postcodElapse supports two:
 
 1.  [BAG (Basisregistratie Adressen en
     Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml)\
-    The bag data set contains for every building in the Netherlands its
-    location & postcode. Size 8GB
+    Contains for every building in the Netherlands its location &
+    postcode. Size 8GB
 
 2.  [PC6
     (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)\
@@ -59,15 +59,6 @@ postcodElapse("9713AV", "bag-light.gpkg")
 #> 1       15.4238   1.878818    31.10718    60.04483     44.7972    77.85616
 #>   PM25FULLt_max
 #> 1       15.4238
-#> Guessed db type to be: BAG
-#>   postcode n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg
-#> 1   9713AV 1   1.878818    31.10718    60.04483     44.7972    77.85616
-#>   PM25FULLt_avg BCFULL_min NO2FULL_min O3FULLa_min O3FULLc_min O3FULLw_min
-#> 1       15.4238   1.878818    31.10718    60.04483     44.7972    77.85616
-#>   PM25FULLt_min BCFULL_max NO2FULL_max O3FULLa_max O3FULLc_max O3FULLw_max
-#> 1       15.4238   1.878818    31.10718    60.04483     44.7972    77.85616
-#>   PM25FULLt_max
-#> 1       15.4238
 ```
 
 In this example, the BAG is used. The output structure is identical when
@@ -83,7 +74,7 @@ Columns include:
 
 If you wish to experiment with lager sets of postcodes, the files
 `postcode100.rds` & `postcode1000.rds` are available in the package’s
-extdata. See below for an example.
+extdata. See the example below on loading.
 
 ``` r
 
@@ -122,8 +113,6 @@ head(estimates, 5)
 #> 4      15.79089
 #> 5      16.56795
 ```
-
-## Further information
 
 With the material above, you can utilize the core functionality
 postcodElapse provides. For plotting spacial data an extra

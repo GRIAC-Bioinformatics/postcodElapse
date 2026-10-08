@@ -73,9 +73,9 @@ postcodElapse(c("8917DD", "9712CP"), "bag-light.gpkg")
 ```
 
 Above we estimated the pollution concentration in two postcodes with
-BAG. The `n` column contains the amount of buildings per postcode, all
-estimates are in µg/m³. When using PC6 the output is structured the
-same, missing data is marked with *NA*.
+BAG. All air pollutant statistics are in µg/m³. The `n` column contains
+how many buildings where found per postcode. When using PC6 the output
+has the same structure, any missing data is marked with *NA*.
 
 ## Spacial plotting
 
