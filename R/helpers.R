@@ -1,9 +1,10 @@
 #' Format strings as Dutch postcodes.
 #'
-#' This attempts to format any given string as an Dutch postcodes. IE. four numbers
-#' followed by two capital letters, no spaces between each character. `formatPostcode()`
-#' removes any spaces in a given string and capitalizes all letters. In addition
-#' checks for unwanted extra numbers and letters, errors in case one is found.
+#' This attempts to format any given string as an Dutch postcodes. IE. four
+#' numbers followed by two capital letters, no spaces between each character.
+#' `formatPostcode()` removes any spaces in a given string and capitalizes all
+#' letters. In addition checks for unwanted extra numbers and letters, errors
+#' in case one is found.
 #'
 #' @param postcodes Strings to be formatted as postcode
 #' @returns Strings formatted as postcodes
@@ -13,13 +14,14 @@
 #'
 #' @export
 formatPostcode <- function(postcodes) {
-  # Format all postcodes as PC6, e.g. for numbers directly followed by two capital letters
+  # Format all postcodes as PC6, e.g. four numbers directly followed
+  # by two capital letters
   postcodes_pc6 <- toupper(gsub(" ", "", postcodes))
 
   # We need to check if we have more van 4 numbers and 2 capital-letters.
   # The formatting can't fix that, but we can error about it.
   badly_formatted <- !grepl("^[1-9][0-9]{3}?[A-Z]{2}$", postcodes_pc6)
-  if(TRUE %in% badly_formatted) {
+  if (TRUE %in% badly_formatted) {
 
     cat("Error: failed to format postcodes:", postcodes[badly_formatted])
     stop()
@@ -32,9 +34,9 @@ formatPostcode <- function(postcodes) {
 #'
 #' @description
 #' ELAPSE is a model representing air pollutant concentrations across Europe,
-#' published by Kees de Hoogh. This function expects it as a tiff grey-scale image
-#' with multiple layers per modeled air pollutant. When no file is given the internal
-#' verion is loaded.
+#' published by Kees de Hoogh. This function expects it as a tiff grey-scale
+#' image with multiple layers per modeled air pollutant. When no file is given
+#' the internal version is loaded.
 #'
 #' @param path *optional* Path to .tif image containing ELAPSE
 #' @return terra spatraster
@@ -42,10 +44,10 @@ formatPostcode <- function(postcodes) {
 #' @export
 loadElapse <- function(path) {
   # No path, get it for the internal ELAPSE.
-  if(missing(path)) {
+  if (missing(path)) {
     path <- system.file("ELAPSE.tif", package = "postcodElapse")
   }
-  if(!file.exists(path)) {
+  if (!file.exists(path)) {
     stop(path, " Does not exist.")
   }
 
@@ -55,8 +57,8 @@ loadElapse <- function(path) {
 }
 
 # Simple helper that attempts to guess the type of an given GeoPackage.
-# I would like to use hashing but that doesn't play nice with differing R versions
-# and platforms.
+# I would like to use hashing but that doesn't play nice with differing R
+# versions and platforms.
 checkDb <- function(path) {
   # sf::st_layers() gives metadata about the given gpkg, here it is used to
   # determine the type of the database, if you want to add another DB just check
@@ -68,9 +70,11 @@ checkDb <- function(path) {
   })
 
   # Do the test
-  if(identical(metadata$name, c("pand", "verblijfsobject", "ligplaats", "standplaats", "woonplaats"))) {
+  if (identical(metadata$name,
+                c("pand", "verblijfsobject", "ligplaats", "standplaats", "woonplaats")
+  )) {
     type <- "BAG"
-  } else if(identical(metadata$name, c("postcode6"))) {
+  } else if (identical(metadata$name, c("postcode6"))) {
     type <- "PC6"
   } else {
     stop("Unable to determine type of database: ", path)
