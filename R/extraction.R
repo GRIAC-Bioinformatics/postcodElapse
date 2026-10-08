@@ -30,14 +30,15 @@
 #' postcodElapse(c("8 9 3 3 DV", "9 713 Gz", "1071 xx"), "cbs_pc6_2024.gpkg")
 #' }
 #' @export
-postcodElapse <- function(postcodes, database_path, database_type = "GUESS", elapse_path) {
-  if(missing(database_path)) {
+postcodElapse <- function(postcodes, database_path, database_type = "GUESS",
+                          elapse_path) {
+  if (missing(database_path)) {
     stop("Extra postcode database required, see ?postcodElapse on downloading.")
   }
-  if(!file.exists(database_path)) {
+  if (!file.exists(database_path)) {
     stop(database_path, " does not exist.")
   }
-  if(!tools::file_ext(database_path) == "gpkg") {
+  if (!tools::file_ext(database_path) == "gpkg") {
     stop(database_path, " Is not an gpkg file.")
   }
 
@@ -45,12 +46,12 @@ postcodElapse <- function(postcodes, database_path, database_type = "GUESS", ela
 
   # Check the type of the database given by the user, so we know how to extract
   # the data. And whine about it when we cannot identify the db.
-  if(database_type == "GUESS") {
+  if (database_type == "GUESS") {
     database_type <- checkDb(database_path)
   }
 
   database_type <- toupper(database_type)
-  if(database_type == "BAG") {
+  if (database_type == "BAG") {
     postcode_pollution <- pollutionFromBag(postcodes,
                                            bag_path = database_path,
                                            elapse_path,
@@ -70,7 +71,7 @@ postcodElapse <- function(postcodes, database_path, database_type = "GUESS", ela
     # In case are missing postcodes warn about it.
     count_given_postcodes <- length(postcodes)
     count_found_postcodes <- nrow(postcode_pollution_stats)
-    if(count_found_postcodes != count_given_postcodes) {
+    if (count_found_postcodes != count_given_postcodes) {
       warning("Found ", count_found_postcodes, " postcodes of the given ",
               count_given_postcodes, ".")
     }
@@ -79,8 +80,10 @@ postcodElapse <- function(postcodes, database_path, database_type = "GUESS", ela
     # Due to PC6 containing areas the statistics happen in pollutionFromPc6()
     # Just need to remove the unwanted geometry.
     postcode_pollution_stats <- sf::st_drop_geometry(
-      pollutionFromPc6(postcodes,pc6_path = database_path, elapse_path,
-                       pass_db_check = TRUE))
+                                pollutionFromPc6(postcodes,
+                                                lpc6_path = database_path,
+                                                elapse_path,
+                                                pass_db_check = TRUE))
 
   } else {
     stop("Nonsense db_type: ", database_type) # In case something goes wrong
@@ -132,18 +135,18 @@ pollutionFromBag <- function(postcodes, bag_path, elapse_path, ...) {
   # if pass_db_check set assume that the parent did it's homework and checked the
   # database, otherwise we have to check ourselves. This is so we don't check the
   # db type twice, which is time consuming, each check takes 3100ms.
-  if(is.null(pass_db_check)) {
-    if(checkDb(bag_path) != "BAG") {
+  if (is.null(pass_db_check)) {
+    if (checkDb(bag_path) != "BAG") {
       stop(bag_path, " Does not seem to be an BAG database.")
     }
   }
 
   # Try to use ELAPSE from the parent-env, doesn't exist then.
-  if(missing(elapse_path) && !exists("elapse")) {
+  if (missing(elapse_path) && !exists("elapse")) {
     elapse <- loadElapse()
   }
   # when given a path for ELAPSE always use it.
-  if(!missing(elapse_path)) {
+  if (!missing(elapse_path)) {
     elapse <- loadElapse(elapse)
   }
 
@@ -161,9 +164,10 @@ pollutionFromBag <- function(postcodes, bag_path, elapse_path, ...) {
                               query = paste0("SELECT geom, postcode FROM verblijfsobject WHERE postcode IN ",
                                              postcodes_query))
 
-  if(nrow(postcode_geo) < 1) {
-    stop("None of the given postcodes where found in the BAG. This should not happen.
-            Check if the schema changed in the database. And update the query accordingly.")
+  if (nrow(postcode_geo) < 1) {
+    stop("None of the given postcodes where found in the BAG. This should not
+         happen. Check if the schema changed in the database. And update the
+         query accordingly.")
   }
 
   # Use the positions we just got to extract air quality form ELAPSE.
@@ -224,16 +228,16 @@ pollutionFromPc6 <- function(postcodes, pc6_path, elapse_path, ...) {
   # if pass_db_check set assume that the parent did it's homework and checked the
   # database. Otherwise we have to check ourselves. This is so we don't check the
   # db type twice, which is expensive, each check takes 3100ms.
-  if(is.null(pass_db_check)) {
-    if(checkDb(pc6_path) != "PC6") {
+  if (is.null(pass_db_check)) {
+    if (checkDb(pc6_path) != "PC6") {
       stop(pc6_path, " Does not seem to be an PC6 database.")
     }
   }
 
-  if(missing(elapse_path) && !exists("elapse")) {
+  if (missing(elapse_path) && !exists("elapse")) {
     elapse <- loadElapse()
   }
-  if(!missing(elapse_path)) {
+  if (!missing(elapse_path)) {
     elapse <- loadElapse(elapse_path)
   }
 
@@ -267,11 +271,13 @@ pollutionFromPc6 <- function(postcodes, pc6_path, elapse_path, ...) {
   postcodes_pollution_stats <- cbind(postcode_geo, geo_pollution_stats)
 
   # Rename some columns and clean the output.
+  # PC6 contains the multiple instances of value -99997. I am assuming this is
+  # meant to me NA thus replacing with NA.
   postcodes_pollution_stats <- postcodes_pollution_stats |>
     dplyr::select(!c(ID_avg, ID_min, ID_max)) |>
     dplyr::rename(n = aantal_woningen) |>
     dplyr::rename(postcode = postcode6) |>
-    dplyr::mutate(dplyr::across(dplyr::where(is.numeric), ~dplyr::na_if(., -99997))) # these values exist in PC6 for an unknown reason, just replace it with NA.
+    dplyr::mutate(dplyr::across(dplyr::where(is.numeric), ~dplyr::na_if(., -99997)))
 
   return(postcodes_pollution_stats)
 }

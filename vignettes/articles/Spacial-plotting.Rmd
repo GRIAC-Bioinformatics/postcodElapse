@@ -14,10 +14,17 @@ library(tidyverse)
 library(tidyterra)
 ```
 
-Within this article the methods to plot the underlying spacial data postcodElapse work with will be explained. For this some preparation is required, we recommend installing the [tidyverse](https://tidyverse.org/), [tidyterra](https://dieghernan.github.io/tidyterra/articles/tidyterra.html) and [ggpubr](https://rpkgs.datanovia.com/ggpubr/) R-packages. These work together to enable spacial plotting in R.
+Within this article the methods to plot the underlying spacial data
+postcodElapse works with will be explored. For this some preparation is
+required, we recommend installing the [tidyverse](https://tidyverse.org/),
+[tidyterra](https://dieghernan.github.io/tidyterra/articles/tidyterra.html) and
+[ggpubr](https://rpkgs.datanovia.com/ggpubr/) R-packages. These work together to
+enable spacial plotting in R.
 
 ## ELAPSE
-To understand the spacial relation of postcodes some map is required, the best equivalent postcodElapse provides is ELAPSE. See the block below to load and plot ELAPSE.
+To understand the spacial relation of postcodes some map is required, the best
+equivalent postcodElapse provides is ELAPSE. See the block below to load and
+plot ELAPSE.
 
 ```{r plotting ELAPSE}
 library(tidyverse)
@@ -31,10 +38,13 @@ ggplot() +
   facet_wrap(~ lyr)
 ```
 
-When plotting we recommend passing your data directly to the geom with the data argument. When no facet is added the average of all layers in ELAPSE will be plotted to a single figure. Use the `$` operator to specify which layer to plot. All concentrations are in the fill aesthetic, we recommend to scale the fill colour with: `?tidyterra::scale_fill_grass_c()`.
+When plotting we recommend passing the data directly to an geom via the *data* argument, this makes layering multiple datasets into one figure easy. The concentration retrieved from ELAPSE are mapped to the fill aestetic, to change the colour scheme we recommend `?tidyterra::scale_fill_grass_c()`. When no facet is used a single panel will be plotted containing mean pollutant concentrations. Subset ELAPSE with the `$` operator to plot a single layer.
 
 ## Accessing postcode geo-locations
-To plot the location of postcodes on ELAPSE the geo-location is *required* these are provided trough: `pollutionFromBag()` and `pollutionFromPc6()`. These function output spacial data in the `geom` column. Plotting this data is achieved with `geom_sf()`, see the block below.
+To plot the location of postcodes on ELAPSE the geo-location is *required* these
+are provided trough: `pollutionFromBag()` and `pollutionFromPc6()`. These
+function output spacial data in the `geom` column. Plotting this data can be
+done with `geom_sf()`, see the block below.
 
 ```{r layerd}
 path <- system.file("extdata/postcode100.rds", package = "postcodElapse")
@@ -51,7 +61,7 @@ ggplot() +
 ```
 
 ## Zooming and insetting
-Due to the scale of ELAPSE it may be hard to visualize the data. To alleviate this we recommend creating an inset plot and marking the location of the zoom on the main plot. postcodElapse provides helpers to do this see the block below.
+Due to the scale of ELAPSE it may be hard to visualize the data. To alleviate this we recommend creating an inset plot and marking the location of the zoom on the main plot. postcodElapse provides `geom_rectFeature()` and `coord_zoomFeature()` to annotate and zoom into specific spatial features. Below is an example showing how to use these helpers with ggpubr to build an inset.
 
 ```{r insetting}
 library(ggpubr) #used to arrange plots into one figure.
@@ -83,3 +93,5 @@ annotate_figure(fig,
 ```
 
 When using `geom_rectFeatrue()` and `coord_zoomFeature()` ensure you subset entire rows using `[12, ]`. Additionally air pollution estimate are always returned in alpha numeric order.
+
+With this material you can plot the spacial data of postcodes and ELAPSE. To see all plotting options we recommend the documentation of  [ggplot](https://ggplot2.tidyverse.org/), [tidyterra](https://dieghernan.github.io/tidyterra/articles/tidyterra.html) and [ggpubr](https://rpkgs.datanovia.com/ggpubr/index.html_)

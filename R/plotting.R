@@ -1,9 +1,10 @@
 #' Zoom into given spacial feature
 #'
 #' @description
-#' Takes the output from ether `pollutionFrom*()` function, calculates the center
-#' of all given special features. Outputs ggplot coord to zoom into the given features.
-#' Works best when sub-setting a lager data-set zooming into a feature of interest.
+#' Takes the output from ether `pollutionFrom*()` function, calculates the
+#' center of all given special features. Outputs ggplot coord to zoom into the
+#' given features. Works best when sub-setting a lager data-set zooming into a
+#' feature of interest.
 #'
 #' @section IMPORTANT NOTE:
 #' When passing a specific feature ensure you index using `[2, ]`. Add the comma
@@ -39,7 +40,7 @@
 #'
 #' @export
 coord_zoomFeature <- function(data, r = 2000, ...) {
-  data <- data$geom # I just want the geometery
+  data <- data$geom # I just want the geometry
 
   # If the geoms are MULTIPOLYGONS first find the center then calculate the bbox
   geom_multipolygon <- FALSE
@@ -47,7 +48,7 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
     geom_multipolygon <- sf::st_geometry_type(data, by_geometry = FALSE) == "MULTIPOLYGON"
   })
 
-  if(geom_multipolygon) {
+  if (geom_multipolygon) {
     bbox <- sf::st_bbox(sf::st_centroid(data))
   } else {
     bbox <- sf::st_bbox(data) #otherwise just directly calculate the bbox.
@@ -77,7 +78,6 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
 #'
 #' @param data data to zoom on.
 #' @param size size of the rectangle.
-#' @param colour border colour of the rectangle.
 #'
 #' @examples
 #' \dontrun{
@@ -104,7 +104,11 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
 #' }
 #'
 #' @export
-geom_rectFeature <- function(data, size = 4000, colour = "red", fill = NA, ...) {
+geom_rectFeature <- function(data,
+                             size = 4000,
+                             colour = "red",
+                             fill = NA,
+                             ...) {
   bbox <- sf::st_bbox(data$geom)
 
   df_bbox <- data.frame(
