@@ -7,28 +7,25 @@ editor_options:
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = TRUE
 )
 # Put these here so we don't the output
 library(tidyverse)
 library(tidyterra)
 ```
 
-Within this article the methods to plot the underlying spacial data
-postcodElapse works with will be explored. For this some preparation is
-required, we recommend installing the [tidyverse](https://tidyverse.org/),
+This article describes the method to plot the spacial data underlying postcodElapse. To enable spatial plotting in R, installation of of the R packages [tidyverse](https://tidyverse.org/),
 [tidyterra](https://dieghernan.github.io/tidyterra/articles/tidyterra.html) and
-[ggpubr](https://rpkgs.datanovia.com/ggpubr/) R-packages. These work together to
-enable spacial plotting in R.
+[ggpubr](https://rpkgs.datanovia.com/ggpubr/) is required.
 
 ## ELAPSE
-To understand the spacial relation of postcodes some map is required, the best
-equivalent postcodElapse provides is ELAPSE. See the block below to load and
-plot ELAPSE.
+First, a map with the spatial relations of the postal codes is required. In postcodElapse, ELAPSE is the best equivalent, which can be loaded and plotted as indicated below: 
 
 ```{r plotting ELAPSE}
 library(tidyverse)
 library(tidyterra)
+library(ggpubr)
 library(postcodElapse)
 
 elapse <- loadElapse()
@@ -38,9 +35,9 @@ ggplot() +
   facet_wrap(~ lyr)
 ```
 
-When plotting we recommend passing the data directly to an geom via the *data* argument, this makes layering multiple datasets into one figure easy. The concentration retrieved from ELAPSE are mapped to the fill aestetic, to change the colour scheme we recommend `?tidyterra::scale_fill_grass_c()`. When no facet is used a single panel will be plotted containing mean pollutant concentrations. Subset ELAPSE with the `$` operator to plot a single layer.
+When plotting spatially pass the data for a layer directly into a geom via the *data* argument, plotting a single layer is done by sub-setting ELAPSE with `$`. The `tidyterra::geom_spatraster()` map air pollutant levels to the fill aesthetic, use `tidyterra::scale_fill_grass_c()` to alter the fill colour.
 
-## Accessing postcode geo-locations
+# Accessing postal coded geo-locations
 To plot the location of postcodes on ELAPSE the geo-location is *required* these
 are provided trough: `pollutionFromBag()` and `pollutionFromPc6()`. These
 function output spacial data in the `geom` column. Plotting this data can be
@@ -61,36 +58,47 @@ ggplot() +
 ```
 
 ## Zooming and insetting
-Due to the scale of ELAPSE it may be hard to visualize the data. To alleviate this we recommend creating an inset plot and marking the location of the zoom on the main plot. postcodElapse provides `geom_rectFeature()` and `coord_zoomFeature()` to annotate and zoom into specific spatial features. Below is an example showing how to use these helpers with ggpubr to build an inset.
+The scale of ELAPSE prohibits the visualization of the data. To alleviate this, it is recommended to create an inset plot and mark the location of the zoom in the main plot. postcodElapse provides `geom_rectFeature()` and `coord_zoomFeature()` to annotate and zoom into specific spatial features. An example is proved below.
 
 ```{r insetting}
-library(ggpubr) #used to arrange plots into one figure.
-
 main <- ggplot() +
   geom_spatraster(data = elapse$NO2FULL) + 
-  geom_sf(data = pc6, aes(geometry = geom), fill = "purple", alpha = 0.7) +
-  geom_sf(data = bag, aes(geometry = geom), colour = "orange", alpha = 0.7) +
+  geom_sf(data = pc6, aes(geometry = geom, colour = "PC6"), alpha = 0.7) +
+  geom_sf(data = bag, aes(geometry = geom, colour = "BAG"), alpha = 0.7) +
   scale_fill_grass_c(transform = "log10") +
-  geom_rectFeature(pc6[100, ], 5000) + # Mark the location of interest
+  scale_colour_manual(name   = "GeoPackage",
+                      values = c("PC6" = "purple", "BAG" = "orange")) +
+  geom_rectFeature(pc6[100, ], 5000) +
   labs(fill = bquote("log"[10]~" Concentration NO"[2]~"µg/m"^3)) +
   theme(legend.position = "top")
 
 inset <- ggplot() +
-  geom_spatraster(data = elapse$NO2FULL) + 
-  geom_sf(data = pc6, aes(geometry = geom), fill = "purple", alpha = 0.7) +
-  geom_sf(data = bag, aes(geometry = geom), colour = "orange", alpha = 0.7) +
+  geom_spatraster(data = elapse$NO2FULL) +
+  geom_sf(data = pc6, aes(geometry = geom, colour = "PC6"), alpha = 0.7) +
+  geom_sf(data = bag, aes(geometry = geom, colour = "BAG"), alpha = 0.7) +
   scale_fill_grass_c(transform = "log10") +
-  coord_zoomFeature(pc6[100, ]) # Zoom into the location of interest
+  scale_colour_manual(name = "GeoPackage",
+                      values = c("PC6" = "purple", "BAG" = "orange")) +
+  coord_zoomFeature(pc6[100, ])
+
 
 # Make and annotate the combined figure.
-fig <- ggarrange(main, inset, ncol = 2,
-                 common.legend = TRUE,
-                 legend.grob = get_legend(main))
+fig <- ggarrange(main, inset,
+  ncol = 2,
+  common.legend = TRUE,
+  legend.grob = get_legend(main)
+)
+
+label <- 
+"NO2 pollutant levels at postal code level in the Netherlands.
+Orange represents spatcial data from BAG, purple represent PC6."
 
 annotate_figure(fig, 
-                fig.lab.pos = "bottom.left",
-                fig.lab = "NO2 pollution in the Netherlands, with postcode location plotted. Orange is BAG purple is PC6.")
+  fig.lab.pos = "bottom.left",
+  fig.lab = label
+)
 ```
+
 
 When using `geom_rectFeatrue()` and `coord_zoomFeature()` ensure you subset entire rows using `[12, ]`. Additionally air pollution estimate are always returned in alpha numeric order.
 
