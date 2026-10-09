@@ -54,7 +54,8 @@ ggplot() +
   geom_spatraster(data = elapse$NO2FULL) + 
   geom_sf(data = pc6, aes(geometry = geom), fill = "purple", alpha = 0.7) +
   geom_sf(data = bag, aes(geometry = geom), colour = "orange") +
-  scale_fill_grass_c()
+  scale_fill_grass_c() +
+  labs(fill = bquote("NO"[2]~"concentration in µg/m"^3))
 ```
 
 ## Zooming and insetting
@@ -63,22 +64,18 @@ The scale of ELAPSE prohibits the visualization of the data. To alleviate this, 
 ```{r insetting}
 main <- ggplot() +
   geom_spatraster(data = elapse$NO2FULL) + 
-  geom_sf(data = pc6, aes(geometry = geom, colour = "PC6"), alpha = 0.7) +
-  geom_sf(data = bag, aes(geometry = geom, colour = "BAG"), alpha = 0.7) +
+  geom_sf(data = pc6, aes(geometry = geom), alpha = 0.7, fill = "purple") +
+  geom_sf(data = bag, aes(geometry = geom), alpha = 0.7, colour = "orange") +
   scale_fill_grass_c(transform = "log10") +
-  scale_colour_manual(name   = "GeoPackage",
-                      values = c("PC6" = "purple", "BAG" = "orange")) +
   geom_rectFeature(pc6[100, ], 5000) +
-  labs(fill = bquote("log"[10]~" Concentration NO"[2]~"µg/m"^3)) +
+  labs(fill = bquote("log10 Concentration NO"[2]~"in µg/m"^3)) +
   theme(legend.position = "top")
 
 inset <- ggplot() +
   geom_spatraster(data = elapse$NO2FULL) +
-  geom_sf(data = pc6, aes(geometry = geom, colour = "PC6"), alpha = 0.7) +
-  geom_sf(data = bag, aes(geometry = geom, colour = "BAG"), alpha = 0.7) +
+  geom_sf(data = pc6, aes(geometry = geom), alpha = 0.7, fill = "purple") +
+  geom_sf(data = bag, aes(geometry = geom), alpha = 0.7, colour = "orange") +
   scale_fill_grass_c(transform = "log10") +
-  scale_colour_manual(name = "GeoPackage",
-                      values = c("PC6" = "purple", "BAG" = "orange")) +
   coord_zoomFeature(pc6[100, ])
 
 
@@ -91,14 +88,12 @@ fig <- ggarrange(main, inset,
 
 label <- 
 "NO2 pollutant levels at postal code level in the Netherlands.
-Orange represents spatcial data from BAG, purple represent PC6."
-
+Purple areas are postal adrreses from PC6, orange dots are buildings from BAG."
 annotate_figure(fig, 
   fig.lab.pos = "bottom.left",
   fig.lab = label
 )
 ```
-
 
 When using `geom_rectFeatrue()` and `coord_zoomFeature()` ensure you subset entire rows using `[12, ]`. Additionally air pollution estimate are always returned in alpha numeric order.
 
