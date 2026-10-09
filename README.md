@@ -1,32 +1,22 @@
 # postcodElapse
 
-postcodElapse is an R-package for estimating concentrations of fine particulate
-matter (PM<sub>2.5</sub>), black carbon (BC), nitrogen dioxide (NO<sub>2</sub>)
-& ozone (O<sub>3</sub>) at the level of Dutch postcodes. The package utilizes
-  the ELAPSE model and an GeoPackage containing spatial data on all postcodes in
-  the Netherlands.
+PostcodElapse is an R-package for estimating the levels of air pollution including fine particulate matter (PM<sub>2.5</sub>), black carbon (BC), nitrogen dioxide (NO<sub>2</sub>) and ozone (O<sub>3</sub>) at postal code level in the Netherlands. The package utilizes the [ELAPSE Land Use Regression model](https://doi.org/10.1016/j.envint.2020.106267) and a GeoPackage containing spatial data on all Dutch postal codes.
 
 We gratefully acknowledge [Kees de Hoogh](https://orcid.org/0000-0001-5974-2007)
-for developing the [ELAPSE](https://doi.org/10.1016/j.envint.2018.07.036) model
+for developing the [ELAPSE](https://doi.org/10.1016/j.envint.2020.106267) model
 and for granting permission to use it within this package.
 
 ## Quick start
 
 ### R-spatial
-postcodElapse relies on the terra package for spatial data handling. Ensure that
-terra is correctly install for your operating system, detailed instructions are
-available in the [terra installation guide.](https://rspatial.github.io/terra/index.html#installation)
+PostcodElapse relies on the terra package for spatial data handling. Ensure that terra is correctly install for your operating system, detailed instructions are available in the [terra installation guide.](https://rspatial.github.io/terra/index.html#installation)
 
 ### Postcode database
+PostcodElapse **requires ** an external database with the spatial data on Dutch postcodes. Two databases are currently supported, download the preferred database:
 
-postcodElapse **requires** an external database with the spatial data on Dutch
-postcodes. Two databases are currently supported, download at least one of the
-following:
+1. [BAG (Basisregistratie Adressen en Gebouwencontains)](https://service.pdok.nl/lv/bag/atom/bag.xml) for every building in the Netherlands the location and postal code. Package size 8GB
 
-- [Basisregistratie Adressen en Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml)(BAG) 
-  size: 8GB
-- [Postcode6](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)(PC6)
-  size: 0.5GB
+1. [PC6 (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml) provides the geographic area for every Dutch postal code. Package size 0.5GB
 
 ### Installation
 Download the latest
@@ -37,9 +27,9 @@ postcodElapse, and install the package using:
 install.packages("postcodElapse_0.1.4.tar.gz")
 ```
 
-If you are using RStudio, you can also install via the *Packages* pane:
+If you are using RStudio, you can also install via the *Packages* panel:
 
-1. Open the *Packages* pane and click *Install*.
+1. Open the *Packages* panel and click *Install*.
 2. Set *Install from* to *Package Archive File (.zip; .tar.gz)*.
 3. Use the file picker to navigate to the downloaded postcodElapse release.
 4. Select the file an click *Install*.
@@ -49,7 +39,7 @@ If you are using RStudio, you can also install via the *Packages* pane:
 ``` r
 library(postcodelapse)
 
-postcodElapse(c("8917DD", "9712CP"), "bag-light.gpkg")
+postcodElapse(c("8917DD", "9712CP"), "~/home/data/bag-light.gpkg")
 #> Guessed db type to be: BAG
 #>   postcode n BCFULL_avg NO2FULL_avg O3FULLa_avg O3FULLc_avg O3FULLw_avg
 #> 1   8917DD 5   1.637956    28.14168    60.92046    46.11469    76.49764
@@ -65,29 +55,17 @@ postcodElapse(c("8917DD", "9712CP"), "bag-light.gpkg")
 #> 2      15.03059
 ```
 
-Above we estimated the pollution concentration in two postcodes with BAG. All
-air pollutant statistics are in µg/m<sup>3</sup>. The `n` column contains how
-many buildings where found per postcode. When using PC6 the output has the same
-structure, any missing data is marked with *NA*.
+Above, the air pollution  levels for two postal codes are estimated with the BAG database. All air pollutant levels are provided in µg/m<sub>3</sub>. The `n` column indicates the number of buildings found per postal code. Any missing data is marked with NA. When using PC6, the output has the same structure. 
 
 ## Spacial plotting
-For visualization, we recommend using the [tidyverse](https://tidyverse.org/)
-ecosystem in conjunction with
-[tidyterra](https://dieghernan.github.io/tidyterra/). Further details and
-examples are provided in the [spacial plotting](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html)
-article.
+For visualization, it is recommended to use  the [tidyverse](https://tidyverse.org/) ecosystem in conjunction with (https://dieghernan.github.io/tidyterra/). Further details and examples are provided in the spacial [spacial plotting](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html) article.
 
-# FAQ
-## I am getting null-pointer errors!
+# Common issues
+## NULL value passed as symbol address
+`loadElapse()` Returns [spatical rasters (spatrasters)](https://rspatial.org/spatial/4-rasterdata.html#spatraster) these **cannot be saved** into the workspace image. Doing this will result in errors like the one below:
+``` r
+ggplot2::autoplot(elapse)
+#> Error in .Call(list(name = "CppField__get", address = <pointer: (nil)>,  : 
+#>   NULL value passed as symbol address
 ```
-Error in .Call(list(name = "CppField__get", address = <pointer: (nil)>,  : 
-  NULL value passed as symbol address
-```
-Remove the currently loaded ELAPSE variable from your environment with `rm()`.
-And run `loadElapse()` again.
-
-ELAPSE is loaded as an spatraster which contains a reference to the files
-containing the actual data. This reference also called an pointer it is not
-saved in .Rdata when restarting R or Rstudio, thus you get the null-pointer
-errors. In the future ensure you don't save any instances of spatrasters in your
-.Rdata and or at the end off your scripts run `rm(<your elapse varabele>)`.
+To fix this remove all spatrasters with `?rm`, at the end of an script.
