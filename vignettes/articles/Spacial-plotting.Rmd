@@ -62,12 +62,13 @@ ggplot() +
 The scale of ELAPSE prohibits the visualization of the data. To alleviate this, it is recommended to create an inset plot and mark the location of the zoom in the main plot. postcodElapse provides `geom_rectFeature()` and `coord_zoomFeature()` to annotate and zoom into specific spatial features. An example is proved below.
 
 ```{r insetting}
+# Build the plots for the single figure separately
 main <- ggplot() +
   geom_spatraster(data = elapse$NO2FULL) + 
   geom_sf(data = pc6, aes(geometry = geom), alpha = 0.7, fill = "purple") +
   geom_sf(data = bag, aes(geometry = geom), alpha = 0.7, colour = "orange") +
   scale_fill_grass_c(transform = "log10") +
-  geom_rectFeature(pc6[100, ], 5000) +
+  geom_rectFeature(pc6[100, ], 5000) + # Annotate a postal address
   labs(fill = bquote("log10 Concentration NO"[2]~"in µg/m"^3)) +
   theme(legend.position = "top")
 
@@ -76,19 +77,20 @@ inset <- ggplot() +
   geom_sf(data = pc6, aes(geometry = geom), alpha = 0.7, fill = "purple") +
   geom_sf(data = bag, aes(geometry = geom), alpha = 0.7, colour = "orange") +
   scale_fill_grass_c(transform = "log10") +
-  coord_zoomFeature(pc6[100, ])
+  coord_zoomFeature(pc6[100, ]) # Zoom into a postal address
 
-
-# Make and annotate the combined figure.
+# Combine the two plots into a single figure.
 fig <- ggarrange(main, inset,
   ncol = 2,
   common.legend = TRUE,
   legend.grob = get_legend(main)
 )
 
+# Lable the figure
 label <- 
 "NO2 pollutant levels at postal code level in the Netherlands.
 Purple areas are postal adrreses from PC6, orange dots are buildings from BAG."
+
 annotate_figure(fig, 
   fig.lab.pos = "bottom.left",
   fig.lab = label
