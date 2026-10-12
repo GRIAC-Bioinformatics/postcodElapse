@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   eval = TRUE
 )
 # Put these here so we don't the output
+setwd("..") #Set the wd one up.
 library(tidyverse)
 library(tidyterra)
 ```
@@ -105,3 +106,9 @@ annotate_figure(fig,
 The `geom_rectFeatrue()` and `coord_zoomFeature()` function expect entire rows of spacial data, subset you spacial data using `[12, ]`.
 
 With this material you can plot the spacial data of postcodes and ELAPSE. To see all plotting options we recommend the documentation of  [ggplot](https://ggplot2.tidyverse.org/), [tidyterra](https://dieghernan.github.io/tidyterra/articles/tidyterra.html) and [ggpubr](https://rpkgs.datanovia.com/ggpubr/index.html_)
+
+```{r cleanup, include=FALSE}
+rm(elapse)
+setwd("./postcodElapse") #reset working dir, this is so we have access to the database.
+```
+
