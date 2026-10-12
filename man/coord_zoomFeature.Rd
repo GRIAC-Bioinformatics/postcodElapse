@@ -4,25 +4,23 @@
 \alias{coord_zoomFeature}
 \title{Zoom into given spacial feature}
 \usage{
-coord_zoomFeature(data, r = 2000, ...)
+coord_zoomFeature(spacial_features, size = 2000, ...)
 }
 \arguments{
-\item{data}{data to zoom on.}
+\item{spacial_features}{to zoom on.}
 
-\item{r}{radius of the zoom, is always a square.}
+\item{size}{of the zoom always a square.}
 }
 \description{
-Takes the output from ether \verb{pollutionFrom*()} function, calculates the center
-of all given special features. Outputs ggplot coord to zoom into the given features.
-Works best when sub-setting a lager data-set zooming into a feature of interest.
-}
-\section{IMPORTANT NOTE}{
+Builds an ggplot coordinate system that zooms into a given set of spacial
+features. Spacial features can be generated using the \code{pollutionFromBag()}
+for \code{pollutionFromPc6()} functions. Use with \code{geom_rectFeature()} to inset
+plots.
 
-When passing a specific feature ensure you index using \verb{[2, ]}. Add the comma
-otherwise R does not pass the entire row. \code{coord_zoomFeature()} expects the
-entire row!
+When passing spacial features only pass the geometry column using subsetting:
+\code{data$geom}. Select specific features or ranged by: \code{data$geom[2]} or
+\code{data$geom[2:20]}.
 }
-
 \examples{
 \dontrun{
 # You need to use this with a plot so the basics

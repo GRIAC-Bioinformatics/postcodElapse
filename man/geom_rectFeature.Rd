@@ -4,27 +4,22 @@
 \alias{geom_rectFeature}
 \title{Draws squares encompassing spacial features.}
 \usage{
-geom_rectFeature(data, size = 4000, colour = "red", fill = NA, ...)
+geom_rectFeature(spacial_features, size = 4000, colour = "red", fill = NA, ...)
 }
 \arguments{
-\item{data}{data to zoom on.}
+\item{spacial_features}{to zoom on.}
 
-\item{size}{size of the rectangle.}
-
-\item{colour}{border colour of the rectangle.}
+\item{size}{of the rectangle.}
 }
 \description{
-Takes a collection of spacial features calculates the position and size of an
-square encompassing all given spacial features. Builds and outputs ggplot
-geom_rect to draw that square on a plot.
-}
-\section{IMPORTANT NOTE}{
+Takes a set of spacial features calculates the position and size of an square
+encompassing all given spacial features. Builds and outputs ggplot geom_rect
+to draw that square on a plot.
 
-When passing a specific feature ensure you index using \verb{[2, ]}. Add the comma
-otherwise R does not pass the entire row. \code{geom_rectFeature()} expects the
-entire row!
+When passing spacial features only pass the geometry column using subsetting:
+\code{data$geom}. Select specific features or ranged by: \code{data$geom[2]} or
+\code{data$geom[2:20]}.
 }
-
 \examples{
 \dontrun{
 # Some plotting basics

@@ -14,7 +14,7 @@ terra spatraster
 }
 \description{
 ELAPSE is a model representing air pollutant concentrations across Europe,
-published by Kees de Hoogh. This function expects it as a tiff grey-scale image
-with multiple layers per modeled air pollutant. When no file is given the internal
-verion is loaded.
+published by Kees de Hoogh. This function expects it as a tiff grey-scale
+image with multiple layers per modeled air pollutant. When no file is given
+the internal version is loaded.
 }
