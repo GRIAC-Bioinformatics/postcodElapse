@@ -14,7 +14,7 @@ PostcodElapse relies on the terra package for spatial data handling. Ensure that
 ### Postcode database
 PostcodElapse **requires ** an external database with the spatial data on Dutch postcodes. Two databases are currently supported, download the preferred database:
 
-1. [BAG (Basisregistratie Adressen en Gebouwencontains)](https://service.pdok.nl/lv/bag/atom/bag.xml) for every building in the Netherlands the location and postal code. Package size 8GB
+1. [BAG (Basisregistratie Adressen en Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml) contains for every building in the Netherlands the location and postal code. Package size 8GB
 
 1. [PC6 (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml) provides the geographic area for every Dutch postal code. Package size 0.5GB
 
