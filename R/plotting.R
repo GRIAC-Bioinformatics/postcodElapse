@@ -1,18 +1,17 @@
 #' Zoom into given spacial feature
 #'
 #' @description
-#' Takes the output from ether `pollutionFrom*()` function, calculates the
-#' center of all given special features. Outputs ggplot coord to zoom into the
-#' given features. Works best when sub-setting a lager data-set zooming into a
-#' feature of interest.
+#' Builds an ggplot coordinate system that zooms into a given set of spacial
+#' features. Spacial features can be generated using the `pollutionFromBag()`
+#' for `pollutionFromPc6()` functions. Use with `geom_rectFeature()` to inset
+#' plots.
 #'
-#' @section IMPORTANT NOTE:
-#' When passing a specific feature ensure you index using `[2, ]`. Add the comma
-#' otherwise R does not pass the entire row. `coord_zoomFeature()` expects the
-#' entire row!
+#' When passing spacial features only pass the geometry column using subsetting:
+#' `data$geom`. Select specific features or ranged by: `data$geom[2]` or
+#' `data$geom[2:20]`.
 #'
-#' @param data data to zoom on.
-#' @param r radius of the zoom, is always a square.
+#' @param spacial_features to zoom on.
+#' @param size of the zoom always a square.
 #'
 #' @examples
 #' \dontrun{
@@ -39,27 +38,30 @@
 #' }
 #'
 #' @export
-coord_zoomFeature <- function(data, r = 2000, ...) {
-  data <- data$geom # I just want the geometry
+coord_zoomFeature <- function(spacial_features, size = 2000, ...) {
+  # did we get spacial data?
+  if ((!"sfc" %in% class(spacial_features))) {
+    stop("Argument data arent spacial features. Was `data$geom` used?")
+  }
 
   # If the geoms are MULTIPOLYGONS first find the center then calculate the bbox
   geom_multipolygon <- FALSE
   tryCatch({
-    geom_multipolygon <- sf::st_geometry_type(data, by_geometry = FALSE) == "MULTIPOLYGON"
+    geom_multipolygon <- sf::st_geometry_type(spacial_features, by_geometry = FALSE) == "MULTIPOLYGON"
   })
 
   if (geom_multipolygon) {
-    bbox <- sf::st_bbox(sf::st_centroid(data))
+    bbox <- sf::st_bbox(sf::st_centroid(spacial_features))
   } else {
-    bbox <- sf::st_bbox(data) #otherwise just directly calculate the bbox.
+    bbox <- sf::st_bbox(spacial_features) #otherwise just directly calculate the bbox.
   }
 
-  r <- r / 2
+  size <- size / 2
 
   # Build ggplot coord_sf with bbox.
   return(
-    ggplot2::coord_sf(xlim = c(bbox$xmin - r, bbox$xmax + r),
-                      ylim = c(bbox$ymin - r, bbox$ymax + r),
+    ggplot2::coord_sf(xlim = c(bbox$xmin - size, bbox$xmax + size),
+                      ylim = c(bbox$ymin - size, bbox$ymax + size),
                       ...)
   )
 }
@@ -67,17 +69,16 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
 #' Draws squares encompassing spacial features.
 #'
 #' @description
-#' Takes a collection of spacial features calculates the position and size of an
-#' square encompassing all given spacial features. Builds and outputs ggplot
-#' geom_rect to draw that square on a plot.
+#' Takes a set of spacial features calculates the position and size of an square
+#' encompassing all given spacial features. Builds and outputs ggplot geom_rect
+#' to draw that square on a plot.
 #'
-#' @section IMPORTANT NOTE:
-#' When passing a specific feature ensure you index using `[2, ]`. Add the comma
-#' otherwise R does not pass the entire row. `geom_rectFeature()` expects the
-#' entire row!
+#' When passing spacial features only pass the geometry column using subsetting:
+#' `data$geom`. Select specific features or ranged by: `data$geom[2]` or
+#' `data$geom[2:20]`.
 #'
-#' @param data data to zoom on.
-#' @param size size of the rectangle.
+#' @param spacial_features to zoom on.
+#' @param size of the rectangle.
 #'
 #' @examples
 #' \dontrun{
@@ -104,12 +105,16 @@ coord_zoomFeature <- function(data, r = 2000, ...) {
 #' }
 #'
 #' @export
-geom_rectFeature <- function(data,
+geom_rectFeature <- function(spacial_features,
                              size = 4000,
                              colour = "red",
                              fill = NA,
                              ...) {
-  bbox <- sf::st_bbox(data$geom)
+  # did we get spacial data?
+  if ((!"sfc" %in% class(spacial_features))) {
+    stop("Argument data arent spacial features. Was `data$geom` used?")
+  }
+  bbox <- sf::st_bbox(spacial_features)
 
   df_bbox <- data.frame(
     xmin = bbox$xmin - size,
