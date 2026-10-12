@@ -16,7 +16,8 @@ Imports:
   dplyr (>= 1.2.1),
   terra (>= 1.9),
   sf (>= 1.1),
-  rlang (>= 1.3.0)
+  rlang (>= 1.3.0),
+  ggplot
 Config/roxygen2/version: 8.1.0
 Suggests: 
     knitr,
