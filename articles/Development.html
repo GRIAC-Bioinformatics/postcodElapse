@@ -71,9 +71,10 @@
 <div class="section level3">
 <h3 id="set-up">Set-up<a class="anchor" aria-label="anchor" href="#set-up"></a>
 </h3>
-<p>To develop postcodElapse you need <a href="https://posit.co/downloads" class="external-link">Rstudio</a> and the git large file
-storage <a href="https://git-lfs.com/" class="external-link">(LFS)</a> installed, check their
-instructions. In addition you need the install the R-packages below.</p>
+<p>To develop postcodElapse, Rstudio with the git large file storage
+(LFS) installed is required. <a href="https://git-lfs.com/" class="external-link">Instructions
+can be found here</a>. In addition, the following R packages are
+required:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"usethis"</span>, <span class="st">"pkgdown"</span>, <span class="st">"roxygen2"</span><span class="op">)</span><span class="op">)</span> <span class="co">#devtools</span></span>
 <span></span>
@@ -84,33 +85,93 @@ instructions. In addition you need the install the R-packages below.</p>
 <div class="section level3">
 <h3 id="cloning">Cloning<a class="anchor" aria-label="anchor" href="#cloning"></a>
 </h3>
-<p>When you’re done install clone:
-<code>https://github.com/GRIAC-Bioinformatics/postcodElapse</code>, you
-must enable lfs for the repo and pull the large file. See shell commands
-below.</p>
+<p>After installing all the dependencies, clone: <a href="https://github.com/GRIAC-Bioinformatics/postcodElapse" class="external-link uri">https://github.com/GRIAC-Bioinformatics/postcodElapse</a>.
+Make sure to enable git LFS for the repo and pull the large file, see
+shell commands below.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">git</span> lfs install</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">git</span> lfs pull</span></code></pre></div>
-<p>This will download ELAPSE.tif it’s 125mb, too large for a normal
-commit but required by postcodElapse. If you wish to work on the
-development version switch to the <code>dev</code> branch.</p>
+<p>This will download the 125MB ELAPSE.tif. Although it is too large for
+a normal commit, it is required by postcodElapse. If preferred, you can
+switch to the dev branch.</p>
+</div>
+<div class="section level3">
+<h3 id="geopackages">GeoPackages<a class="anchor" aria-label="anchor" href="#geopackages"></a>
+</h3>
+<p>Finally create a directory named: <code>data</code> in the parent
+directory of the postcodElapse repo. Download and place into the data
+dir both supported GeoPackages links below:</p>
+<ol style="list-style-type: decimal">
+<li><p><a href="https://service.pdok.nl/lv/bag/atom/bag.xml" class="external-link">BAG
+(Basisregistratie Adressen en Gebouwencontains)</a> for every building
+in the Netherlands the location and postal code. Package size
+8GB</p></li>
+<li><p><a href="https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml" class="external-link">PC6
+(Postcode6)</a> provides the geographic area for every Dutch postal
+code. Package size 0.5GB</p></li>
+</ol>
+<p>These are used in the documentation. When setup correct everything
+should match the the directory tree below:</p>
+<pre><code>./development
+├── data
+│   ├── bag-light.gpkg
+│   └── cbs_pc6_2024.gpkg
+└── postcodElapse
+    ├── data-raw
+    │   └── sample_postcodes.R
+    ├── DESCRIPTION
+    ├── inst
+    │   ├── ELAPSE.tif
+    │   └── extdata
+    │       ├── postcode1000.rds
+    │       └── postcode100.rds
+    ├── LICENSE.md
+    ├── man
+    │   ├── coord_zoomFeature.Rd
+    │   ├── formatPostcode.Rd
+    │   ├── geom_rectFeature.Rd
+    │   ├── loadElapse.Rd
+    │   ├── pollutionFromBag.Rd
+    │   ├── pollutionFromPc6.Rd
+    │   └── postcodElapse.Rd
+    ├── NAMESPACE
+    ├── _pkgdown.yml
+    ├── postcodElapse.Rproj
+    ├── R
+    │   ├── extraction.R
+    │   ├── helpers.R
+    │   └── plotting.R
+    ├── README.md
+    └── vignettes
+        ├── articles
+        │   ├── Development.Rmd
+        │   └── Spacial-plotting.Rmd
+        ├── postcodElapse.Rmd
+        └── postcodElapse.Rmd.orig
+
+10 directories, 26 files</code></pre>
 </div>
 <div class="section level3">
 <h3 id="building">Building<a class="anchor" aria-label="anchor" href="#building"></a>
 </h3>
+<p>When implementing new features or fixing bugs, make sure to work on
+the dev branch. To quickly install the package in the Rstudio ribbon,
+navigate to: <em>Build &gt; Load All</em>. This will quickly load the
+package into the current R session. Alternatively, use the keybind:
+<code>Control + Shift + L</code>.</p>
 <p>Again if you are implementing new features or fixing bugs please work
 on the <code>dev</code> branch. To quickly install the package in the
 Rstudio ribbon navigate: Build &gt; Load All, this quickly loads the
 package into your R session. Or you can use the keybind:
 <code>Control + Shift + L</code>.</p>
-<p>To build the package fully in the ribbon: Build &gt; Install package
-or use the <code>Control + Shift + B</code> keybind, this also updates
-any changed documentation.</p>
-<p>If you are done developing and wish to build postcodElapse for
-release on GitHub. Run Build &gt; Build Source Package, this will create
-an archive (.tar.gz or .zip) in the parent directory of the repo. This
-file is the built package, add this file to the new release. Don’t
-forget to merge dev to main, and update the documentation.</p>
+<p>To fully build the package in the ribbon: <em>Build &gt; Install
+package</em> or use the <code>Control + Shift + B</code> keybind. , This
+will also update any changed documentation.</p>
+<p>After finishing developing, to build postcodElapse for release on
+GitHub, use: <em>Run Build &gt; Build Source Package</em>. This will
+build package as an archive (.tar.gz or .zip) in the parent directory of
+the repo. Add this file as new release to GitHub. Don’t forget to merge
+dev to main and update the documentation.</p>
 </div>
 </div>
 <div class="section level2">
@@ -119,23 +180,23 @@ forget to merge dev to main, and update the documentation.</p>
 <div class="section level3">
 <h3 id="in-package">In package<a class="anchor" aria-label="anchor" href="#in-package"></a>
 </h3>
-<p>In package documentation is what you read when you run
-?postcodElapse. It is made using roxygen from the comment blocks above
-the function definitions in the postcodElapse. See their <a href="https://roxygen2.r-lib.org/" class="external-link">page</a> on usage.</p>
+<p>The package documentation is used for ?postcodElapse in R. It is
+created with roxygen from the comment blocks above the function
+definitions in the postcodElapse. See their <a href="https://roxygen2.r-lib.org/" class="external-link">page</a> for user information.</p>
 </div>
 <div class="section level3">
 <h3 id="github-pages">GitHub pages<a class="anchor" aria-label="anchor" href="#github-pages"></a>
 </h3>
-<p>GitHub pages is where you find this article in addition to the more
-expanded guide style documentation. This is made using
-<code>pkgdown</code>. Creating new articles or vignettes is done with
-<code>usethis</code>, by running in the R console
+<p>More expanded guide style documentation can be found on the GitHub
+pages. This is created using <em>pkgdown</em>. Creating new articles or
+vignettes can be done with <em>usethis</em>, running in the R console
 <code><a href="https://usethis.r-lib.org/reference/use_vignette.html" class="external-link">usethis::use_article()</a></code> or
-<code><a href="https://usethis.r-lib.org/reference/use_vignette.html" class="external-link">usethis::use_vignette()</a></code>. For usage refer to the <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> and <a href="https://usethis.r-lib.org/" class="external-link">usethis</a> documentation.</p>
-<p>Building the and viewing the site locally can be done by running
+<code><a href="https://usethis.r-lib.org/reference/use_vignette.html" class="external-link">usethis::use_vignette()</a></code>. User information can be found in
+the <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> and <a href="https://usethis.r-lib.org/" class="external-link">usethis</a> documentation.</p>
+<p>Local building and viewing can be done by running
 <code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code>. To publish the documentation on
-GitHub pages run <code><a href="https://pkgdown.r-lib.org/reference/deploy_to_branch.html" class="external-link">pkgdown::deploy_to_branch()</a></code> and wait till
-GitHub fully deploys the page.</p>
+GitHub pages, run <code><a href="https://pkgdown.r-lib.org/reference/deploy_to_branch.html" class="external-link">pkgdown::deploy_to_branch()</a></code> and wait
+until GitHub fully deploys the page.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

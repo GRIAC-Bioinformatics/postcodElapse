@@ -2,47 +2,49 @@
 
 ## Overview
 
-The goal of postcodElapse is to estimate concentrations of fine
-particulate matter (PM_(2.5)), black carbon (BC), nitrogen dioxide (NO₂)
-& ozone (O₃) at the level of Dutch postcodes, as an alternative to
-on-site measurements.
+The goal of postcodElapse is to estimate the levels of air pollution,
+including fine particulate matter (PM_(2.5)), black carbon (BC),
+nitrogen dioxide (NO₂) and ozone (O₃) at the postal code level in the
+Netherlands and provides an alternative to on-site measurements.
 
 This is achieved by:
 
-1.  Obtaining spatial information (points or areas) from one of two
-    supported GeoPackages.
-2.  Linking these locations to the ELAPSE air quality model.
-3.  Calculate postcode-level air pollutant concentration estimates.
+1.  Obtaining postal code-derived spatial information (points or areas)
+    from one of two supported GeoPackages.
+2.  Linking these locations to the ELAPSE air quality Land Use
+    Regression model.
+3.  Estimating postal code-derived levels of air pollutants in µg/m³.
 
-This vignette is a guide on setting up, running and utilizing
+This vignette is a guide for setting up, running and utilizing
 postcodElapse.
 
 ## GeoPackages
 
-As described above, the spatial data on a postcode is **required** in
-order to estimate air pollutant concentrations. postcodElapse expects
-this data to be provided in GeoPackage (.gpkg) files, a format commonly
+As described above, the spatial data of a postal code is required in
+order to estimate air pollutant concentrations. PostcodElapse requires
+this data to be provided in a GeoPackage (.gpkg) file, a format commonly
 used for storing spatial data.
 
-Currently, postcodElapse supports two:
+Currently, postcodElapse supports two GeoPackages:
 
 1.  [BAG (Basisregistratie Adressen en
-    Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml)\
-    Contains for every building in the Netherlands its location &
-    postcode. Size 8GB
+    Gebouwencontains)](https://service.pdok.nl/lv/bag/atom/bag.xml) for
+    every building in the Netherlands the location and postal code.
+    Package size 8GB
 
 2.  [PC6
-    (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)\
-    provides the geographic area for every Dutch postcode. Size 0.5GB
+    (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
+    provides the geographic area for every Dutch postal code. Package
+    size 0.5GB
 
-The package assumes that these GeoPackages have been stored locally in a
-location accessible to your R session.
+PostcodElapse requires that these GeoPackages are stored locally in the
+current Working Directory of your R session.
 
 ## Estimating exposures
 
-To estimate air pollutant concentration, call the main function
+To estimate the air pollutant levels, call the main function
 [`postcodElapse()`](https://griac-bioinformatics.github.io/postcodElapse/reference/postcodElapse.md)
-with a postcode (can also be a vector) and the path to the relevant
+with a postcode (can also be a vector) and the file path to the relevant
 GeoPackage.
 
 ``` r
@@ -62,7 +64,7 @@ postcodElapse("9713AV", "bag-light.gpkg")
 ```
 
 In this example, the BAG is used. The output structure is identical when
-using PC6; only the database path needs adjusting.
+using PC6; only the database file path needs adjusting.
 [`postcodElapse()`](https://griac-bioinformatics.github.io/postcodElapse/reference/postcodElapse.md)
 returns a data frame in which each row corresponds to a postcode.
 Columns include:
@@ -72,9 +74,10 @@ Columns include:
 - Mean, minimum & maximum concentration for all air pollutants, in
   µg/m³.
 
-If you wish to experiment with lager sets of postcodes, the files
-`postcode100.rds` & `postcode1000.rds` are available in the package’s
-extdata. See the example below on loading.
+PostcodElapse includes two demonstration data-sets, in extdata:
+`postcode100.rds` and `postcode1000.rds`. Containing 100 and 1000 postal
+codes randomly sampled from both GeoPackages, see the example below on
+loading.
 
 ``` r
 
