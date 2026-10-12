@@ -28,14 +28,13 @@ used for storing spatial data.
 Currently, postcodElapse supports two GeoPackages:
 
 1.  [BAG (Basisregistratie Adressen en
-    Gebouwencontains)](https://service.pdok.nl/lv/bag/atom/bag.xml) for
-    every building in the Netherlands the location and postal code.
-    Package size 8GB
+    Gebouwen)](https://service.pdok.nl/lv/bag/atom/bag.xml) contains for
+    every building in the Netherlands the location and postal code. Size
+    8GB
 
 2.  [PC6
     (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
-    provides the geographic area for every Dutch postal code. Package
-    size 0.5GB
+    provides the geographic area for every Dutch postal code. Size 0.5GB
 
 PostcodElapse requires that these GeoPackages are stored locally in the
 current Working Directory of your R session.

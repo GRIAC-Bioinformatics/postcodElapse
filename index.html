@@ -70,7 +70,7 @@
 </h3>
 <p>PostcodElapse <strong>requires </strong> an external database with the spatial data on Dutch postcodes. Two databases are currently supported, download the preferred database:</p>
 <ol style="list-style-type: decimal">
-<li><p><a href="https://service.pdok.nl/lv/bag/atom/bag.xml" class="external-link">BAG (Basisregistratie Adressen en Gebouwencontains)</a> for every building in the Netherlands the location and postal code. Package size 8GB</p></li>
+<li><p><a href="https://service.pdok.nl/lv/bag/atom/bag.xml" class="external-link">BAG (Basisregistratie Adressen en Gebouwen</a> contains for every building in the Netherlands the location and postal code. Package size 8GB</p></li>
 <li><p><a href="https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml" class="external-link">PC6 (Postcode6)</a> provides the geographic area for every Dutch postal code. Package size 0.5GB</p></li>
 </ol>
 </div>
@@ -114,7 +114,7 @@
 <div class="section level2">
 <h2 id="spacial-plotting">Spacial plotting<a class="anchor" aria-label="anchor" href="#spacial-plotting"></a>
 </h2>
-<p>For visualization, it is recommended to use the <a href="https://tidyverse.org/" class="external-link">tidyverse</a> ecosystem in conjunction with (<a href="https://dieghernan.github.io/tidyterra/" class="external-link uri">https://dieghernan.github.io/tidyterra/</a>). Further details and examples are provided in the spacial <a href="https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html">spacial plotting</a> article.</p>
+<p>For visualization, it is recommended to use the <a href="https://tidyverse.org/" class="external-link">tidyverse</a> ecosystem in conjunction with <a href="https://dieghernan.github.io/tidyterra/" class="external-link">tidyterra</a>. Further details and examples are provided in the spacial <a href="https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html">spacial plotting</a> article.</p>
 </div>
 </div>
 <div class="section level1">
@@ -128,7 +128,7 @@
 <code class="sourceCode R"><span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">elapse</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in .Call(list(name = "CppField__get", address = &lt;pointer: (nil)&gt;,  : </span></span>
 <span><span class="co">#&gt;   NULL value passed as symbol address</span></span></code></pre></div>
-<p>To fix this remove all spatrasters with <code><a href="https://rdrr.io/r/base/rm.html" class="external-link">?rm</a></code>, at the end of an script.</p>
+<p>To fix this remove all spatrasters with <code><a href="https://rdrr.io/r/base/rm.html" class="external-link">?rm</a></code>, and re-run the script. When closing Rstudio or R don’t save the workspace image, or remove any spatrasters with <code><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm()</a></code> before saving.</p>
 </div>
 </div>
 

@@ -28,7 +28,7 @@ Dutch postcodes. Two databases are currently supported, download the
 preferred database:
 
 1.  [BAG (Basisregistratie Adressen en
-    Gebouwencontains)](https://service.pdok.nl/lv/bag/atom/bag.xml) for
+    Gebouwen](https://service.pdok.nl/lv/bag/atom/bag.xml) contains for
     every building in the Netherlands the location and postal code.
     Package size 8GB
 
@@ -88,8 +88,8 @@ structure.
 
 For visualization, it is recommended to use the
 [tidyverse](https://tidyverse.org/) ecosystem in conjunction with
-(<https://dieghernan.github.io/tidyterra/>). Further details and
-examples are provided in the spacial [spacial
+[tidyterra](https://dieghernan.github.io/tidyterra/). Further details
+and examples are provided in the spacial [spacial
 plotting](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html)
 article.
 
@@ -111,7 +111,9 @@ ggplot2::autoplot(elapse)
 ```
 
 To fix this remove all spatrasters with
-[`?rm`](https://rdrr.io/r/base/rm.html), at the end of an script.
+[`?rm`](https://rdrr.io/r/base/rm.html), and re-run the script. When
+closing Rstudio or R don’t save the workspace image, or remove any
+spatrasters with [`rm()`](https://rdrr.io/r/base/rm.html) before saving.
 
 # Package index
 
