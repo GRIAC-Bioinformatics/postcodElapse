@@ -33,13 +33,13 @@ git lfs pull
 This will download the 125MB ELAPSE.tif. Although it is too large for a normal commit, it is required by postcodElapse. If preferred, you can switch to the dev branch.
 
 ### GeoPackages
-Finaly create a directory named: `data` in the parent directory of the postcodElapse repo. Donload and place into the data dir both supported GeoPackages links below:
+Finally create a directory named: `data` in the parent directory of the postcodElapse repo. Download and place into the data dir both supported GeoPackages links below:
 
 1. [BAG (Basisregistratie Adressen en Gebouwencontains)](https://service.pdok.nl/lv/bag/atom/bag.xml) for every building in the Netherlands the location and postal code. Package size 8GB
 
 1. [PC6 (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml) provides the geographic area for every Dutch postal code. Package size 0.5GB
 
-These are used in the documentation scripts. When setup correct everything should match the the directory tree below:
+These are used in the documentation. When setup correct everything should match the the directory tree below:
 
 ```
 ./development

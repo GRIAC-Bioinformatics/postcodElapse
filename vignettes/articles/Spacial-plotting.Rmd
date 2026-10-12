@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
   eval = TRUE
 )
 # Put these here so we don't the output
-setwd("..") #Set the wd one up.
+# setwd("..") #Set the wd one up.
 library(tidyverse)
 library(tidyterra)
 ```
@@ -48,8 +48,8 @@ done with `geom_sf()`, see the block below.
 path <- system.file("extdata/postcode100.rds", package = "postcodElapse")
 postcode100 <- readRDS(path)
 
-pc6 <- pollutionFromPc6(postcode100, "./data/cbs_pc6_2024.gpkg")
-bag <- pollutionFromBag(postcode100, "./data/bag-light.gpkg")
+pc6 <- pollutionFromPc6(postcode100, "../../../data/cbs_pc6_2024.gpkg")
+bag <- pollutionFromBag(postcode100, "../../../data/bag-light.gpkg")
 
 ggplot() +
   geom_spatraster(data = elapse$NO2FULL) + 
@@ -109,6 +109,6 @@ With this material you can plot the spacial data of postcodes and ELAPSE. To see
 
 ```{r cleanup, include=FALSE}
 rm(elapse)
-setwd("./postcodElapse") #reset working dir, this is so we have access to the database.
+# setwd("./postcodElapse") #reset working dir, this is so we have access to the database.
 ```
 
