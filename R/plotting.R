@@ -1,3 +1,53 @@
+#' Plot ELAPSE layered with GeoPackages.
+#'
+#' @param elapse **optional** file-paht to an ELAPSE.tif
+#' @param geoPackages One or multiple file-paths to GeoPackages
+#'
+#' @export
+plotElapse <- function(elapse, postcodes, GeoPackages, GeoColour) {
+
+  if (missing(elapse)) {
+    message("No ELAPSE given loading internal.")
+    elapse <- loadElapse()
+  }
+
+  #ELAPSE
+  figure <- ggplot2::ggplot() +
+    tidyterra::geom_spatraster(data = elapse)
+
+  #Enumerate all given GeoPackages and build the corresponing geom_sf()
+  for (index in 1:length(GeoPackages)) {
+    layer_path <- GeoPackages[index]
+    message("Adding geom_sf() for: ", layer_path)
+
+    dbType <- checkDb(layer_path)
+    if (dbType == "BAG") {
+      data <- pollutionFromBag(postcodes, layer_path, pass_db_check = TRUE)
+    } else if (dbType == "PC6") {
+      data <- pollutionFromPc6(postcodes, layer_path, pass_db_check = TRUE)
+    }
+
+    figure <- figure + ggplot2::geom_sf(data = data,
+                                        ggplot2::aes(geometry = geom),
+                                        colour = GeoColour[index],
+                                        fill = GeoColour[index])
+
+  }
+
+  #Styling
+  figure <- figure + tidyterra::scale_fill_grass_c()
+
+  #Do we facet?
+  if (terra::nlyr(elapse) > 1) {
+    message("ELAPSE has multiple layers, adding facet_wrap()")
+    figure <- figure + ggplot2::facet_wrap(ggplot2::vars(lyr))
+  }
+
+  #?Labels
+
+  print(figure)
+}
+
 #' Zoom into given spacial feature
 #'
 #' @description
