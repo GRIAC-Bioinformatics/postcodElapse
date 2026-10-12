@@ -32,9 +32,9 @@ As described above, the spatial data of a postal code is required in order to es
 
 Currently, postcodElapse supports two GeoPackages:
 
-1. [BAG (Basisregistratie Adressen en Gebouwencontains)](https://service.pdok.nl/lv/bag/atom/bag.xml) for every building in the Netherlands the location and postal code. Package size 8GB
+1. [BAG (Basisregistratie Adressen en Gebouwencontains)](https://service.pdok.nl/lv/bag/atom/bag.xml) for every building in the Netherlands the location and postal code. Size 8GB
 
-1. [PC6 (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml) provides the geographic area for every Dutch postal code. Package size 0.5GB
+1. [PC6 (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml) provides the geographic area for every Dutch postal code. Size 0.5GB
 
 PostcodElapse requires  that these GeoPackages are stored locally in the current Working Directory of your R session.
 
