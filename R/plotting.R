@@ -1,5 +1,7 @@
 #' Plot ELAPSE layered with GeoPackages.
 #'
+#' @description
+#'
 #' @param elapse **optional** file-paht to an ELAPSE.tif
 #'
 #' @export
@@ -18,14 +20,15 @@ plotElapse <- function(elapse,
                        annotate_colour = "red",
 
                        zoom_postcodes,
-                       zoom_size = 2000) {
+                       zoom_size = 2000,
+                       no_facet = FALSE) {
 
   if (missing(elapse)) {
     message("No ELAPSE given loading internal.")
     elapse <- loadElapse()
   }
 
-  #ELAPSE
+  #Plot ELAPSE layer
   figure <- ggplot2::ggplot() +
     tidyterra::geom_spatraster(data = elapse)
 
@@ -53,19 +56,21 @@ plotElapse <- function(elapse,
     }
   }
 
-  #Styling
+  #Scale the figure colour
   figure <- figure + tidyterra::scale_fill_grass_c()
 
+  #Add Annotate or zoom
   if (!missing(annotate_postcodes) & !missing(zoom_postcodes)) {
     stop("Cannot add annotate and zoom plot at the same time.")
   }
 
-  #Annotate
-  if (!missing(annotate_postcodes)) {
+  if (!missing(annotate_postcodes)) { # Add annotation using geom_rectFeature()
     if (missing(PC6_path) & missing(BAG_path)) {
       stop("Got postcodes but no GeoPackage, provide at-least one GeoPackage.")
     }
 
+    # I internaly decide wich data to use PC6 has priority.
+    # Having the user decide would make this function even more conveluted.
     if (!missing(PC6_path)) {
       message("Using spacial data from PC6 to annotate.")
       spacial_data <- pc6
@@ -76,16 +81,15 @@ plotElapse <- function(elapse,
     spacial_data <- spacial_data |>
       dplyr::filter(postcode %in% annotate_postcodes)
 
-    # This geom is provieded by postcodElapse
+    # This geom is provided by postcodElapse
     figure <- figure + geom_rectFeature(spacial_data$geom, annotate_size,
                                         annotate_colour)
-  }
-
-  #Zoom
-  if (!missing(zoom_postcodes)) {
+  } else if (!missing(zoom_postcodes)) { # Add zoom using coord_zoomFeature()
     if (missing(PC6_path) & missing(BAG_path)) {
       stop("Got postcodes but no GeoPackage, provide at-least one GeoPackage.")
     }
+
+    # Again PC6 has priority
     if (!missing(PC6_path)) {
       message("Using spacial data from PC6 to zoom.")
       spacial_data <- pc6
@@ -96,12 +100,12 @@ plotElapse <- function(elapse,
     spacial_data <- spacial_data |>
       dplyr::filter(postcode %in% zoom_postcodes)
 
-    # This scale is provieded by postcodElapse
+    # This scale is provided by postcodElapse
     figure <- figure + coord_zoomFeature(spacial_data$geom, zoom_size)
   }
 
   #Do we facet?
-  if (terra::nlyr(elapse) > 1) {
+  if (terra::nlyr(elapse) > 1 & !no_facet) {
     message("ELAPSE has multiple layers, adding facet_wrap()")
     figure <- figure + ggplot2::facet_wrap(ggplot2::vars(lyr))
   }
