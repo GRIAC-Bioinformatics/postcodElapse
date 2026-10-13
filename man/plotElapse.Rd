@@ -4,13 +4,127 @@
 \alias{plotElapse}
 \title{Plot ELAPSE layered with GeoPackages.}
 \usage{
-plotElapse()
+plotElapse(
+  elapse,
+  postcodes,
+  BAG_path,
+  BAG_colour = "orange",
+  PC6_path,
+  PC6_fill = "purple",
+  PC6_alpha = 0.7,
+  annotate_postcodes,
+  annotate_size = 4000,
+  annotate_colour = "red",
+  zoom_postcodes,
+  zoom_size = 2000,
+  no_facet = FALSE
+)
 }
 \arguments{
-\item{elapse}{\strong{optional} file-paht to an ELAPSE.tif}
+\item{elapse}{File path to an ELAPSE.tif, when left empty will load ELAPSE
+internal to postcodElapse.}
 
-\item{geoPackages}{One or multiple file-paths to GeoPackages}
+\item{postcodes}{Postcodes to plot layerd on-top of ELAPSE, when any postcodes
+are given at-least one GeoPackage must be provided via the \code{BAG_path} or
+\code{PC6_path} arguments. Providing both arguments will add two layers to the
+figure.}
+
+\item{BAG_path}{File path to the BAG GeoPackage, this argument requires the
+\code{postcodes} argument.}
+
+\item{BAG_colour}{Colour used to draw the spacial positions of BAG.}
+
+\item{PC6_path}{File path to the PC6 GeoPackage, this argument requires the
+\code{postcodes} argument.}
+
+\item{annotate_postcodes}{List of Dutch postal addresses to annotate on the
+figure. This list subsets the \code{postcodes} argument and draw an rectangle
+around those addresses. IMPORTANT this argument cannot be used when
+\code{zoom_postcodes} is present.}
+
+\item{annotate_size}{Size of the drawn annotation.}
+
+\item{annotate_colour}{Colour of the drawn annotation.}
+
+\item{zoom_postcodes}{List of Dutch postal addresses to zoom into on the
+figure. This list subsets the \code{postcodes} argument and zooms into those
+postcodes. IMPORTANT this argument cannot be used when \code{annotate_postcodes}
+is present.}
+
+\item{zoom_size}{Size of the zoom.}
+
+\item{no_facet}{Set to TRUE to disable faceting.}
 }
 \description{
-Plot ELAPSE layered with GeoPackages.
+The goal of this function is to provide a easy way to plot ELAPSE and spacial
+data from the BAG and or PC6 GeoPackages. When directly called it will plot
+ELAPSE. To plot the postal addresses on ELAPSE provide the \code{postcodes} argument
+and one or both supported GeoPackages in the \code{BAG_path} and \code{PC6_path} arguments.
+To annotate a specific postcode provide that postcode in \code{annotate_postcodes}
+an square will be drawn around it's location. Zooming is done in a similar
+manner with the \code{zoom_postcodes} argument. Important you cannot zoom and
+annotate the same figure.
+}
+\examples{
+\dontrun{
+library(postcodElapse)
+
+## Just plot ELAPSE
+plotElapse()
+
+# If ELAPSE has multiple layers an facet_wrap() will be added. Disable this
+# with the `no_facet` argument.
+
+## Plot the NO2 layer in ELAPSE
+elapse <- loadElapse()
+
+plotElapse(elapse = elapse$NO2FULL)
+
+## Plot a singular postcode from BAG.
+plotElapse(postcodes = "9726AC", BAG_path = "../data/bag-light.gpkg")
+
+## Plot BAG and PC6 with the oneHunderdAddresses demo-data.
+data("oneHunderdAddresses")
+
+plotElapse(postcodes = oneHunderdAddresses,
+           BAG_path = "../data/bag-light.gpkg",
+           PC6_path = "../data/cbs_pc6_2024.gpkg")
+
+## Annotating and zooming are mutialy exclusive!
+### Annotate the postal address: 8463VE
+
+plotElapse(postcodes = oneHunderdAddresses,
+           PC6_path = "../data/cbs_pc6_2024.gpkg",
+           annotate_postcodes = "8463VE",
+           no_facet = TRUE)
+
+### Zoom into the postal address: 8463VE
+
+plotElapse(postcodes = oneHunderdAddresses,
+           PC6_path = "../data/cbs_pc6_2024.gpkg",
+           zoom_postcodes = "8463VE",
+           no_facet = TRUE)
+
+# All layers have respective size, colour, fill and alpha argument where
+# applicable.
+
+## Making inset figures can be done with ggpubr
+library(ggpubr)
+
+main <- plotElapse(elapse = elapse$NO2FULL,
+                   postcodes = oneHunderdAddresses,
+                   PC6_path = "../data/cbs_pc6_2024.gpkg",
+                   BAG_path = "../data/bag-light.gpkg",
+                   annotate_postcodes = "8463VE")
+
+inset <- plotElapse(elapse = elapse$NO2FULL,
+                    postcodes = oneHunderdAddresses,
+                    PC6_path = "../data/cbs_pc6_2024.gpkg",
+                    BAG_path = "../data/bag-light.gpkg",
+                    zoom_postcodes = "8463VE")
+
+ggarrange(main, inset, ncol = 2)
+}
+
+
 }
