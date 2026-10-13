@@ -1,10 +1,24 @@
 #' Plot ELAPSE layered with GeoPackages.
 #'
 #' @param elapse **optional** file-paht to an ELAPSE.tif
-#' @param geoPackages One or multiple file-paths to GeoPackages
 #'
 #' @export
-plotElapse <- function(elapse, postcodes, GeoPackages, GeoColour) {
+plotElapse <- function(elapse,
+                       postcodes,
+
+                       BAG_path,
+                       BAG_colour = "orange",
+
+                       PC6_path,
+                       PC6_fill = "purple",
+                       PC6_alpha = 0.7,
+
+                       annotate_postcodes,
+                       annotate_size = 4000,
+                       annotate_colour = "red",
+
+                       zoom_postcodes,
+                       zoom_size = 2000) {
 
   if (missing(elapse)) {
     message("No ELAPSE given loading internal.")
@@ -15,27 +29,76 @@ plotElapse <- function(elapse, postcodes, GeoPackages, GeoColour) {
   figure <- ggplot2::ggplot() +
     tidyterra::geom_spatraster(data = elapse)
 
-  #Enumerate all given GeoPackages and build the corresponing geom_sf()
-  for (index in 1:length(GeoPackages)) {
-    layer_path <- GeoPackages[index]
-    message("Adding geom_sf() for: ", layer_path)
-
-    dbType <- checkDb(layer_path)
-    if (dbType == "BAG") {
-      data <- pollutionFromBag(postcodes, layer_path, pass_db_check = TRUE)
-    } else if (dbType == "PC6") {
-      data <- pollutionFromPc6(postcodes, layer_path, pass_db_check = TRUE)
+  # Plot the given geopackages + styling.
+  if (!missing(postcodes)) { #Got postcodes? try to plot.
+    #To plot we need atleas one GeoPackage, if none are given error.
+    if (missing(PC6_path) & missing(BAG_path)) {
+      stop("Got postcodes but no GeoPackage, provide at-least one GeoPackage.")
     }
 
-    figure <- figure + ggplot2::geom_sf(data = data,
-                                        ggplot2::aes(geometry = geom),
-                                        colour = GeoColour[index],
-                                        fill = GeoColour[index])
+    if (!missing(BAG_path)) {
+      message("Plotting BAG from: ", BAG_path)
+      bag <- pollutionFromBag(postcodes, BAG_path)
 
+      figure <- figure + ggplot2::geom_sf(data = bag, ggplot2::aes(geometry = geom),
+                                          colour = BAG_colour)
+    }
+
+    if (!missing(PC6_path)) {
+      message("Plotting PC6 from: ", PC6_path)
+      pc6 <- pollutionFromPc6(postcodes, PC6_path)
+
+      figure <- figure + ggplot2::geom_sf(data = pc6, ggplot2::aes(geometry = geom),
+                                          fill = PC6_fill, alpha = PC6_alpha)
+    }
   }
 
   #Styling
   figure <- figure + tidyterra::scale_fill_grass_c()
+
+  if (!missing(annotate_postcodes) & !missing(zoom_postcodes)) {
+    stop("Cannot add annotate and zoom plot at the same time.")
+  }
+
+  #Annotate
+  if (!missing(annotate_postcodes)) {
+    if (missing(PC6_path) & missing(BAG_path)) {
+      stop("Got postcodes but no GeoPackage, provide at-least one GeoPackage.")
+    }
+
+    if (!missing(PC6_path)) {
+      message("Using spacial data from PC6 to annotate.")
+      spacial_data <- pc6
+    } else if (!missing(BAG_path)) {
+      message("Using spacial data from BAG to annotate.")
+      spacial_data <- bag
+    }
+    spacial_data <- spacial_data |>
+      dplyr::filter(postcode %in% annotate_postcodes)
+
+    # This geom is provieded by postcodElapse
+    figure <- figure + geom_rectFeature(spacial_data$geom, annotate_size,
+                                        annotate_colour)
+  }
+
+  #Zoom
+  if (!missing(zoom_postcodes)) {
+    if (missing(PC6_path) & missing(BAG_path)) {
+      stop("Got postcodes but no GeoPackage, provide at-least one GeoPackage.")
+    }
+    if (!missing(PC6_path)) {
+      message("Using spacial data from PC6 to zoom.")
+      spacial_data <- pc6
+    } else if (!missing(BAG_path)) {
+      message("Using spacial data from BAG to zoom.")
+      spacial_data <- bag
+    }
+    spacial_data <- spacial_data |>
+      dplyr::filter(postcode %in% zoom_postcodes)
+
+    # This scale is provieded by postcodElapse
+    figure <- figure + coord_zoomFeature(spacial_data$geom, zoom_size)
+  }
 
   #Do we facet?
   if (terra::nlyr(elapse) > 1) {
@@ -44,6 +107,9 @@ plotElapse <- function(elapse, postcodes, GeoPackages, GeoColour) {
   }
 
   #?Labels
+  figure <- figure + ggplot2::labs(
+    fill = bquote("µg/m"^3)
+  )
 
   print(figure)
 }
