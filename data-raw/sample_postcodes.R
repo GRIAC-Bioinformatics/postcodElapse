@@ -1,5 +1,5 @@
-# This script was used to build the demo datasests included in extdata,
-# containing a random sample of postcods exising in both GeoPackages.
+# This script is used to build the oneHunderdAddresses demo-dataset.
+# It contains 100 postal addresses common between the BAG and PC6 GeoPackages.
 library(sf)
 library(tidyverse)
 
@@ -10,13 +10,14 @@ bag <- st_read("../data/bag-light.gpkg",
 pc6 <- st_read("../data/cbs_pc6_2024.gpkg",
         query = "SELECT postcode6 FROM postcode6")
 
-
-# Deduplicate the data
+# De-duplicate the postcodes
 bag <- distinct(bag)
 pc6 <- distinct(pc6)
 
 # find all postcodes that exist in both GeoPackages
 both <- intersect(bag$postcode, pc6$postcode6)
 
-# Randomly sample them.
-postcode100 <- sample(both, 100)
+# Randomly sample them. You can change this to add more.
+oneHunderdAddresses <- sample(both, 100)
+
+# usethis::use_data(oneHunderdAddresses) # Un-comment to update the demo-data.
