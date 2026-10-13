@@ -81,7 +81,7 @@ postcodElapse <- function(postcodes, database_path, database_type = "GUESS",
     # Just need to remove the unwanted geometry.
     postcode_pollution_stats <- sf::st_drop_geometry(
                                 pollutionFromPc6(postcodes,
-                                                lpc6_path = database_path,
+                                                pc6_path = database_path,
                                                 elapse_path,
                                                 pass_db_check = TRUE))
 
