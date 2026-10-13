@@ -20,4 +20,3 @@ both <- intersect(bag$postcode, pc6$postcode6)
 
 # Randomly sample them.
 postcode100 <- sample(both, 100)
-postcode1000 <- sample(both, 1000)
