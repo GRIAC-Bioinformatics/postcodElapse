@@ -57,9 +57,6 @@ postcodElapse(c("8917DD", "9712CP"), "~/home/data/bag-light.gpkg")
 
 Above, the air pollution  levels for two postal codes are estimated with the BAG database. All air pollutant levels are provided in µg/m<sub>3</sub>. The `n` column indicates the number of buildings found per postal code. Any missing data is marked with NA. When using PC6, the output has the same structure. 
 
-## Spacial plotting
-For visualization, it is recommended to use  the [tidyverse](https://tidyverse.org/) ecosystem in conjunction with [tidyterra](https://dieghernan.github.io/tidyterra/). Further details and examples are provided in the spacial [spacial plotting](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html) article.
-
 # Common issues
 ## NULL value passed as symbol address
 `loadElapse()` Returns [spatical rasters (spatrasters)](https://rspatial.org/spatial/4-rasterdata.html#spatraster) these **cannot be saved** into the workspace image. Doing this will result in errors like the one below:
