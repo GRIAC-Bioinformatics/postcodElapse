@@ -115,6 +115,4 @@ head(estimates, 5)
 ```
 
 With the material above, you can utilize the core functionality
-postcodElapse provides. For plotting spacial data an extra
-[article](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html)
-is provided.
+postcodElapse provides.

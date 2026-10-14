@@ -84,15 +84,6 @@ the BAG database. All air pollutant levels are provided in µg/m₃. The
 missing data is marked with NA. When using PC6, the output has the same
 structure.
 
-## Spacial plotting
-
-For visualization, it is recommended to use the
-[tidyverse](https://tidyverse.org/) ecosystem in conjunction with
-[tidyterra](https://dieghernan.github.io/tidyterra/). Further details
-and examples are provided in the spacial [spacial
-plotting](https://griac-bioinformatics.github.io/postcodElapse/articles/Spacial-plotting.html)
-article.
-
 # Common issues
 
 ## NULL value passed as symbol address
