@@ -202,7 +202,7 @@ main <- ggplot(bag_pc6_merge) +
     fill = bquote("Log10 concentration NO"[2]~" in µg/m"^3),
     colour = "GeoPackage")+
   theme(legend.position = "top",
-        legend.text = element_text(vjust = 1))
+        legend.text = element_text(vjust = -1))
 
 inset <- ggplot(bag_pc6_merge) +
   geom_spatraster(data = elapse$NO2FULL) +
