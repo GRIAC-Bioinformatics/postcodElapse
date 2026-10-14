@@ -1,4 +1,4 @@
-# Estimate air pollutant concentraions for a given Dutch postcode.
+# Estimate air pollutant concentrations for a given Dutch postcode.
 
 Estimates air pollutant concentration for given Dutch postcodes. Using
 ELAPSE (included) and a postcode database (not-included). Two postcode
@@ -6,9 +6,18 @@ databases formatted as Geopackage (.gpkg) are supported
 [Postcode6(PC6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
 and [Basisregistratie Adressen en
 Gebouwen(BAG)](https://service.pdok.nl/lv/bag/atom/bag.xml) download one
-of these and point the `database ` argument to it's location.
-PostcodElapse automatically guesses the `type` argument, which you can
-set to "PC6" or "BAG".
+of these and point the `database` argument to it's location.
+PostcodElapse automatically guesses the `type` argument, which can be
+changed to "PC6" or "BAG".
+
+`postcodElapse()` produces a data.frame with the following content:
+
+- The postcode
+
+- Number of buildings in that postcode n.
+
+- Mean, minimum & maximum concentration for all air pollutants, in
+  µg/m3.
 
 ## Usage
 
