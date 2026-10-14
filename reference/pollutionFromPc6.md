@@ -37,19 +37,23 @@ that postcode.
 
 ``` r
 if (FALSE) { # \dontrun{
-# basic use
-pollutionFromPc6("9726AC", "cbs_pc6_2024.gpkg")
-
-# Plotting the area's, I recommend you use tidyverse & tidyterra
+## Packages used in plotting
 library(tidyverse)
 library(tidyterra)
-library(postcodElapse)
 
-data <- pollutionFromPc6("9726AC", "cbs_pc6_2024.gpkg")
+## Get the spacial area's associated with postcodes.
+data("oneHunderdAddresses")
 
+pc6 <- pollutionFromPc6(oneHunderdAddresses, "./data/cbs_pc6_2024.gpkg")
+
+head(pc6, 5)
+
+## Plot the spacial features, and NO2 concentration across the Netherlands.
 elapse <- loadElapse()
- ggplot() +
- geom_spatraster(data = elapse$NO2FULL) +
- geom_sf(data = data, aes(geometry = geom), colour = "red")
+
+ggplot() +
+  geom_spatraster(data = elapse$NO2FULL) +
+  geom_sf(data = pc6, aes(geometry = geom), colour = "purple") +
+  scale_fill_grass_c(transform = "log10")
 } # }
 ```

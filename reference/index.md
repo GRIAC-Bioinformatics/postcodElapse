@@ -3,7 +3,7 @@
 ## All functions
 
 - [`coord_zoomFeature()`](https://griac-bioinformatics.github.io/postcodElapse/reference/coord_zoomFeature.md)
-  : Zoom into given spacial feature
+  : Zoom into given spacial feature (Broken on Windows.)
 - [`formatPostcode()`](https://griac-bioinformatics.github.io/postcodElapse/reference/formatPostcode.md)
   : Format strings as Dutch postcodes.
 - [`geom_rectFeature()`](https://griac-bioinformatics.github.io/postcodElapse/reference/geom_rectFeature.md)

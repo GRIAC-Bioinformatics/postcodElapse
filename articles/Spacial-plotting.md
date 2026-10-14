@@ -51,12 +51,11 @@ the block below.
 
 ``` r
 
-path <- system.file("extdata/postcode100.rds", package = "postcodElapse")
-postcode100 <- readRDS(path)
+data("oneHunderdAddresses")
 
-pc6 <- pollutionFromPc6(postcode100, "../../../data/cbs_pc6_2024.gpkg")
+pc6 <- pollutionFromPc6(oneHunderdAddresses, "../../../data/cbs_pc6_2024.gpkg")
 #> Guessed db type to be: PC6
-bag <- pollutionFromBag(postcode100, "../../../data/bag-light.gpkg")
+bag <- pollutionFromBag(oneHunderdAddresses, "../../../data/bag-light.gpkg")
 #> Guessed db type to be: BAG
 
 ggplot() +
@@ -86,33 +85,28 @@ See the example below on how to build an inset plot:
 
 ``` r
 
-# Build the plots for the single figure separately
-main <- ggplot() +
+# Build a base plot to annotate and zoom later
+base <- ggplot() +
   geom_spatraster(data = elapse$NO2FULL) + 
   geom_sf(data = pc6, aes(geometry = geom), alpha = 0.7, fill = "purple") +
   geom_sf(data = bag, aes(geometry = geom), alpha = 0.7, colour = "orange") +
   scale_fill_grass_c(transform = "log10") +
-  geom_rectFeature(pc6[100, ], 5000) + # Annotate a postal address
   labs(fill = bquote("log10 Concentration NO"[2]~"in µg/m"^3)) +
   theme(legend.position = "top")
 #> <SpatRaster> resampled to 500490 cells.
 
-inset <- ggplot() +
-  geom_spatraster(data = elapse$NO2FULL) +
-  geom_sf(data = pc6, aes(geometry = geom), alpha = 0.7, fill = "purple") +
-  geom_sf(data = bag, aes(geometry = geom), alpha = 0.7, colour = "orange") +
-  scale_fill_grass_c(transform = "log10") +
-  coord_zoomFeature(pc6[100, ]) # Zoom into a postal address
-#> <SpatRaster> resampled to 500490 cells.
+# Create the annotation and zoom for the postal address of interest.
+annotation <- base + geom_rectFeature(pc6$geom[100], 5000)
+zoom <- base + coord_zoomFeature(pc6$geom[100])
 
-# Combine the two plots into a single figure.
-fig <- ggarrange(main, inset,
+# Combine the two into a single figure.
+fig <- ggarrange(annotation, zoom,
   ncol = 2,
   common.legend = TRUE,
-  legend.grob = get_legend(main)
+  legend.grob = get_legend(base)
 )
 
-# Lable the figure
+# Label the figure
 label <- 
 "NO2 pollutant levels at postal code level in the Netherlands.
 Purple areas are postal adrreses from PC6, orange dots are buildings from BAG."

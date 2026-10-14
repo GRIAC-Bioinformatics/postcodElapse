@@ -73,20 +73,18 @@ Columns include:
 - Mean, minimum & maximum concentration for all air pollutants, in
   µg/m³.
 
-PostcodElapse includes two demonstration data-sets, in extdata:
-`postcode100.rds` and `postcode1000.rds`. Containing 100 and 1000 postal
-codes randomly sampled from both GeoPackages, see the example below on
-loading.
+PostcodElapse includes the “oneHunderdAddresses” demo-dataset it
+conatins an 100 Duch postal addresses, randomly sampled from both
+GeoPackages. Load it using `data("oneHunderdAddresses")`.
 
 ``` r
 
-path <- system.file("extdata/postcode100.rds", package = "postcodElapse")
-postcode100 <- readRDS(path)
+data("oneHunderdAddresses")
 
-head(postcode100)
+head(oneHunderdAddresses)
 #> [1] "2694BH" "9686NH" "2514LX" "6835MH" "9717LD" "3723EK"
 
-estimates <- postcodElapse(postcode100, "cbs_pc6_2024.gpkg")
+estimates <- postcodElapse(oneHunderdAddresses, "cbs_pc6_2024.gpkg")
 #> Guessed db type to be: PC6
 
 head(estimates, 5)
