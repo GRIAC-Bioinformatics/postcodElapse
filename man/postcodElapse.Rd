@@ -29,14 +29,19 @@ PostcodElapse automatically guesses the \code{type} argument, which you can set 
 }
 \examples{
 \dontrun{
-# Estimate air pollution for postcode "8933DV" with Postcode6.
-postcodElapse("8933DV", "cbs_pc6_2024.gpkg")
+## Estimate air pollutant levels at NHLstenden Leeuwarden
+## and Rijksuniversiteit Gronningen
+postcodElapse(c("8917DD", "9712CP"), "~/home/data/bag-light.gpkg")
 
-# Estimate air pollution for multiple postcodes with BAG.
-postcodElapse(c("8933DV", "9713 GZ", "1071XX"), "bag-light.gpkg")
+## Load the demo-data "oneHunderdAddresses" estimate the air pollution levels
+## for all the postcodes.
+data("oneHunderdAddresses")
 
-# Postcodes are valid a long as they are four numbers followed by two letters.
-# Any spaces will be removed and non-capital letters will be capitalized.
-postcodElapse(c("8 9 3 3 DV", "9 713 Gz", "1071 xx"), "cbs_pc6_2024.gpkg")
+head(oneHunderdAddresses)
+
+estimates <- postcodElapse(oneHunderdAddresses, "cbs_pc6_2024.gpkg")
+
+head(estimates, 5)
 }
+
 }
