@@ -13,10 +13,11 @@ formatPostcode(postcodes)
 Strings formatted as postcodes
 }
 \description{
-This attempts to format any given string as an Dutch postcodes. IE. four numbers
-followed by two capital letters, no spaces between each character. \code{formatPostcode()}
-removes any spaces in a given string and capitalizes all letters. In addition
-checks for unwanted extra numbers and letters, errors in case one is found.
+This attempts to format any given string as an Dutch postcodes. IE. four
+numbers followed by two capital letters, no spaces between each character.
+\code{formatPostcode()} removes any spaces in a given string and capitalizes all
+letters. In addition checks for unwanted extra numbers and letters, errors
+in case one is found.
 }
 \examples{
 formatPostcode("8 9 3 3 DV", "9 713 Gz", "1071 xx")

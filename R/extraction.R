@@ -1,13 +1,19 @@
-#' Estimate air pollutant concentraions for a given Dutch postcode.
+#' Estimate air pollutant concentrations for a given Dutch postcode.
 #'
 #' @description
 #' Estimates air pollutant concentration for given Dutch postcodes. Using ELAPSE
 #' (included) and a postcode database (not-included). Two postcode databases formatted
 #' as Geopackage (.gpkg) are supported [Postcode6(PC6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
 #' and [Basisregistratie Adressen en Gebouwen(BAG)](https://service.pdok.nl/lv/bag/atom/bag.xml)
-#' download one of these and point the `database ` argument to it's location.
-#' PostcodElapse automatically guesses the `type` argument, which you can set to
-#' "PC6" or "BAG".
+#' download one of these and point the `database` argument to it's location.
+#' PostcodElapse automatically guesses the `type` argument, which can be changed
+#'  to "PC6" or "BAG".
+#'
+#' `postcodElapse()` produces a data.frame with the following content:
+#'
+#'  - The postcode
+#'  - Number of buildings in that postcode n.
+#'  - Mean, minimum & maximum concentration for all air pollutants, in µg/m3.
 #'
 #' @param postcodes String containing Dutch postcode (1234AB) can also be a vector.
 #' @param database Path to the postcode database, see Postcode database below.
@@ -19,16 +25,21 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Estimate air pollution for postcode "8933DV" with Postcode6.
-#' postcodElapse("8933DV", "cbs_pc6_2024.gpkg")
+#' ## Estimate air pollutant levels at NHLstenden Leeuwarden
+#' ## and Rijksuniversiteit Gronningen
+#' postcodElapse(c("8917DD", "9712CP"), "~/home/data/bag-light.gpkg")
 #'
-#' # Estimate air pollution for multiple postcodes with BAG.
-#' postcodElapse(c("8933DV", "9713 GZ", "1071XX"), "bag-light.gpkg")
+#' ## Load the demo-data "oneHunderdAddresses" estimate the air pollution levels
+#' ## for all the postcodes.
+#' data("oneHunderdAddresses")
 #'
-#' # Postcodes are valid a long as they are four numbers followed by two letters.
-#' # Any spaces will be removed and non-capital letters will be capitalized.
-#' postcodElapse(c("8 9 3 3 DV", "9 713 Gz", "1071 xx"), "cbs_pc6_2024.gpkg")
+#' head(oneHunderdAddresses)
+#'
+#' estimates <- postcodElapse(oneHunderdAddresses, "cbs_pc6_2024.gpkg")
+#'
+#' head(estimates, 5)
 #' }
+#'
 #' @export
 postcodElapse <- function(postcodes, database_path, database_type = "GUESS",
                           elapse_path) {
@@ -81,7 +92,7 @@ postcodElapse <- function(postcodes, database_path, database_type = "GUESS",
     # Just need to remove the unwanted geometry.
     postcode_pollution_stats <- sf::st_drop_geometry(
                                 pollutionFromPc6(postcodes,
-                                                lpc6_path = database_path,
+                                                pc6_path = database_path,
                                                 elapse_path,
                                                 pass_db_check = TRUE))
 
@@ -110,22 +121,24 @@ postcodElapse <- function(postcodes, database_path, database_type = "GUESS",
 #' buildings in the given postcodes
 #' @examples
 #' \dontrun{
-#' # Basic usage
-#' pollutionFromBag("9726AC", "bag-light.gpkg")
-#'
-#' # Plotting the location of all buildings,
-#' # I recommend you use tidyverse & tidyterra
+#' ## Packages used in plotting
 #' library(tidyverse)
 #' library(tidyterra)
-#' library(postcodElapse)
 #'
-#' data <- pollutionFromBag("9726AC", "bag-light.gpkg")
+#' ## Get the spacial points associated with postcodes.
+#' data("oneHunderdAddresses")
 #'
+#' bag <- pollutionFromBag(oneHunderdAddresses, "./data/bag-light.gpkg")
+#'
+#' head(bag, 5)
+#'
+#' ## Plot the spacial features, and NO2 concentration across the Netherlands.
 #' elapse <- loadElapse()
 #'
 #' ggplot() +
-#'    geom_spatraster(data = elapse$NO2FULL) +
-#'    geom_sf(data = data, aes(geometry = geom), colour = "red")
+#'   geom_spatraster(data = elapse$NO2FULL) +
+#'   geom_sf(data = bag, aes(geometry = geom), colour = "orange") +
+#'   scale_fill_grass_c(transform = "log10")
 #' }
 #'
 #' @export
@@ -205,20 +218,24 @@ pollutionFromBag <- function(postcodes, bag_path, elapse_path, ...) {
 #'
 #' @examples
 #' \dontrun{
-#' # basic use
-#' pollutionFromPc6("9726AC", "cbs_pc6_2024.gpkg")
-#'
-#' # Plotting the area's, I recommend you use tidyverse & tidyterra
+#' ## Packages used in plotting
 #' library(tidyverse)
 #' library(tidyterra)
-#' library(postcodElapse)
 #'
-#' data <- pollutionFromPc6("9726AC", "cbs_pc6_2024.gpkg")
+#' ## Get the spacial area's associated with postcodes.
+#' data("oneHunderdAddresses")
 #'
+#' pc6 <- pollutionFromPc6(oneHunderdAddresses, "./data/cbs_pc6_2024.gpkg")
+#'
+#' head(pc6, 5)
+#'
+#' ## Plot the spacial features, and NO2 concentration across the Netherlands.
 #' elapse <- loadElapse()
-#'  ggplot() +
-#'  geom_spatraster(data = elapse$NO2FULL) +
-#'  geom_sf(data = data, aes(geometry = geom), colour = "red")
+#'
+#' ggplot() +
+#'   geom_spatraster(data = elapse$NO2FULL) +
+#'   geom_sf(data = pc6, aes(geometry = geom), colour = "purple") +
+#'   scale_fill_grass_c(transform = "log10")
 #' }
 #'
 #' @export

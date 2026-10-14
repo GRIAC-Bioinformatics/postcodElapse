@@ -27,22 +27,24 @@ wanted postcodes, including the geo-location.
 }
 \examples{
 \dontrun{
-# Basic usage
-pollutionFromBag("9726AC", "bag-light.gpkg")
-
-# Plotting the location of all buildings,
-# I recommend you use tidyverse & tidyterra
+## Packages used in plotting
 library(tidyverse)
 library(tidyterra)
-library(postcodElapse)
 
-data <- pollutionFromBag("9726AC", "bag-light.gpkg")
+## Get the spacial points associated with postcodes.
+data("oneHunderdAddresses")
 
+bag <- pollutionFromBag(oneHunderdAddresses, "./data/bag-light.gpkg")
+
+head(bag, 5)
+
+## Plot the spacial features, and NO2 concentration across the Netherlands.
 elapse <- loadElapse()
 
 ggplot() +
-   geom_spatraster(data = elapse$NO2FULL) +
-   geom_sf(data = data, aes(geometry = geom), colour = "red")
+  geom_spatraster(data = elapse$NO2FULL) +
+  geom_sf(data = bag, aes(geometry = geom), colour = "orange") +
+  scale_fill_grass_c(transform = "log10")
 }
 
 }

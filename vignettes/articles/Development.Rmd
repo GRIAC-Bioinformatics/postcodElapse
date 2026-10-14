@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
 
 ## Dev environment
 ### Set-up
-To develop postcodElapse you need [Rstudio](https://posit.co/downloads) and the git large file storage [(LFS)](https://git-lfs.com/) installed, check their instructions. In addition you need the install the R-packages below.
+To develop postcodElapse, Rstudio with the git large file storage (LFS) installed is required. [Instructions can be found here](https://git-lfs.com/). In addition, the following R packages are required: 
 
 ```r
 install.packages(c("usethis", "pkgdown", "roxygen2")) #devtools
@@ -22,28 +22,81 @@ install.packages(c("tidyverse", "tidyterra", "ggpubr")) #used in the docs
 ```
 
 ### Cloning
-When you're done install clone: `https://github.com/GRIAC-Bioinformatics/postcodElapse`, you must enable lfs for the repo and pull the large file. See shell commands below.
+After installing all the dependencies, clone: https://github.com/GRIAC-Bioinformatics/postcodElapse. Make sure to enable git LFS for the repo and pull the large file, see shell commands below.
+
 ```bash
 git lfs install
 
 git lfs pull
 ```
 
-This will download ELAPSE.tif it's 125mb, too large for a normal commit but required by postcodElapse. If you wish to work on the development version switch to the `dev` branch.
+This will download the 125MB ELAPSE.tif. Although it is too large for a normal commit, it is required by postcodElapse. If preferred, you can switch to the dev branch.
+
+### GeoPackages
+Finally create a directory named: `data` in the parent directory of the postcodElapse repo. Download and place into the data dir both supported GeoPackages links below:
+
+1. [BAG (Basisregistratie Adressen en Gebouwencontains)](https://service.pdok.nl/lv/bag/atom/bag.xml) for every building in the Netherlands the location and postal code. Package size 8GB
+
+1. [PC6 (Postcode6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml) provides the geographic area for every Dutch postal code. Package size 0.5GB
+
+These are used in the documentation. When setup correct everything should match the the directory tree below:
+
+```
+./development
+├── data
+│   ├── bag-light.gpkg
+│   └── cbs_pc6_2024.gpkg
+└── postcodElapse
+    ├── data-raw
+    │   └── sample_postcodes.R
+    ├── DESCRIPTION
+    ├── inst
+    │   ├── ELAPSE.tif
+    │   └── extdata
+    │       ├── postcode1000.rds
+    │       └── postcode100.rds
+    ├── LICENSE.md
+    ├── man
+    │   ├── coord_zoomFeature.Rd
+    │   ├── formatPostcode.Rd
+    │   ├── geom_rectFeature.Rd
+    │   ├── loadElapse.Rd
+    │   ├── pollutionFromBag.Rd
+    │   ├── pollutionFromPc6.Rd
+    │   └── postcodElapse.Rd
+    ├── NAMESPACE
+    ├── _pkgdown.yml
+    ├── postcodElapse.Rproj
+    ├── R
+    │   ├── extraction.R
+    │   ├── helpers.R
+    │   └── plotting.R
+    ├── README.md
+    └── vignettes
+        ├── articles
+        │   ├── Development.Rmd
+        │   └── Spacial-plotting.Rmd
+        ├── postcodElapse.Rmd
+        └── postcodElapse.Rmd.orig
+
+10 directories, 26 files
+```
 
 ### Building
+When implementing new features or fixing bugs, make sure to work on the dev branch. To quickly install the package in the Rstudio ribbon, navigate to: *Build > Load All*. This will quickly load the package into the current R session. Alternatively,  use the keybind: `Control + Shift + L`.
+
 Again if you are implementing new features or fixing bugs please work on the `dev` branch. To quickly install the package in the Rstudio ribbon navigate: Build > Load All, this quickly loads the package into your R session. Or you can use the keybind: `Control + Shift + L`. 
 
-To build the package fully in the ribbon: Build > Install package or use the `Control + Shift + B` keybind, this also updates any changed documentation.
+To fully build the package in the ribbon: *Build > Install package* or use the `Control + Shift + B` keybind. , This will also update any changed documentation.
 
-If you are done developing and wish to build postcodElapse for release on GitHub. Run Build > Build Source Package, this will create an archive (.tar.gz or .zip) in the parent directory of the repo. This file is the built package, add this file to the new release. Don't forget to merge dev to main, and update the documentation.
+After finishing developing, to build postcodElapse for release on GitHub, use: *Run Build > Build Source Package*. This will build package as an archive (.tar.gz or .zip) in the parent directory of the repo. Add this file as new release to GitHub. Don’t forget to merge dev to main and update the documentation.
 
 ## Documentation
 
 ### In package
-In package documentation is what you read when you run ?postcodElapse. It is made using roxygen from the comment blocks above the function definitions in the postcodElapse. See their [page](https://roxygen2.r-lib.org/) on usage.
+The package documentation is used for ?postcodElapse in R. It is created with roxygen from the comment blocks above the function definitions in the postcodElapse. See their [page](https://roxygen2.r-lib.org/) for user information. 
 
 ### GitHub pages
-GitHub pages is where you find this article in addition to the more expanded guide style documentation. This is made using `pkgdown`. Creating new articles or vignettes is done with `usethis`, by running in the R console `usethis::use_article()` or `usethis::use_vignette()`. For usage refer to the [pkgdown](https://pkgdown.r-lib.org/) and [usethis](https://usethis.r-lib.org/) documentation.
+More expanded guide style documentation can be found on the GitHub pages. This is created using *pkgdown*. Creating new articles or vignettes can be done with *usethis*, running in the R console `usethis::use_article()` or `usethis::use_vignette()`. User information can be found in the [pkgdown](https://pkgdown.r-lib.org/) and [usethis](https://usethis.r-lib.org/) documentation.
 
-Building the and viewing the site locally can be done by running `pkgdown::build_site()`. To publish the documentation on GitHub pages run `pkgdown::deploy_to_branch()` and wait till GitHub fully deploys the page.
+Local building and viewing can be done by running `pkgdown::build_site()`. To publish the documentation on GitHub pages, run `pkgdown::deploy_to_branch()` and wait until GitHub fully deploys the page.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/extraction.R
 \name{postcodElapse}
 \alias{postcodElapse}
-\title{Estimate air pollutant concentraions for a given Dutch postcode.}
+\title{Estimate air pollutant concentrations for a given Dutch postcode.}
 \usage{
 postcodElapse(postcodes, database_path, database_type = "GUESS", elapse_path)
 }
@@ -23,20 +23,32 @@ Estimates air pollutant concentration for given Dutch postcodes. Using ELAPSE
 (included) and a postcode database (not-included). Two postcode databases formatted
 as Geopackage (.gpkg) are supported \href{https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml}{Postcode6(PC6)}
 and \href{https://service.pdok.nl/lv/bag/atom/bag.xml}{Basisregistratie Adressen en Gebouwen(BAG)}
-download one of these and point the \code{database } argument to it's location.
-PostcodElapse automatically guesses the \code{type} argument, which you can set to
-"PC6" or "BAG".
+download one of these and point the \code{database} argument to it's location.
+PostcodElapse automatically guesses the \code{type} argument, which can be changed
+to "PC6" or "BAG".
+
+\code{postcodElapse()} produces a data.frame with the following content:
+\itemize{
+\item The postcode
+\item Number of buildings in that postcode n.
+\item Mean, minimum & maximum concentration for all air pollutants, in µg/m3.
+}
 }
 \examples{
 \dontrun{
-# Estimate air pollution for postcode "8933DV" with Postcode6.
-postcodElapse("8933DV", "cbs_pc6_2024.gpkg")
+## Estimate air pollutant levels at NHLstenden Leeuwarden
+## and Rijksuniversiteit Gronningen
+postcodElapse(c("8917DD", "9712CP"), "~/home/data/bag-light.gpkg")
 
-# Estimate air pollution for multiple postcodes with BAG.
-postcodElapse(c("8933DV", "9713 GZ", "1071XX"), "bag-light.gpkg")
+## Load the demo-data "oneHunderdAddresses" estimate the air pollution levels
+## for all the postcodes.
+data("oneHunderdAddresses")
 
-# Postcodes are valid a long as they are four numbers followed by two letters.
-# Any spaces will be removed and non-capital letters will be capitalized.
-postcodElapse(c("8 9 3 3 DV", "9 713 Gz", "1071 xx"), "cbs_pc6_2024.gpkg")
+head(oneHunderdAddresses)
+
+estimates <- postcodElapse(oneHunderdAddresses, "cbs_pc6_2024.gpkg")
+
+head(estimates, 5)
 }
+
 }
