@@ -212,7 +212,7 @@ plotElapse <- function(elapse,
   return(figure)
 }
 
-#' Zoom into given spacial feature
+#' Zoom into given spacial feature (Broken on Windows.)
 #'
 #' @description
 #' Builds an ggplot coordinate system that zooms into a given set of spacial
@@ -229,26 +229,31 @@ plotElapse <- function(elapse,
 #'
 #' @examples
 #' \dontrun{
-#' # You need to use this with a plot so the basics
+#' ## Packages used in plotting
 #' library(tidyverse)
 #' library(tidyterra)
-#' library(postcodElapse)
 #'
-#' data <- pollutionFromBag("9726AC", "bag-light.gpkg")
+#' ## Get the spacial area's associated with postcodes.
+#' data("oneHunderdAddresses")
 #'
+#' pc6 <- pollutionFromPc6(oneHunderdAddresses, "./data/cbs_pc6_2024.gpkg")
+#'
+#' head(pc6, 5)
+#'
+#' ## Make base plot the spacial features, and NO2 concentration across the
+#' ## Netherlands.
 #' elapse <- loadElapse()
 #'
-#' # We are zooming in on the 3rd building.
-#' ggplot() +
-#'    geom_spatraster(data = elapse$NO2FULL) +
-#'    geom_sf(data = data, aes(geometry = geom), colour = "red") +
-#'    coord_zoomFeature(data[3, ]) # you must index with `[3, ]` the entire row is expected!
+#' base <- ggplot() +
+#'   geom_spatraster(data = elapse$NO2FULL) +
+#'   geom_sf(data = pc6, aes(geometry = geom), colour = "purple") +
+#'   scale_fill_grass_c(transform = "log10")
 #'
-#' # On the 5th trough 10th buildings
-#' ggplot() +
-#'    geom_spatraster(data = elapse$NO2FULL) +
-#'    geom_sf(data = data, aes(geometry = geom), colour = "red") +
-#'    coord_zoomFeature(data[5:10, ])
+#' ## Zoom into the 10th postal address
+#' base + coord_zoomFeature(pc6$geom[10])
+#'
+#' ## Zoom into 10th trogh 15th postal addresses.
+#' base + coord_zoomFeature(pc6$geom[10:15])
 #' }
 #'
 #' @export
@@ -296,26 +301,31 @@ coord_zoomFeature <- function(spacial_features, size = 2000, ...) {
 #'
 #' @examples
 #' \dontrun{
-#' # Some plotting basics
+#' ## Packages used in plotting
 #' library(tidyverse)
 #' library(tidyterra)
-#' library(postcodElapse)
 #'
-#' data <- pollutionFromBag("9726AC", "bag-light.gpkg")
+#' ## Get the spacial area's associated with postcodes.
+#' data("oneHunderdAddresses")
 #'
+#' pc6 <- pollutionFromPc6(oneHunderdAddresses, "./data/cbs_pc6_2024.gpkg")
+#'
+#' head(pc6, 5)
+#'
+#' ## Make base plot the spacial features, and NO2 concentration across the
+#' ## Netherlands.
 #' elapse <- loadElapse()
 #'
-#' # Draw a box around 3rd building.
-#' ggplot() +
-#'    geom_spatraster(data = elapse$NO2FULL) +
-#'    geom_sf(data = data, aes(geometry = geom), colour = "red") +
-#'    geom_reactFeature(data[3, ])
+#' base <- ggplot() +
+#'   geom_spatraster(data = elapse$NO2FULL) +
+#'   geom_sf(data = pc6, aes(geometry = geom), colour = "purple") +
+#'   scale_fill_grass_c(transform = "log10")
 #'
-#' # On the 5th trough 10th buildings
-#' ggplot() +
-#'    geom_spatraster(data = elapse$NO2FULL) +
-#'    geom_sf(data = data, aes(geometry = geom), colour = "red") +
-#'    geom_rectFeature(data[5:10, ])
+#' ## Annotate the position of the 10th postal address.
+#' base + geom_rectFeature(pc6$geom[10])
+#'
+#' ## Annotate the 10th trough 15th postal addresses.
+#' base + geom_rectFeature(pc6$geom[10:15])
 #' }
 #'
 #' @export
