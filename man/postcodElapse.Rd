@@ -2,7 +2,7 @@
 % Please edit documentation in R/extraction.R
 \name{postcodElapse}
 \alias{postcodElapse}
-\title{Estimate air pollutant concentraions for a given Dutch postcode.}
+\title{Estimate air pollutant concentrations for a given Dutch postcode.}
 \usage{
 postcodElapse(postcodes, database_path, database_type = "GUESS", elapse_path)
 }
@@ -23,9 +23,16 @@ Estimates air pollutant concentration for given Dutch postcodes. Using ELAPSE
 (included) and a postcode database (not-included). Two postcode databases formatted
 as Geopackage (.gpkg) are supported \href{https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml}{Postcode6(PC6)}
 and \href{https://service.pdok.nl/lv/bag/atom/bag.xml}{Basisregistratie Adressen en Gebouwen(BAG)}
-download one of these and point the \code{database } argument to it's location.
-PostcodElapse automatically guesses the \code{type} argument, which you can set to
-"PC6" or "BAG".
+download one of these and point the \code{database} argument to it's location.
+PostcodElapse automatically guesses the \code{type} argument, which can be changed
+to "PC6" or "BAG".
+
+\code{postcodElapse()} produces a data.frame with the following content:
+\itemize{
+\item The postcode
+\item Number of buildings in that postcode n.
+\item Mean, minimum & maximum concentration for all air pollutants, in µg/m3.
+}
 }
 \examples{
 \dontrun{
