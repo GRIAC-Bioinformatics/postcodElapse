@@ -4,7 +4,7 @@
 #' The goal of this function is to provide a easy way to plot ELAPSE and spacial
 #' data from the BAG and or PC6 GeoPackages. When directly called it will plot
 #' ELAPSE. To plot the postal addresses on ELAPSE provide the `postcodes` argument
-#' and one or both supported GeoPackages in the `BAG_path` and `PC6_path` arguments.
+#' and one or both supported GeoPackages in the `BAG_gpkg` and `PC6_gpkg` arguments.
 #' To annotate a specific postcode provide that postcode in `annotate_postcodes`
 #' an square will be drawn around it's location. Zooming is done in a similar
 #' manner with the `zoom_postcodes` argument. Important you cannot zoom and
@@ -26,27 +26,27 @@
 #' plotElapse(elapse = elapse$NO2FULL)
 #'
 #' ## Plot a singular postcode from BAG.
-#' plotElapse(postcodes = "9726AC", BAG_path = "../data/bag-light.gpkg")
+#' plotElapse(postcodes = "9726AC", BAG_gpkg = "../data/bag-light.gpkg")
 #'
 #' ## Plot BAG and PC6 with the oneHunderdAddresses demo-data.
 #' data("oneHunderdAddresses")
 #'
 #' plotElapse(postcodes = oneHunderdAddresses,
-#'            BAG_path = "../data/bag-light.gpkg",
-#'            PC6_path = "../data/cbs_pc6_2024.gpkg")
+#'            BAG_gpkg = "../data/bag-light.gpkg",
+#'            PC6_gpkg = "../data/cbs_pc6_2024.gpkg")
 #'
 #' ## Annotating and zooming are mutialy exclusive!
 #' ### Annotate the postal address: 8463VE
 #'
 #' plotElapse(postcodes = oneHunderdAddresses,
-#'            PC6_path = "../data/cbs_pc6_2024.gpkg",
+#'            PC6_gpkg = "../data/cbs_pc6_2024.gpkg",
 #'            annotate_postcodes = "8463VE",
 #'            no_facet = TRUE)
 #'
 #' ### Zoom into the postal address: 8463VE
 #'
 #' plotElapse(postcodes = oneHunderdAddresses,
-#'            PC6_path = "../data/cbs_pc6_2024.gpkg",
+#'            PC6_gpkg = "../data/cbs_pc6_2024.gpkg",
 #'            zoom_postcodes = "8463VE",
 #'            no_facet = TRUE)
 #'
@@ -58,14 +58,14 @@
 #'
 #' main <- plotElapse(elapse = elapse$NO2FULL,
 #'                    postcodes = oneHunderdAddresses,
-#'                    PC6_path = "../data/cbs_pc6_2024.gpkg",
-#'                    BAG_path = "../data/bag-light.gpkg",
+#'                    PC6_gpkg = "../data/cbs_pc6_2024.gpkg",
+#'                    BAG_gpkg = "../data/bag-light.gpkg",
 #'                    annotate_postcodes = "8463VE")
 #'
 #' inset <- plotElapse(elapse = elapse$NO2FULL,
 #'                     postcodes = oneHunderdAddresses,
-#'                     PC6_path = "../data/cbs_pc6_2024.gpkg",
-#'                     BAG_path = "../data/bag-light.gpkg",
+#'                     PC6_gpkg = "../data/cbs_pc6_2024.gpkg",
+#'                     BAG_gpkg = "../data/bag-light.gpkg",
 #'                     zoom_postcodes = "8463VE")
 #'
 #' ggarrange(main, inset, ncol = 2)
@@ -74,14 +74,14 @@
 #'
 #' @param elapse File path to an ELAPSE.tif, when left empty will load ELAPSE
 #' internal to postcodElapse.
-#' @param postcodes Postcodes to plot layerd on-top of ELAPSE, when any postcodes
-#' are given at-least one GeoPackage must be provided via the `BAG_path` or
-#' `PC6_path` arguments. Providing both arguments will add two layers to the
-#' figure.
-#' @param BAG_path File path to the BAG GeoPackage, this argument requires the
+#' @param postcodes Postcodes to plot layerd on-top of ELAPSE, when any
+#' postcodes are given at-least one GeoPackage must be provided via the
+#' `BAG_gpkg` or `PC6_gpkg` arguments. Providing both arguments will add two
+#' layers to the figure.
+#' @param BAG_gpkg File path to the BAG GeoPackage, this argument requires the
 #' `postcodes` argument.
 #' @param BAG_colour Colour used to draw the spacial positions of BAG.
-#' @param PC6_path File path to the PC6 GeoPackage, this argument requires the
+#' @param PC6_gpkg File path to the PC6 GeoPackage, this argument requires the
 #' `postcodes` argument.
 #' @param annotate_postcodes List of Dutch postal addresses to annotate on the
 #' figure. This list subsets the `postcodes` argument and draw an rectangle
@@ -101,10 +101,10 @@
 plotElapse <- function(elapse,
                        postcodes,
 
-                       BAG_path,
+                       BAG_gpkg,
                        BAG_colour = "orange",
 
-                       PC6_path,
+                       PC6_gpkg,
                        PC6_fill = "purple",
                        PC6_alpha = 0.7,
 
@@ -115,7 +115,8 @@ plotElapse <- function(elapse,
                        zoom_postcodes,
                        zoom_size = 2000,
 
-                       no_facet = FALSE) {
+                       no_facet = FALSE
+                       ) {
 
   if (missing(elapse)) {
     message("No ELAPSE given loading internal.")
@@ -129,21 +130,21 @@ plotElapse <- function(elapse,
   # Plot the given geopackages + styling.
   if (!missing(postcodes)) { #Got postcodes? try to plot.
     #To plot we need atleas one GeoPackage, if none are given error.
-    if (missing(PC6_path) & missing(BAG_path)) {
+    if (missing(PC6_gpkg) & missing(BAG_gpkg)) {
       stop("Got postcodes but no GeoPackage, provide at-least one GeoPackage.")
     }
 
-    if (!missing(BAG_path)) {
-      message("Plotting BAG from: ", BAG_path)
-      bag <- pollutionFromBag(postcodes, BAG_path)
+    if (!missing(BAG_gpkg)) {
+      message("Plotting BAG from: ", BAG_gpkg)
+      bag <- pollutionFromBag(postcodes, BAG_gpkg)
 
       figure <- figure + ggplot2::geom_sf(data = bag, ggplot2::aes(geometry = geom),
                                           colour = BAG_colour)
     }
 
-    if (!missing(PC6_path)) {
-      message("Plotting PC6 from: ", PC6_path)
-      pc6 <- pollutionFromPc6(postcodes, PC6_path)
+    if (!missing(PC6_gpkg)) {
+      message("Plotting PC6 from: ", PC6_gpkg)
+      pc6 <- pollutionFromPc6(postcodes, PC6_gpkg)
 
       figure <- figure + ggplot2::geom_sf(data = pc6, ggplot2::aes(geometry = geom),
                                           fill = PC6_fill, alpha = PC6_alpha)
@@ -159,16 +160,16 @@ plotElapse <- function(elapse,
   }
 
   if (!missing(annotate_postcodes)) { # Add annotation using geom_rectFeature()
-    if (missing(PC6_path) & missing(BAG_path)) {
+    if (missing(PC6_gpkg) & missing(BAG_gpkg)) {
       stop("Got postcodes but no GeoPackage, provide at-least one GeoPackage.")
     }
 
     # I internaly decide wich data to use PC6 has priority.
     # Having the user decide would make this function even more conveluted.
-    if (!missing(PC6_path)) {
+    if (!missing(PC6_gpkg)) {
       message("Using spacial data from PC6 to annotate.")
       spacial_data <- pc6
-    } else if (!missing(BAG_path)) {
+    } else if (!missing(BAG_gpkg)) {
       message("Using spacial data from BAG to annotate.")
       spacial_data <- bag
     }
@@ -179,15 +180,15 @@ plotElapse <- function(elapse,
     figure <- figure + geom_rectFeature(spacial_data$geom, annotate_size,
                                         annotate_colour)
   } else if (!missing(zoom_postcodes)) { # Add zoom using coord_zoomFeature()
-    if (missing(PC6_path) & missing(BAG_path)) {
+    if (missing(PC6_gpkg) & missing(BAG_gpkg)) {
       stop("Got postcodes but no GeoPackage, provide at-least one GeoPackage.")
     }
 
     # Again PC6 has priority
-    if (!missing(PC6_path)) {
+    if (!missing(PC6_gpkg)) {
       message("Using spacial data from PC6 to zoom.")
       spacial_data <- pc6
-    } else if (!missing(BAG_path)) {
+    } else if (!missing(BAG_gpkg)) {
       message("Using spacial data from BAG to zoom.")
       spacial_data <- bag
     }
