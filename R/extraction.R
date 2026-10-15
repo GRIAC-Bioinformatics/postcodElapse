@@ -103,22 +103,26 @@ postcodElapse <- function(postcodes, database_path, database_type = "GUESS",
   return(postcode_pollution_stats)
 }
 
-#' Estimate air pollution concentrations in a postcode with BAG database.
+#' Estimate air pollution levels for Dutch postal addresses using BAG.
 #'
 #' @description
 #' Kadaster's [Basisregistratie Adressen en Gebouwen](https://www.pdok.nl/introductie/-/article/basisregistratie-adressen-en-gebouwen-ba-1)
-#' database contains for all buildings in the Netherlands their location and postcode.
-#' `pollutionFromBag()` finds the geo-location of all buildings part of the given
-#' postcodes. Then extracts the air pollutant concentrations at those geo-locations
-#' from ELAPSE. Returned are all pollution estimates for every building in the
-#' wanted postcodes, including the geo-location.
+#' database contains for all buildings in the Netherlands their location and
+#' postal address. `pollutionFromBag()` estimates air pollutant levels for a
+#' given set of postal addresses by: Querying spatial data of all buildings part
+#' of the given postal addresses from BAG. Subsequently extracting air pollution
+#' estimates from ELAPSE using the spatial data.
 #'
-#' @param postcodes string or vector of strings Containing Duch postcodes.
-#' @param bag string Path to BAG database.
-#' @param elapse *optional* Path to ELAPSE. (When empty will load internal ELAPSE)
+#' @param postcodes Dutch postal addresses.
+#' @param bag Path to BAG database.
+#' @param elapse Path to ELAPSE, when empty uses internal ELAPSE.
 #'
-#' @return data.frame containing air pollution estimates and geo-location for all
-#' buildings in the given postcodes
+#' @return data.frame where each row represents a building with the following
+#' columns containing:
+#' - The postcode of a building.
+#' - Concentration estimates for air pollutant levels, in µg/m<sup>3</sup>
+#' - Spacial points representing the geographic location of a building.
+#'
 #' @examples
 #' \dontrun{
 #' ## Packages used in plotting
