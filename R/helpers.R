@@ -10,7 +10,7 @@
 #' @returns Strings formatted as postcodes
 #'
 #' @examples
-#' formatPostcode("8 9 3 3 DV", "9 713 Gz", "1071 xx")
+#' formatPostcode(c("8 9 3 3 DV", "9 713 Gz", "1071 xx"))
 #'
 #' @export
 formatPostcode <- function(postcodes) {
