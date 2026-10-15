@@ -1,27 +1,29 @@
-#' Estimate air pollutant concentrations for a given Dutch postcode.
+#' Estimate air pollutant levels for Dutch postal addresses.
 #'
 #' @description
-#' Estimates air pollutant concentration for given Dutch postcodes. Using ELAPSE
-#' (included) and a postcode database (not-included). Two postcode databases formatted
-#' as Geopackage (.gpkg) are supported [Postcode6(PC6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
+#' Estimates air pollutant concentration for given Dutch postal addresses.
+#' Using ELAPSE (included) and a postcode database (not-included). Two postcode
+#' databases formatted as Geopackage (.gpkg) are supported [Postcode6(PC6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
 #' and [Basisregistratie Adressen en Gebouwen(BAG)](https://service.pdok.nl/lv/bag/atom/bag.xml)
 #' download one of these and point the `database` argument to it's location.
 #' PostcodElapse automatically guesses the `type` argument, which can be changed
-#'  to "PC6" or "BAG".
+#' to "PC6" or "BAG".
 #'
-#' `postcodElapse()` produces a data.frame with the following content:
-#'
-#'  - The postcode
-#'  - Number of buildings in that postcode n.
-#'  - Mean, minimum & maximum concentration for all air pollutants, in µg/m3.
-#'
-#' @param postcodes String containing Dutch postcode (1234AB) can also be a vector.
+#' @param postcodes String containing Dutch postal addresses (1234AB) can also
+#' be a vector.
 #' @param database Path to the postcode database, see Postcode database below.
-#' @param type Type of the postcode database, defaults to "GUESS" where postcodElapse
-#' fills type in as "BAG" for Basisregistratie Adressen en Gebouwen or
-#' "PC6" for Postcode6.
-#' @param elapse_path When empty ELAPSE stored in extdata is used. Otherwise use
-#' the one provided.
+#' @param type Type of the postcode database, defaults to "GUESS" where
+#' postcodElapse fills type in as "BAG" for Basisregistratie Adressen en Gebouwen
+#' or "PC6" for Postcode6.
+#' @param elapse_path When not given the internal ELAPSE model is uses.
+#' Otherwise the provides model is used.
+#'
+#' @return data.frame containing a row for every postal address of interest with
+#' the following columns:
+#'
+#'  - The postal address
+#'  - Number of buildings in the postal address **n**.
+#'  - Mean, minimum & maximum concentration for all air pollutants, in µg/m3.
 #'
 #' @examples
 #' \dontrun{
@@ -206,19 +208,22 @@ pollutionFromBag <- function(postcodes, bag_path, elapse_path, ...) {
 #'
 #' @description
 #' [Postcode6(PC6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
-#' by the CBS, contains the geographic region of every postcode in the Netherlands.
-#' `pollutionFromPc6()` query's the geographic region of all given postcodes.
-#' Subsequently it uses ELAPSE to calculate the average, minimum & maximum
-#' concentration of every air pollutant in that region. In addition it collects
-#' the amount of buildings in that region.
+#' by the CBS, contains the geographic region of every postal address in the
+#' Netherlands. `PollutionFromPc6()` estimates air pollutant levels for a given
+#' set of postal addresses by: Querying the spacial region of all given postal
+#' addresses from PC6. Subsequently extracting and calculating Mean, minimum &
+#' maximum air pollutant levels for every postcode from ELAPSE.
 #'
 #' @param postcodes string or vector of strings Containing PC6 postcodes.
 #' @param pc6_path string Path to the Postcode6 database.
 #' @param elapse_path *optional* string Path to the ELAPSE database.
 
-#' @returns simple feature collection. for every postcode the average, minimum &
-#' maximum air pollutant concentration. In addition the geographic area of that
-#' postcode.
+#' @returns data.frame containing a row for every postcode with the following
+#' columns:
+#'
+#' - The postal address
+#' - Number of buildings in thta postcode `n`.
+#' - Mean, minimum & maximum concentration for all air pollutants, in µg/m3.
 #'
 #' @examples
 #' \dontrun{
