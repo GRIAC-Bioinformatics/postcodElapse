@@ -1,14 +1,15 @@
 Package: postcodElapse
 Title: Estimate air pollution concentrations for Dutch postcodes using ELAPSE.
-Version: 0.1.5
+Version: 0.1.6
 Authors@R: 
     person("Berend", "Veldthuis", , "b.veldthuis@umcg.nl", role = c("aut", "cre"))
 Author: Berend Veldthuis [aut, cre]
 Maintainer: Berend Veldthuis <b.veldthuis@umcg.nl>
-Description: Calculate estimated concentration of PM2.5, BC, NO2, O3 air
-  pollutants for Duch postal addreses. Air pollution data is extracted from the 
-  ELAPSE model published by K de Hoogh. Locations of postal codes are queryed 
-  from the Basisregistratie Adressen en Gebouwen or Postcode6 databases.
+Description: PostcodElapse is an R-package for estimating the levels of air
+  pollution including fine particulate matter (PM2.5), black carbon (BC), nitrogen
+  dioxide (NO2) and ozone (O3) at postal code level in the Netherlands. The
+  package utilizes the ELAPSE Land Use Regression model and a GeoPackage
+  containing spatial data on all Dutch postal codes.
 License: AGPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
