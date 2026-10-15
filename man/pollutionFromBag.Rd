@@ -2,28 +2,33 @@
 % Please edit documentation in R/extraction.R
 \name{pollutionFromBag}
 \alias{pollutionFromBag}
-\title{Estimate air pollution concentrations in a postcode with BAG database.}
+\title{Estimate air pollution levels for Dutch postal addresses using BAG.}
 \usage{
 pollutionFromBag(postcodes, bag_path, elapse_path, ...)
 }
 \arguments{
-\item{postcodes}{string or vector of strings Containing Duch postcodes.}
+\item{postcodes}{Dutch postal addresses.}
 
-\item{bag}{string Path to BAG database.}
+\item{bag}{Path to BAG database.}
 
-\item{elapse}{\emph{optional} Path to ELAPSE. (When empty will load internal ELAPSE)}
+\item{elapse}{Path to ELAPSE, when empty uses internal ELAPSE.}
 }
 \value{
-data.frame containing air pollution estimates and geo-location for all
-buildings in the given postcodes
+data.frame where each row represents a building with the following
+columns containing:
+\itemize{
+\item The postcode of a building.
+\item Concentration estimates for air pollutant levels, in µg/m\if{html}{\out{<sup>}}3\if{html}{\out{</sup>}}
+\item Spacial points representing the geographic location of a building.
+}
 }
 \description{
 Kadaster's \href{https://www.pdok.nl/introductie/-/article/basisregistratie-adressen-en-gebouwen-ba-1}{Basisregistratie Adressen en Gebouwen}
-database contains for all buildings in the Netherlands their location and postcode.
-\code{pollutionFromBag()} finds the geo-location of all buildings part of the given
-postcodes. Then extracts the air pollutant concentrations at those geo-locations
-from ELAPSE. Returned are all pollution estimates for every building in the
-wanted postcodes, including the geo-location.
+database contains for all buildings in the Netherlands their location and
+postal address. \code{pollutionFromBag()} estimates air pollutant levels for a
+given set of postal addresses by: Querying spatial data of all buildings part
+of the given postal addresses from BAG. Subsequently extracting air pollution
+estimates from ELAPSE using the spatial data.
 }
 \examples{
 \dontrun{

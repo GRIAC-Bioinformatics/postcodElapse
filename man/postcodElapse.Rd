@@ -2,37 +2,40 @@
 % Please edit documentation in R/extraction.R
 \name{postcodElapse}
 \alias{postcodElapse}
-\title{Estimate air pollutant concentrations for a given Dutch postcode.}
+\title{Estimate air pollutant levels for Dutch postal addresses.}
 \usage{
 postcodElapse(postcodes, database_path, database_type = "GUESS", elapse_path)
 }
 \arguments{
-\item{postcodes}{String containing Dutch postcode (1234AB) can also be a vector.}
+\item{postcodes}{String containing Dutch postal addresses (1234AB) can also
+be a vector.}
 
-\item{elapse_path}{When empty ELAPSE stored in extdata is used. Otherwise use
-the one provided.}
+\item{elapse_path}{When not given the internal ELAPSE model is uses.
+Otherwise the provides model is used.}
 
 \item{database}{Path to the postcode database, see Postcode database below.}
 
-\item{type}{Type of the postcode database, defaults to "GUESS" where postcodElapse
-fills type in as "BAG" for Basisregistratie Adressen en Gebouwen or
-"PC6" for Postcode6.}
+\item{type}{Type of the postcode database, defaults to "GUESS" where
+postcodElapse fills type in as "BAG" for Basisregistratie Adressen en Gebouwen
+or "PC6" for Postcode6.}
+}
+\value{
+data.frame containing a row for every postal address of interest with
+the following columns:
+\itemize{
+\item The postal address
+\item Number of buildings in the postal address \strong{n}.
+\item Mean, minimum & maximum concentration for all air pollutants, in µg/m3.
+}
 }
 \description{
-Estimates air pollutant concentration for given Dutch postcodes. Using ELAPSE
-(included) and a postcode database (not-included). Two postcode databases formatted
-as Geopackage (.gpkg) are supported \href{https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml}{Postcode6(PC6)}
+Estimates air pollutant concentration for given Dutch postal addresses.
+Using ELAPSE (included) and a postcode database (not-included). Two postcode
+databases formatted as Geopackage (.gpkg) are supported \href{https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml}{Postcode6(PC6)}
 and \href{https://service.pdok.nl/lv/bag/atom/bag.xml}{Basisregistratie Adressen en Gebouwen(BAG)}
 download one of these and point the \code{database} argument to it's location.
 PostcodElapse automatically guesses the \code{type} argument, which can be changed
 to "PC6" or "BAG".
-
-\code{postcodElapse()} produces a data.frame with the following content:
-\itemize{
-\item The postcode
-\item Number of buildings in that postcode n.
-\item Mean, minimum & maximum concentration for all air pollutants, in µg/m3.
-}
 }
 \examples{
 \dontrun{
