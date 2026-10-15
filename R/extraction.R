@@ -222,7 +222,7 @@ pollutionFromBag <- function(postcodes, bag_path, elapse_path, ...) {
 #' columns:
 #'
 #' - The postal address
-#' - Number of buildings in thta postcode `n`.
+#' - Number of buildings in thta postcode **n**.
 #' - Mean, minimum & maximum concentration for all air pollutants, in µg/m3.
 #'
 #' @examples
