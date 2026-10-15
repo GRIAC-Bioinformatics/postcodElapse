@@ -6,10 +6,10 @@ Authors@R:
 Author: Berend Veldthuis [aut, cre]
 Maintainer: Berend Veldthuis <b.veldthuis@umcg.nl>
 Description: PostcodElapse is an R-package for estimating the levels of air
-pollution including fine particulate matter (PM2.5), black carbon (BC), nitrogen
-dioxide (NO2) and ozone (O3) at postal code level in the Netherlands. The
-package utilizes the ELAPSE Land Use Regression model and a GeoPackage
-containing spatial data on all Dutch postal codes.
+  pollution including fine particulate matter (PM2.5), black carbon (BC), nitrogen
+  dioxide (NO2) and ozone (O3) at postal code level in the Netherlands. The
+  package utilizes the ELAPSE Land Use Regression model and a GeoPackage
+  containing spatial data on all Dutch postal codes.
 License: AGPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
