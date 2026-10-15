@@ -10,8 +10,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Estimate air pollution concentrations for Dutch postcodes using ELAPSE.">
-<meta name="description" content="Calculate estimated concentration of PM2.5, BC, NO2, O3 air pollutants for Duch postal addreses. Air pollution data is extracted from the ELAPSE model published by K de Hoogh. Locations of postal codes are queryed from the Basisregistratie Adressen en Gebouwen or Postcode6 databases.">
-<meta property="og:description" content="Calculate estimated concentration of PM2.5, BC, NO2, O3 air pollutants for Duch postal addreses. Air pollution data is extracted from the ELAPSE model published by K de Hoogh. Locations of postal codes are queryed from the Basisregistratie Adressen en Gebouwen or Postcode6 databases.">
+<meta name="description" content="PostcodElapse is an R-package for estimating the levels of air pollution including fine particulate matter (PM2.5), black carbon (BC), nitrogen dioxide (NO2) and ozone (O3) at postal code level in the Netherlands. The package utilizes the ELAPSE Land Use Regression model and a GeoPackage containing spatial data on all Dutch postal codes.">
+<meta property="og:description" content="PostcodElapse is an R-package for estimating the levels of air pollution including fine particulate matter (PM2.5), black carbon (BC), nitrogen dioxide (NO2) and ozone (O3) at postal code level in the Netherlands. The package utilizes the ELAPSE Land Use Regression model and a GeoPackage containing spatial data on all Dutch postal codes.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="index.html">postcodElapse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@
 </h3>
 <p>Download the latest <a href="https://github.com/GRIAC-Bioinformatics/postcodElapse/releases" class="external-link">release</a> of postcodElapse, and install the package using:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"postcodElapse_0.1.4.tar.gz"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"postcodElapse_0.1.6.tar.gz"</span><span class="op">)</span></span></code></pre></div>
 <p>If you are using RStudio, you can also install via the <em>Packages</em> panel:</p>
 <ol style="list-style-type: decimal">
 <li>Open the <em>Packages</em> panel and click <em>Install</em>.</li>

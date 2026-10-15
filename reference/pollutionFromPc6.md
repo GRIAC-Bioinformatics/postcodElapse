@@ -1,11 +1,12 @@
 # Estimate air pollution concentrations in a postcode with PC6 database.
 
 [Postcode6(PC6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
-by the CBS, contains the geographic region of every postcode in the
-Netherlands. `pollutionFromPc6()` query's the geographic region of all
-given postcodes. Subsequently it uses ELAPSE to calculate the average,
-minimum & maximum concentration of every air pollutant in that region.
-In addition it collects the amount of buildings in that region.
+by the CBS, contains the geographic region of every postal address in
+the Netherlands. `PollutionFromPc6()` estimates air pollutant levels for
+a given set of postal addresses by: Querying the spacial region of all
+given postal addresses from PC6. Subsequently extracting and calculating
+Mean, minimum & maximum air pollutant levels for every postcode from
+ELAPSE.
 
 ## Usage
 
@@ -29,9 +30,15 @@ pollutionFromPc6(postcodes, pc6_path, elapse_path, ...)
 
 ## Value
 
-simple feature collection. for every postcode the average, minimum &
-maximum air pollutant concentration. In addition the geographic area of
-that postcode.
+data.frame containing a row for every postcode with the following
+columns:
+
+- The postal address
+
+- Number of buildings in thta postcode **n**.
+
+- Mean, minimum & maximum concentration for all air pollutants, in
+  µg/m3.
 
 ## Examples
 

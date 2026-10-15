@@ -1,23 +1,14 @@
-# Estimate air pollutant concentrations for a given Dutch postcode.
+# Estimate air pollutant levels for Dutch postal addresses.
 
-Estimates air pollutant concentration for given Dutch postcodes. Using
-ELAPSE (included) and a postcode database (not-included). Two postcode
-databases formatted as Geopackage (.gpkg) are supported
+Estimates air pollutant concentration for given Dutch postal addresses.
+Using ELAPSE (included) and a postcode database (not-included). Two
+postcode databases formatted as Geopackage (.gpkg) are supported
 [Postcode6(PC6)](https://service.pdok.nl/cbs/postcode6/atom/postcode6_volledige_postcode.xml)
 and [Basisregistratie Adressen en
 Gebouwen(BAG)](https://service.pdok.nl/lv/bag/atom/bag.xml) download one
 of these and point the `database` argument to it's location.
 PostcodElapse automatically guesses the `type` argument, which can be
 changed to "PC6" or "BAG".
-
-`postcodElapse()` produces a data.frame with the following content:
-
-- The postcode
-
-- Number of buildings in that postcode n.
-
-- Mean, minimum & maximum concentration for all air pollutants, in
-  µg/m3.
 
 ## Usage
 
@@ -29,12 +20,13 @@ postcodElapse(postcodes, database_path, database_type = "GUESS", elapse_path)
 
 - postcodes:
 
-  String containing Dutch postcode (1234AB) can also be a vector.
+  String containing Dutch postal addresses (1234AB) can also be a
+  vector.
 
 - elapse_path:
 
-  When empty ELAPSE stored in extdata is used. Otherwise use the one
-  provided.
+  When not given the internal ELAPSE model is uses. Otherwise the
+  provides model is used.
 
 - database:
 
@@ -45,6 +37,18 @@ postcodElapse(postcodes, database_path, database_type = "GUESS", elapse_path)
   Type of the postcode database, defaults to "GUESS" where postcodElapse
   fills type in as "BAG" for Basisregistratie Adressen en Gebouwen or
   "PC6" for Postcode6.
+
+## Value
+
+data.frame containing a row for every postal address of interest with
+the following columns:
+
+- The postal address
+
+- Number of buildings in the postal address **n**.
+
+- Mean, minimum & maximum concentration for all air pollutants, in
+  µg/m3.
 
 ## Examples
 
