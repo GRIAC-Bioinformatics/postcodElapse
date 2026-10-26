@@ -46,8 +46,8 @@ done with `geom_sf()`, see the block below.
 ```{r layerd}
 data("oneHunderdAddresses")
 
-pc6 <- pollutionFromPc6(oneHunderdAddresses, "./data/cbs_pc6_2024.gpkg")
-bag <- pollutionFromBag(oneHunderdAddresses, "./data/bag-light.gpkg")
+pc6 <- pollutionFromPc6(oneHunderdAddresses, "../../../data/GeoPackages/cbs_pc6_2024.gpkg")
+bag <- pollutionFromBag(oneHunderdAddresses, "../../../data/GeoPackages/bag-light.gpkg")
 
 ggplot() +
   geom_spatraster(data = elapse$NO2FULL) + 
