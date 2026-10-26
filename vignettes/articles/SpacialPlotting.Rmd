@@ -1,0 +1,60 @@
+---
+title: "Spacial plotting"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE
+)
+# Put these here so we don't the output
+library(tidyverse)
+library(tidyterra)
+```
+
+This article describes the method to plot the spacial data underlying postcodElapse. To enable spatial plotting in R, installation of of the R packages [tidyverse](https://tidyverse.org/),
+[tidyterra](https://dieghernan.github.io/tidyterra/articles/tidyterra.html) and
+[ggpubr](https://rpkgs.datanovia.com/ggpubr/) is required.
+
+## ELAPSE
+First, a map with the spatial relations of the postal codes is required. In postcodElapse, ELAPSE is the best equivalent, which can be loaded and plotted as indicated below: 
+
+```{r plotting ELAPSE}
+library(tidyverse)
+library(tidyterra)
+library(ggpubr)
+library(postcodElapse)
+
+elapse <- loadElapse()
+
+ggplot() +
+  geom_spatraster(data = elapse) +
+  facet_wrap(~ lyr)
+```
+
+When plotting pass spacial data directly into a geom via the *data* argument. Plotting a specific layer of ELAPSE can be done with the `$` operator. Tidyterra's `geom_spatraster()` maps values extracted from spatrasters to the fill aestetic, to scale the fill colour use `scale_fill_grass_c()`.
+
+# Plotting postal coded geo-locations
+To plot the location of postcodes on ELAPSE the geo-location is *required* these
+are provided trough: `pollutionFromBag()` and `pollutionFromPc6()`. These
+function output spacial data in the `geom` column. Plotting this data can be
+done with `geom_sf()`, see the block below.
+
+```{r layerd}
+data("oneHunderdAddresses")
+
+pc6 <- pollutionFromPc6(oneHunderdAddresses, "./data/cbs_pc6_2024.gpkg")
+bag <- pollutionFromBag(oneHunderdAddresses, "./data/bag-light.gpkg")
+
+ggplot() +
+  geom_spatraster(data = elapse$NO2FULL) + 
+  geom_sf(data = pc6, aes(geometry = geom), fill = "purple", alpha = 0.7) +
+  geom_sf(data = bag, aes(geometry = geom), colour = "orange") +
+  scale_fill_grass_c() +
+  labs(fill = bquote("NO"[2]~"concentration in µg/m"^3))
+```
+
+With this material you can plot the spacial data of postcodes and ELAPSE. To see all plotting options we recommend the documentation of  [ggplot](https://ggplot2.tidyverse.org/), [tidyterra](https://dieghernan.github.io/tidyterra/articles/tidyterra.html) and [ggpubr](https://rpkgs.datanovia.com/ggpubr/index.html_)
