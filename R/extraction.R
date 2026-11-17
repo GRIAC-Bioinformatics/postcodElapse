@@ -279,7 +279,7 @@ pollutionFromPc6 <- function(postcodes, pc6_path, elapse_path, ...) {
 
   # Use the areas we just got to extract pollution data form ELAPSE.
   # Because they are areas we must calculate average, minimum & maximum here.
-  geo_pollution_mean <-  terra::extract(elapse, postcode_geo, fun = median)
+  geo_pollution_mean <-  terra::extract(elapse, postcode_geo, fun = mean)
   names(geo_pollution_mean) <- paste0(names(geo_pollution_mean), "_avg")
 
   geo_pollution_min <-  terra::extract(elapse, postcode_geo, fun = min)
