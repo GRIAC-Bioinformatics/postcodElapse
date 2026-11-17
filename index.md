@@ -45,7 +45,7 @@ of postcodElapse, and install the package using:
 
 ``` r
 
-install.packages("postcodElapse_0.1.6.tar.gz")
+install.packages("postcodElapse_0.1.7.tar.gz")
 ```
 
 If you are using RStudio, you can also install via the *Packages* panel:
